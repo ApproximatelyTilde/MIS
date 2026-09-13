@@ -1,0 +1,161 @@
+<div class="WindowContainer SearchCharactersContainer">
+  <div class="SearchCharactersTopBar">
+    <div class="SearchCharactersControlsRow">
+      <button type="button" id="SearchCharactersFilterModalTrigger" class="Button ButtonSquare SearchCharactersIconButton" title="Filter Characters" aria-label="Filter Characters">
+        <span class="FunctionIcon FunctionIconFilter" aria-hidden="true"></span>
+      </button>
+      <select id="SearchCharactersSortSelect" name="SortBy" class="SearchCharactersSortSelect"
+              hx-get="/API/Characters/Search/Partial"
+              hx-trigger="change"
+              hx-target="#SearchCharactersResultsContainer"
+              hx-swap="innerHTML"
+              hx-include="#SearchCharactersForm, #SearchCharactersInput">
+        <option value="Name">Name</option>
+        <option id="SearchCharactersSortLevelOption" value="Level">Level</option>
+        <option value="ModifiedAt">Recently Updated</option>
+      </select>
+      <button type="button" id="SearchCharactersSortToggleButton" class="Button ButtonSquare SearchCharactersIconButton" title="Sort Ascending" aria-label="Sort Ascending" data-sort-order="Ascending">
+        <span class="FunctionIcon FunctionIconSort" aria-hidden="true"></span>
+      </button>
+      <input type="text" id="SearchCharactersInput" name="SearchQuery" class="SearchCharactersInput" placeholder="Search character name..." autocomplete="off" spellcheck="false"
+             hx-get="/API/Characters/Search/Partial"
+             hx-trigger="keyup[key=='Enter'], search"
+             hx-target="#SearchCharactersResultsContainer"
+             hx-swap="innerHTML"
+             hx-include="#SearchCharactersForm, #SearchCharactersSortSelect" />
+      <button type="button" id="SearchCharactersSearchButton" class="Button ButtonSquare SearchCharactersIconButton" title="Search Characters" aria-label="Search Characters"
+              hx-get="/API/Characters/Search/Partial"
+              hx-trigger="click"
+              hx-target="#SearchCharactersResultsContainer"
+              hx-swap="innerHTML"
+              hx-include="#SearchCharactersForm, #SearchCharactersInput, #SearchCharactersSortSelect">
+        <span class="FunctionIcon FunctionIconSearch" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <form id="SearchCharactersForm">
+    <input type="hidden" id="SearchCharactersActiveGameSystem" name="GameSystem" value="DND5thEdition" />
+    <input type="hidden" id="SearchCharactersActiveDNDClass" name="DNDClass" value="" />
+    <input type="hidden" id="SearchCharactersActiveDNDSpecies" name="DNDSpecies" value="" />
+    <input type="hidden" id="SearchCharactersActiveDNDLevelMin" name="DNDLevelMin" value="1" />
+    <input type="hidden" id="SearchCharactersActiveDNDLevelMax" name="DNDLevelMax" value="20" />
+    <input type="hidden" id="SearchCharactersActiveTravellerCareer" name="TravellerCareer" value="" />
+    <input type="hidden" id="SearchCharactersActiveTravellerHomeworld" name="TravellerHomeworld" value="" />
+    <input type="hidden" id="SearchCharactersActiveTravellerTermsMin" name="TravellerTermsMin" value="1" />
+    <input type="hidden" id="SearchCharactersActiveTravellerTermsMax" name="TravellerTermsMax" value="10" />
+    <input type="hidden" id="SearchCharactersActiveIncludePrivate" name="IncludePrivate" value="false" />
+    <input type="hidden" id="SearchCharactersActiveIncludeArchived" name="IncludeArchived" value="false" />
+    <input type="hidden" id="SearchCharactersActiveSortOrder" name="SortOrder" value="Ascending" />
+  </form>
+
+  <div id="SearchCharactersResultsContainer" class="SearchCharactersResultsArea"
+       hx-get="/API/Characters/Search/Partial"
+       hx-trigger="load"
+       hx-swap="innerHTML"
+       hx-include="#SearchCharactersForm, #SearchCharactersInput, #SearchCharactersSortSelect"></div>
+
+  <div id="SearchCharactersFilterModal" class="SearchCharactersModalOverlay HiddenElement">
+    <div class="CharacterSheetModalPanel">
+      <div class="CharacterSheetModalTitlebar">
+        <span class="CharacterSheetModalTitle">Filter Characters</span>
+      </div>
+      <div class="CharacterSheetModalBody">
+        <div class="FormGroup MarginBottomSmall">
+          <label class="FormLabel" for="SearchCharactersSystemSelect">Game System</label>
+          <select id="SearchCharactersSystemSelect" class="Select">
+            <option value="DND5thEdition" selected>DND5thEdition</option>
+            <option value="Traveller2ndEdition">Traveller2ndEdition</option>
+          </select>
+        </div>
+
+        <div id="SearchCharactersDNDFiltersSection">
+          <div class="FormGroup MarginBottomSmall">
+            <label class="FormLabel" for="SearchCharactersDNDClassSelect">Class</label>
+            <select id="SearchCharactersDNDClassSelect" class="Select">
+              <option value="">All Classes</option>
+              {% for ClassOption in DNDClasses %}
+                <option value="{{ ClassOption }}">{{ ClassOption }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="FormGroup MarginBottomSmall">
+            <label class="FormLabel" for="SearchCharactersDNDSpeciesSelect">Species</label>
+            <select id="SearchCharactersDNDSpeciesSelect" class="Select">
+              <option value="">All Species</option>
+              {% for SpeciesOption in DNDSpecies %}
+                <option value="{{ SpeciesOption }}">{{ SpeciesOption }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="DualRangeSliderWrapper MarginBottomSmall" id="SearchCharactersDNDLevelSliderWrapper">
+            <div class="DualRangeSliderHeader">
+              <span class="DualRangeSliderLabel">Level Range</span>
+              <span id="SearchCharactersDNDLevelReadout" class="DualRangeSliderValue">Level 1 - 20</span>
+            </div>
+            <div class="DualRangeSliderTrackContainer">
+              <div class="DualRangeSliderBaseTrack"></div>
+              <div id="SearchCharactersDNDLevelActiveBar" class="DualRangeSliderActiveBar"></div>
+              <input type="range" id="SearchCharactersDNDLevelMinInput" min="1" max="20" value="1" class="DualRangeSliderInput" />
+              <input type="range" id="SearchCharactersDNDLevelMaxInput" min="1" max="20" value="20" class="DualRangeSliderInput" />
+            </div>
+          </div>
+        </div>
+
+        <div id="SearchCharactersTravellerFiltersSection" class="HiddenElement">
+          <div class="FormGroup MarginBottomSmall">
+            <label class="FormLabel" for="SearchCharactersTravellerCareerSelect">Career</label>
+            <select id="SearchCharactersTravellerCareerSelect" class="Select">
+              <option value="">All Careers</option>
+              {% for CareerOption in TravellerCareers %}
+                <option value="{{ CareerOption }}">{{ CareerOption }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="FormGroup MarginBottomSmall">
+            <label class="FormLabel" for="SearchCharactersTravellerHomeworldSelect">Homeworld</label>
+            <select id="SearchCharactersTravellerHomeworldSelect" class="Select">
+              <option value="">All Homeworlds</option>
+              {% for HomeworldOption in TravellerHomeworlds %}
+                <option value="{{ HomeworldOption }}">{{ HomeworldOption }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="DualRangeSliderWrapper MarginBottomSmall" id="SearchCharactersTravellerTermsSliderWrapper">
+            <div class="DualRangeSliderHeader">
+              <span class="DualRangeSliderLabel">Terms Range</span>
+              <span id="SearchCharactersTravellerTermsReadout" class="DualRangeSliderValue">Terms 1 - 10</span>
+            </div>
+            <div class="DualRangeSliderTrackContainer">
+              <div class="DualRangeSliderBaseTrack"></div>
+              <div id="SearchCharactersTravellerTermsActiveBar" class="DualRangeSliderActiveBar"></div>
+              <input type="range" id="SearchCharactersTravellerTermsMinInput" min="1" max="10" value="1" class="DualRangeSliderInput" />
+              <input type="range" id="SearchCharactersTravellerTermsMaxInput" min="1" max="10" value="10" class="DualRangeSliderInput" />
+            </div>
+          </div>
+        </div>
+
+        {% if CanViewPrivateOrArchived %}
+          <div class="FilterCheckboxRow">
+            <input type="checkbox" id="SearchCharactersIncludePrivateCheckbox" value="true" />
+            <label class="FilterCheckboxLabel" for="SearchCharactersIncludePrivateCheckbox">Include Private Characters</label>
+          </div>
+          <div class="FilterCheckboxRow">
+            <input type="checkbox" id="SearchCharactersIncludeArchivedCheckbox" value="true" />
+            <label class="FilterCheckboxLabel" for="SearchCharactersIncludeArchivedCheckbox">Include Archived Characters</label>
+          </div>
+        {% endif %}
+
+        <div class="CharacterSheetModalButtonRow MarginTopSmall">
+          <button type="button" id="SearchCharactersFilterResetButton" class="Button">Reset</button>
+          <button type="button" id="SearchCharactersFilterCancelButton" class="Button">Cancel</button>
+          <button type="button" id="SearchCharactersFilterSaveButton" class="Button ButtonPrimary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

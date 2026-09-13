@@ -1,0 +1,28 @@
+<div class="WindowContainer">
+  {% if not IsAuthenticated %}
+    <div class="TerminalPane MarginTopMedium">
+      <div class="TextDanger HeaderText MarginBottomSmall">ACCESS RESTRICTED</div>
+      <div class="TextMuted">Please log in to browse or upload object storage assets.</div>
+    </div>
+  {% else %}
+    <div class="PortraitPickerContainer">
+      <div class="PortraitPickerActionBar">
+        <form id="PortraitPickerUploadForm">
+          {% if IsInGuild %}
+            <input type="file" id="PortraitPickerFileInput" name="File" accept="image/jpeg,image/png,image/webp" class="HiddenElement" hx-post="/API/Characters/Portrait/Upload/Partial" hx-target="#CharacterPortraitContainer" hx-swap="outerHTML" hx-encoding="multipart/form-data" hx-params="File" hx-trigger="change" />
+            <button type="button" id="PortraitPickerUploadButton" class="Button ButtonPrimary">Upload From Computer...</button>
+          {% else %}
+            <button type="button" id="PortraitPickerUploadButton" class="Button ButtonDisabled" disabled>Upload From Computer...</button>
+          {% endif %}
+        </form>
+        <button type="button" class="Button" hx-get="/API/Storage/Images/Picker/Partial" hx-target="#PortraitPickerContent" hx-swap="innerHTML">Refresh Storage</button>
+      </div>
+
+      <div id="PortraitPickerContent" class="PortraitPickerContent" hx-get="/API/Storage/Images/Picker/Partial" hx-trigger="load" hx-swap="innerHTML">
+        <div class="TerminalPane MarginTopSmall">
+          <div class="TextMuted">Loading stored assets from object storage...</div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>

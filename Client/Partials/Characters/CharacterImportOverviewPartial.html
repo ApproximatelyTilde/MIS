@@ -1,0 +1,44 @@
+{% if IsReady and Overview %}
+  <div class="CharacterImportOverviewContent">
+    <div class="CharacterImportOverviewHeader MarginBottomSmall">
+      {% if Overview.PortraitURL %}
+        <div class="CharacterImportOverviewPortraitContainer">
+          <img class="CharacterImportOverviewPortrait" src="{{ Overview.PortraitURL }}" alt="{{ Overview.Name }}" />
+        </div>
+      {% endif %}
+      <div class="CharacterImportOverviewIdentity">
+        <div class="CharacterImportOverviewName TextCold HeaderText">{{ Overview.Name }}</div>
+        <div class="FlexRow AlignCenter MarginTopTiny">
+          <span class="Badge BadgeDND5thEdition">{{ Overview.GameSystem }}</span>
+          <span class="Badge BadgePublic MarginLeftSmall">{{ Overview.Source }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="CharacterImportOverviewGrid">
+      <div class="CharacterImportOverviewRow">
+        <span class="CharacterImportOverviewLabel TextMuted">Class:</span>
+        <span class="CharacterImportOverviewValue TextForeground">{{ Overview.Class }} (Level {{ Overview.Level }})</span>
+      </div>
+      <div class="CharacterImportOverviewRow">
+        <span class="CharacterImportOverviewLabel TextMuted">Species:</span>
+        <span class="CharacterImportOverviewValue TextForeground">{{ Overview.Species }}</span>
+      </div>
+      <div class="CharacterImportOverviewRow">
+        <span class="CharacterImportOverviewLabel TextMuted">Hit Points:</span>
+        <span class="CharacterImportOverviewValue TextForeground">{{ Overview.HitPoints }}</span>
+      </div>
+      <div class="CharacterImportOverviewRow">
+        <span class="CharacterImportOverviewLabel TextMuted">Armor Class:</span>
+        <span class="CharacterImportOverviewValue TextForeground">{{ Overview.ArmorClass }}</span>
+      </div>
+    </div>
+  </div>
+{% elif ErrorMessage %}
+  <div class="CharacterImportOverviewStatus TextWarm FontTerminal">
+    {{ ErrorMessage }}
+  </div>
+{% else %}
+  <div class="CharacterImportOverviewStatus TextMuted FontTerminal">
+    Enter a character sheet URL above to preview details.
+  </div>
+{% endif %}

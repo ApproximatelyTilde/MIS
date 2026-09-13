@@ -1,0 +1,29 @@
+{% if Messages and Messages|length > 0 %}
+  {% for MessageItem in Messages %}
+    <div class="MailEntryCard {% if MessageItem.IsSelected %}ActiveMailEntry{% endif %} {% if not MessageItem.IsRead %}MailEntryUnread{% endif %}"
+         hx-get="/API/Mail/Message/{{ MessageItem.ID }}/Partial"
+         hx-target="#MailMessageContainer"
+         hx-swap="innerHTML">
+      {% if MessageItem.SenderPortraitURL %}
+        <img class="MailEntrySenderPortrait" src="{{ MessageItem.SenderPortraitURL }}" alt="{{ MessageItem.SenderName }}" />
+      {% endif %}
+      <div class="MailEntryDetails">
+        <div class="MailEntryCardTopRow">
+          <div class="MailEntrySenderGroup">
+            {% if not MessageItem.IsRead %}
+              <div class="MailUnreadPip" title="Unread"></div>
+            {% endif %}
+            <span class="MailEntrySenderName" title="{{ MessageItem.SenderName }}">{{ MessageItem.SenderName }}</span>
+          </div>
+          <span class="MailEntryTimestamp" data-timestamp="{% if MessageItem.CreatedAtISO %}{{ MessageItem.CreatedAtISO }}{% elif MessageItem.CreatedAt %}{{ MessageItem.CreatedAt.isoformat() }}{% endif %}">{{ MessageItem.FormattedTimestamp }}</span>
+        </div>
+        <div class="MailEntrySubject" title="{{ MessageItem.Subject }}">{{ MessageItem.Subject }}</div>
+        <div class="MailEntryBadgeRow">
+          <span class="Badge BadgeSmall Badge{{ MessageItem.Category }}">{{ MessageItem.CategoryDisplayLabel }}</span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="MailEmptyNotice">No messages found in folder.</div>
+{% endif %}

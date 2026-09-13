@@ -1,0 +1,1509 @@
+:root {
+    --DesktopScreenWidth: round(down, min(86vw, calc(82vh * (4 / 3))), 48px);
+    --SceneScale: 0.44;
+}
+
+body.ZoomedIn {
+    --SceneScale: 1.0;
+    cursor: zoom-out;
+}
+
+body.ZoomedIn #WorkstationViewport {
+    perspective: none;
+}
+
+body.ZoomedIn #WorkstationMotionStage {
+    transform: none !important;
+    will-change: auto;
+}
+
+body.ZoomedIn #WorkstationScene {
+    will-change: auto;
+}
+
+body:not(.ZoomedIn) #DesktopScreenTubeBacking,
+body:not(.ZoomedIn) #DesktopScreenContainer {
+    cursor: pointer;
+}
+
+body.ZoomedIn #DesktopScreenTubeBacking,
+body.ZoomedIn #DesktopScreenContainer {
+    cursor: default;
+}
+
+:root,
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar,
+::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--Color0);
+    user-select: none;
+}
+
+#WorkstationViewport {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    perspective: 1400px;
+}
+
+#WorkstationMotionStage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: flat;
+    will-change: transform;
+}
+
+#WorkstationScene {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(var(--DesktopScreenWidth) * (2400 / 450));
+    height: calc(var(--DesktopScreenWidth) * (1792 / 450));
+    transform-origin: 50.0417% 43.6663%;
+    transform: translate(-50.0417%, -43.6663%) scale(var(--SceneScale));
+    transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+    will-change: transform;
+}
+
+#DesktopHardwareBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/Resources/PNG/Computer.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 30;
+}
+
+#DesktopScreenTubeBacking {
+    position: absolute;
+    left: 50.0417%;
+    top: 43.6663%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--DesktopScreenWidth) * (504 / 450));
+    height: calc(var(--DesktopScreenWidth) * (398 / 450));
+    border-radius: 28px;
+    background-color: var(--Color0);
+    box-shadow: inset 0 0 36px var(--Color0), inset 0 0 18px var(--Color8);
+    pointer-events: none;
+    z-index: 2;
+}
+
+#DesktopScreenContainer {
+    position: absolute;
+    left: 50.0417%;
+    top: 43.6663%;
+    transform: translate(-50%, -50%);
+    width: var(--DesktopScreenWidth);
+    height: calc(var(--DesktopScreenWidth) * (3 / 4));
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 12px var(--Color0);
+    z-index: 10;
+    image-rendering: pixelated;
+}
+
+#DesktopScreenContainer.CRTIgnitionActive {
+    animation: CRTCathodeIgnitionSequence 1.1s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+}
+
+#DesktopScreenContainer.CRTSyncRelockActive {
+    animation: CRTHardwareSyncRelock 0.85s ease-out forwards;
+}
+
+#DesktopScreenCRTOverlay {
+    position: absolute;
+    left: 50.0417%;
+    top: 43.6663%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--DesktopScreenWidth) * (498 / 450));
+    height: calc(var(--DesktopScreenWidth) * (392 / 450));
+    border-radius: 24px;
+    pointer-events: none;
+    z-index: 20;
+    overflow: hidden;
+    animation: CRTPhosphorPulse 6s ease-in-out infinite;
+}
+
+#CRTPhosphorMatrixLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(90deg, var(--Color1) 0px, var(--Color1) 1px, var(--Color2) 1px, var(--Color2) 2px, var(--Color4) 2px, var(--Color4) 3px);
+    background-size: 3px 100%;
+    mix-blend-mode: multiply;
+    opacity: 0.10;
+    z-index: 890;
+}
+
+#CRTRollingScanlineLayer {
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 180%;
+    height: 14%;
+    pointer-events: none;
+    background-color: var(--Color15);
+    will-change: transform, opacity;
+    animation: CRTRollingScanlineSweep 18s linear infinite;
+    opacity: 0.45;
+    z-index: 900;
+    transition: opacity 0.4s ease;
+}
+
+#SystemBootScreenContainer:not(.HiddenElement) ~ #CRTRollingScanlineLayer,
+#DesktopScreenContainer:has(#SystemBootScreenContainer:not(.HiddenElement)) #CRTRollingScanlineLayer {
+    opacity: 0;
+    animation-play-state: paused;
+}
+
+#CRTBeamBloomLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(ellipse 70% 65% at 50% 50%, var(--Color15) 0%, var(--ColorTransparent) 100%);
+    mix-blend-mode: screen;
+    opacity: 0.04;
+}
+
+#CRTSpecularGlassLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(135deg, var(--Color15) 0%, var(--ColorTransparent) 36%), radial-gradient(ellipse 70% 35% at 45% 8%, var(--Color15) 0%, var(--ColorTransparent) 100%);
+    opacity: 0.08;
+}
+
+#CRTVignetteLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(ellipse 75% 70% at 50% 50%, var(--ColorTransparent) 75%, var(--Color8) 92%, var(--Color0) 100%);
+    opacity: 0.28;
+}
+
+@keyframes CRTRollingScanlineSweep {
+    0% {
+        transform: translateY(1020%) translateX(0%) rotate(-12deg) scale(1, 0.78);
+    }
+
+    8% {
+        transform: translateY(820%) translateX(-0.3%) rotate(-11.6deg) scale(1, 0.95);
+    }
+
+    18% {
+        transform: translateY(600%) translateX(0.4%) rotate(-12.4deg) scale(1, 1.22);
+    }
+
+    32% {
+        transform: translateY(340%) translateX(-0.5%) rotate(-11.8deg) scale(1, 1.38);
+    }
+
+    48% {
+        transform: translateY(100%) translateX(0.3%) rotate(-12.6deg) scale(1, 1.25);
+    }
+
+    62% {
+        transform: translateY(-140%) translateX(-0.2%) rotate(-11.4deg) scale(1, 0.98);
+    }
+
+    72% {
+        transform: translateY(-380%) translateX(0%) rotate(-12deg) scale(1, 0.82);
+    }
+
+    100% {
+        transform: translateY(-380%) translateX(0%) rotate(-12deg) scale(1, 0.82);
+    }
+}
+
+@keyframes CRTPhosphorPulse {
+    0% {
+        opacity: 0.94;
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    48% {
+        opacity: 0.96;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0.95;
+    }
+
+    82% {
+        opacity: 0.98;
+    }
+
+    100% {
+        opacity: 0.94;
+    }
+}
+
+@keyframes CRTCathodeIgnitionSequence {
+    0% {
+        transform: translate(-50%, -50%) scale(0.92, 0.003);
+        filter: brightness(3.2) contrast(2);
+        opacity: 0.3;
+    }
+
+    25% {
+        transform: translate(-50%, -50%) scale(1, 0.006);
+        filter: brightness(3.5) contrast(2.2);
+        opacity: 1;
+    }
+
+    45% {
+        transform: translate(-50%, -50%) scale(1.015, 1.02);
+        filter: brightness(1.7) contrast(1.4);
+        opacity: 1;
+    }
+
+    55% {
+        transform: translate(-50%, -50%) scale(0.995, 0.995);
+        filter: brightness(1.2) contrast(1.1);
+        opacity: 1;
+    }
+
+    60% {
+        transform: translate(calc(-50% + 3px), calc(-50% - 2px)) scale(1, 1);
+        filter: brightness(1.3) contrast(1.1);
+    }
+
+    65% {
+        transform: translate(calc(-50% - 3px), calc(-50% + 2px)) scale(1, 1);
+        filter: brightness(0.95) contrast(1.05);
+    }
+
+    70% {
+        transform: translate(calc(-50% + 2px), calc(-50% + 1px)) scale(1, 1);
+        filter: brightness(1.15) contrast(1.05);
+    }
+
+    75% {
+        transform: translate(calc(-50% - 2px), calc(-50% - 1px)) scale(1, 1);
+        filter: brightness(0.98) contrast(1);
+    }
+
+    82% {
+        transform: translate(calc(-50% + 1px), calc(-50% - 1px)) scale(1, 1);
+        filter: brightness(1.05) contrast(1);
+    }
+
+    90% {
+        transform: translate(calc(-50% - 1px), calc(-50% + 1px)) scale(1, 1);
+        filter: brightness(1) contrast(1);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1, 1);
+        filter: brightness(1) contrast(1);
+        opacity: 1;
+    }
+}
+
+@keyframes CRTHardwareSyncRelock {
+    0% {
+        filter: brightness(1);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+
+    20% {
+        filter: brightness(0);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+
+    50% {
+        filter: brightness(0);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1, 0.005);
+    }
+
+    58% {
+        filter: brightness(3.5);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1, 0.008);
+    }
+
+    68% {
+        filter: brightness(0);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1, 0.005);
+    }
+
+    82% {
+        filter: brightness(0);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+
+    100% {
+        filter: brightness(1);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1, 1);
+    }
+}
+
+#DesktopContainer.DesktopStippleWipeActive {
+    animation: DesktopStippleWipe 0.75s steps(16, end) forwards;
+}
+
+@keyframes DesktopStippleWipe {
+    0% {
+        clip-path: inset(0 0 100% 0);
+    }
+
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+#SystemSplashScreenContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 450;
+    box-sizing: border-box;
+}
+
+#SystemSplashPanel {
+    width: 360px;
+    height: 252px;
+    background-color: var(--Color15);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.SystemSplashTitle {
+    font-family: 'JPN12', monospace;
+    font-size: 3rem;
+    font-weight: normal;
+    color: var(--Color0);
+    margin: 0;
+    text-align: center;
+}
+
+.SystemSplashEmblemContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.SystemSplashEmblem {
+    width: 128px;
+    height: 128px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+}
+
+.SystemSplashProgressContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SystemSplashProgressBar {
+    width: 100%;
+    height: 18px;
+    background-color: var(--Color7);
+    border: 2px solid var(--Color0);
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+.SystemSplashProgressFill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--Color6);
+    transition: width 0.12s steps(4, end);
+}
+
+#DesktopContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--Color8);
+    background-image: repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 4px 4px;
+    background-position: 0 0;
+    image-rendering: pixelated;
+    overflow: hidden;
+}
+
+#DesktopContainer.InteractionDisabled {
+    pointer-events: none;
+}
+
+.DesktopWindow {
+    position: absolute;
+    background-color: var(--Color15);
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--Color15), var(--Color15)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 4px 4px;
+    background-position: 0 0, calc(-1 * var(--WindowLeft, 0px)) calc(-1 * var(--WindowTop, 0px));
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    min-width: 198px;
+    min-height: 150px;
+    z-index: 100;
+}
+
+.DesktopWindow.ActiveWindow {
+    background-image: linear-gradient(var(--Color15), var(--Color15)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+}
+
+.WindowTitlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    background-color: var(--Color7);
+    color: var(--Color0);
+    cursor: move;
+    height: 24px;
+    flex-shrink: 0;
+    gap: 6px;
+}
+
+.DesktopWindow.ActiveWindow .WindowTitlebar {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.WindowTitleDivider {
+    height: 4px;
+    width: 100%;
+    flex-shrink: 0;
+    background-color: var(--Color8);
+    background-image: repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 4px 4px;
+    background-position: 0 0;
+    image-rendering: pixelated;
+}
+
+.DesktopWindow.ActiveWindow .WindowTitleDivider {
+    background-color: var(--Color8);
+    background-image: repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+}
+
+.WindowTitle {
+    font-family: 'JPN12', monospace;
+    font-weight: normal;
+    font-size: 2rem;
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    text-align: left;
+}
+
+.WindowControls {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+
+.WindowControlButton {
+    font-family: 'JPN12', monospace;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    font-weight: normal;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.WindowControlButton:active,
+.WindowControlButton.WindowControlButtonActive {
+    background-color: var(--Color8);
+    color: var(--Color15);
+}
+
+.WindowControlResizeButton {
+    cursor: se-resize;
+}
+
+.WindowButtonIcon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    image-rendering: pixelated;
+    shape-rendering: crispEdges;
+    pointer-events: none;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+.WindowButtonIconMinimize {
+    -webkit-mask-image: url("/Resources/SVG/WindowButton-Iconify.svg");
+    mask-image: url("/Resources/SVG/WindowButton-Iconify.svg");
+}
+
+.WindowButtonIconResize {
+    -webkit-mask-image: url("/Resources/SVG/WindowButton-Resize.svg");
+    mask-image: url("/Resources/SVG/WindowButton-Resize.svg");
+}
+
+.DesktopIconBox {
+    position: absolute;
+    height: 32px;
+    background-color: var(--Color7);
+    color: var(--Color0);
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--Color7), var(--Color7)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 4px 4px;
+    background-position: 0 0, calc(-1 * var(--IconLeft, 0px)) calc(-1 * var(--IconTop, 0px));
+    image-rendering: pixelated;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 6px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: normal;
+    cursor: move;
+    user-select: none;
+    z-index: 25;
+}
+
+.WindowControlRestoreButton {
+    cursor: pointer;
+}
+
+.DesktopIconBoxImage {
+    width: 16px;
+    height: 16px;
+    display: block;
+    image-rendering: pixelated;
+    pointer-events: none;
+}
+
+.DesktopIconBoxTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+}
+
+.LauncherDivider {
+    height: 2px;
+    background-color: var(--Color7);
+    border-bottom: 1px solid var(--Color8);
+    margin: 2px 0;
+}
+
+#LauncherButtonDeleteWindow:hover {
+    background-color: var(--Color1);
+    color: var(--Color15);
+}
+
+#LauncherButtonDeleteWindow:active {
+    background-color: var(--Color9);
+    color: var(--Color15);
+}
+
+.WindowContent {
+    flex: 1;
+    overflow: auto;
+    padding: 12px;
+    background-color: var(--Color15);
+    position: relative;
+}
+
+#WindowApplicationLauncher {
+    min-width: 200px;
+    min-height: 264px;
+}
+
+#WindowAccountCentre {
+    min-width: 488px;
+    min-height: 324px;
+}
+
+#WindowStorage {
+    min-width: 420px;
+    min-height: 240px;
+}
+
+#WindowCalendar {
+    min-width: 480px;
+    min-height: 260px;
+}
+
+#WindowDiceRoller {
+    min-width: 400px;
+    min-height: 304px;
+}
+
+#WindowNPCGenerator {
+    min-width: 324px;
+    min-height: 220px;
+}
+
+#WindowCharacterSheet {
+    min-width: 960px;
+    min-height: 720px;
+}
+
+#WindowSearchCharacters {
+    min-width: 348px;
+    min-height: 316px;
+}
+
+#WindowPortraitAssetPicker {
+    min-width: 452px;
+    min-height: 324px;
+}
+
+#WindowCharacterImport {
+    min-width: 340px;
+    min-height: 260px;
+}
+
+#WindowMail {
+    min-width: 892px;
+    min-height: 520px;
+}
+
+#WindowMailCompose {
+    min-width: 440px;
+    min-height: 416px;
+}
+
+#WindowClock {
+    width: 192px;
+    height: 220px;
+    min-width: 192px;
+    max-width: 192px;
+    min-height: 220px;
+    max-height: 220px;
+}
+
+#WindowClock .WindowContent {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 18px 0 6px 0;
+    overflow: hidden;
+}
+
+#WindowApplicationLauncher .WindowContent {
+    padding: 0;
+    overflow: visible;
+}
+
+#WindowMail .WindowContent {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#WindowMailCompose .WindowContent {
+    padding: 12px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: var(--ColorBackground);
+    display: flex;
+    flex-direction: column;
+}
+
+#WindowApplicationLauncher .LauncherContainer {
+    overflow: visible;
+}
+
+#WindowApplicationLauncher .LauncherList {
+    overflow: visible;
+}
+
+.DesktopContextMenu {
+    position: absolute;
+    width: 192px;
+    background-color: var(--Color15);
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--Color15), var(--Color15)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 4px 4px;
+    background-position: 0 0, 0 0;
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    z-index: 500;
+}
+
+.DesktopMenuHeader {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    background-color: var(--Color7);
+    border-bottom: 1px solid var(--Color8);
+    color: var(--Color0);
+}
+
+.DesktopMenuList {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--Color15);
+}
+
+.DesktopMenuItemButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px 12px;
+    background-color: var(--Color15);
+    border: none;
+    color: var(--Color0);
+    font-size: 2rem;
+    font-weight: normal;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'JPN12', monospace;
+}
+
+.DesktopMenuItemButton:hover {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.DesktopMenuItemButton:active {
+    background-color: var(--Color4);
+    color: var(--Color15);
+}
+
+.DesktopMenuItemIndicator {
+    font-size: 2rem;
+    color: var(--Color3);
+}
+
+.DesktopMenuItemButton:hover .DesktopMenuItemIndicator {
+    color: var(--Color15);
+}
+
+.DesktopMenuItemTitle {
+    flex: 1;
+}
+
+.DesktopMenuDivider {
+    height: 2px;
+    background-color: var(--Color7);
+    border-bottom: 1px solid var(--Color8);
+    margin: 2px 0;
+}
+
+.DesktopMenuItemButton.DesktopMenuDangerButton:hover {
+    background-color: var(--Color1);
+    color: var(--Color15);
+}
+
+.DesktopMenuItemButton.DesktopMenuDangerButton:active {
+    background-color: var(--Color9);
+    color: var(--Color15);
+}
+
+.DesktopMenuItemParent {
+    position: relative;
+    width: 100%;
+}
+
+.DesktopMenuItemParent:hover > .DesktopMenuItemButton {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.DesktopMenuItemParent:hover > .DesktopMenuItemButton .DesktopMenuItemIndicator {
+    color: var(--Color15);
+}
+
+.DesktopSubmenu {
+    position: absolute;
+    top: -4px;
+    left: 100%;
+    width: 160px;
+    background-color: var(--Color15);
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--Color15), var(--Color15)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 4px 4px;
+    background-position: 0 0, 0 0;
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    z-index: 510;
+}
+
+.DesktopSubmenu.DesktopSubmenuLeft {
+    left: auto;
+    right: 100%;
+}
+
+.SystemConfirmationModalContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 600;
+    box-sizing: border-box;
+    background-color: var(--ColorTransparent);
+}
+
+.SystemConfirmationPanel {
+    position: relative;
+    width: 320px;
+    background-color: var(--Color15);
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--Color15), var(--Color15)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 4px 4px;
+    background-position: 0 0, 0 0;
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.SystemConfirmationTitlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    background-color: var(--Color6);
+    color: var(--Color15);
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.SystemConfirmationTitle {
+    font-family: 'JPN12', monospace;
+    font-weight: normal;
+    font-size: 2rem;
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    text-align: left;
+}
+
+.SystemConfirmationTitleDivider {
+    height: 6px;
+    width: 100%;
+    flex-shrink: 0;
+    background-color: var(--Color8);
+    background-image: repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 4px 4px;
+    background-position: 0 0;
+    image-rendering: pixelated;
+}
+
+.SystemConfirmationBody {
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    gap: 18px;
+    background-color: var(--Color15);
+}
+
+.SystemConfirmationContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.SystemConfirmationWarningBadge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: var(--Color1);
+    color: var(--Color15);
+    font-family: 'JPN12', monospace;
+    font-size: 3rem;
+    font-weight: bold;
+    border: 2px solid var(--Color9);
+    flex-shrink: 0;
+}
+
+.SystemConfirmationMessage {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    line-height: 1.4;
+    flex: 1;
+    white-space: pre-line;
+}
+
+.ConfirmationUnderlineText {
+    text-decoration: underline;
+}
+
+.ConfirmationHyperlink {
+    color: var(--Color4);
+    text-decoration: underline;
+    cursor: pointer;
+    word-break: break-all;
+}
+
+.SystemConfirmationButtonRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.SystemConfirmationButton {
+    min-width: 72px;
+    height: 24px;
+    box-sizing: border-box;
+}
+
+.LauncherContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.LauncherHeader {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    background-color: var(--Color7);
+    border-bottom: 1px solid var(--Color8);
+    color: var(--Color0);
+}
+
+.LauncherList {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
+    background-color: var(--Color15);
+}
+
+.LauncherItemButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    height: 5rem;
+    padding: 6px 12px;
+    background-color: var(--Color15);
+    border: none;
+    color: var(--Color0);
+    font-size: 2rem;
+    font-weight: normal;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'JPN12', monospace;
+}
+
+.LauncherItemButton:hover {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.LauncherItemButton:active {
+    background-color: var(--Color4);
+    color: var(--Color15);
+}
+
+.LauncherItemParent {
+    position: relative;
+    width: 100%;
+}
+
+.LauncherItemParent:hover > .LauncherItemButton {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.LauncherItemParent:hover > .LauncherItemButton .LauncherItemIndicator {
+    color: var(--Color15);
+}
+
+.LauncherSubmenu {
+    position: absolute;
+    top: -4px;
+    left: 100%;
+    width: 200px;
+    background-color: var(--Color15);
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--Color15), var(--Color15)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 4px 4px;
+    background-position: 0 0, 0 0;
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    z-index: 520;
+}
+
+.LauncherSubmenu.LauncherSubmenuLeft {
+    left: auto;
+    right: 100%;
+}
+
+.LauncherSubmenuItemButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 5rem;
+    padding: 6px 12px;
+    background-color: var(--Color15);
+    border: none;
+    color: var(--Color0);
+    font-size: 2rem;
+    font-weight: normal;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'JPN12', monospace;
+}
+
+.LauncherSubmenuItemButton:hover {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.LauncherSubmenuItemButton:active {
+    background-color: var(--Color4);
+    color: var(--Color15);
+}
+
+.LauncherSubmenuItemButton.DesktopMenuDangerButton:hover {
+    background-color: var(--Color1);
+    color: var(--Color15);
+}
+
+.LauncherSubmenuItemButton.DesktopMenuDangerButton:active {
+    background-color: var(--Color9);
+    color: var(--Color15);
+}
+
+.LauncherSubmenuItemButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--Color15);
+    color: var(--Color8);
+}
+
+.LauncherItemParent:hover > .LauncherItemButton:disabled {
+    background-color: var(--Color15);
+    color: var(--Color8);
+}
+
+.LauncherItemIndicator {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color3);
+}
+
+.LauncherItemButton:hover .LauncherItemIndicator {
+    color: var(--Color15);
+}
+
+.LauncherItemTitle {
+    flex: 1;
+}
+
+.WindowPlacementGrid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid var(--Color0);
+    outline: 1px solid var(--Color15);
+    background-color: transparent;
+    z-index: 10000;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+.WindowPlacementGridCell {
+    border: 1px solid var(--Color0);
+    outline: 1px solid var(--Color15);
+    box-sizing: border-box;
+}
+
+.WindowResizeGrid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid var(--Color0);
+    outline: 1px solid var(--Color15);
+    background-color: transparent;
+    z-index: 10000;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+.WindowResizeGridCell {
+    border: 1px solid var(--Color0);
+    outline: 1px solid var(--Color15);
+    box-sizing: border-box;
+}
+
+.WindowResizeGeometryBadge {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--Color0);
+    color: var(--Color15);
+    font-family: "JPN12", monospace;
+    font-size: 2rem;
+    line-height: 1;
+    padding: 6px 12px;
+    border: 2px solid var(--Color15);
+    outline: 1px solid var(--Color0);
+    pointer-events: none;
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: border-box;
+    z-index: 10001;
+}
+
+.SystemPanicModalContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    box-sizing: border-box;
+    background-color: var(--Color0);
+}
+
+.SystemPanicPanel {
+    position: relative;
+    width: 384px;
+    background-color: var(--Color15);
+    border: 6px solid var(--Color0);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 24px;
+    gap: 18px;
+}
+
+.SystemPanicHeaderRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.SystemPanicAlertBadge {
+    width: 36px;
+    height: 36px;
+    background-color: var(--Color1);
+    color: var(--Color15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JPN12', monospace;
+    font-size: 4rem;
+    font-weight: bold;
+    border: 2px solid var(--Color0);
+    flex-shrink: 0;
+}
+
+.SystemPanicTitle {
+    font-family: 'JPN12', monospace;
+    font-size: 3rem;
+    color: var(--Color1);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.SystemPanicDivider {
+    height: 6px;
+    width: 100%;
+    flex-shrink: 0;
+    background-color: var(--Color0);
+}
+
+.SystemPanicContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.SystemPanicMessage {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--ColorForeground);
+    line-height: 1.4;
+}
+
+.SystemPanicCodeRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--Color7);
+    border: 2px solid var(--Color0);
+}
+
+.SystemPanicCodeLabel {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+}
+
+.SystemPanicCodeValue {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color1);
+    font-weight: bold;
+}
+
+.SystemPanicButtonRow {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+
+.SystemPanicButton {
+    height: 24px;
+    padding: 0 12px;
+}
+
+.ClockWindowContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.ClockFaceContainer {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.ClockDialBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.ClockHand {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 50%;
+    pointer-events: none;
+}
+
+.ClockHandHour {
+    z-index: 5;
+}
+
+.ClockHandMinute {
+    z-index: 6;
+}
+
+.ClockDateDisplay {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    height: 2rem;
+    color: var(--Color0);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.DesktopMailIndicator {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 48px;
+    height: 48px;
+    z-index: 50;
+    cursor: pointer;
+    user-select: none;
+}
+
+.DesktopMailFrame {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    image-rendering: pixelated;
+    color: var(--Color0);
+}
+
+.ClockAngle0 { transform: rotate(0deg); }
+.ClockAngle1 { transform: rotate(6deg); }
+.ClockAngle2 { transform: rotate(12deg); }
+.ClockAngle3 { transform: rotate(18deg); }
+.ClockAngle4 { transform: rotate(24deg); }
+.ClockAngle5 { transform: rotate(30deg); }
+.ClockAngle6 { transform: rotate(36deg); }
+.ClockAngle7 { transform: rotate(42deg); }
+.ClockAngle8 { transform: rotate(48deg); }
+.ClockAngle9 { transform: rotate(54deg); }
+.ClockAngle10 { transform: rotate(60deg); }
+.ClockAngle11 { transform: rotate(66deg); }
+.ClockAngle12 { transform: rotate(72deg); }
+.ClockAngle13 { transform: rotate(78deg); }
+.ClockAngle14 { transform: rotate(84deg); }
+.ClockAngle15 { transform: rotate(90deg); }
+.ClockAngle16 { transform: rotate(96deg); }
+.ClockAngle17 { transform: rotate(102deg); }
+.ClockAngle18 { transform: rotate(108deg); }
+.ClockAngle19 { transform: rotate(114deg); }
+.ClockAngle20 { transform: rotate(120deg); }
+.ClockAngle21 { transform: rotate(126deg); }
+.ClockAngle22 { transform: rotate(132deg); }
+.ClockAngle23 { transform: rotate(138deg); }
+.ClockAngle24 { transform: rotate(144deg); }
+.ClockAngle25 { transform: rotate(150deg); }
+.ClockAngle26 { transform: rotate(156deg); }
+.ClockAngle27 { transform: rotate(162deg); }
+.ClockAngle28 { transform: rotate(168deg); }
+.ClockAngle29 { transform: rotate(174deg); }
+.ClockAngle30 { transform: rotate(180deg); }
+.ClockAngle31 { transform: rotate(186deg); }
+.ClockAngle32 { transform: rotate(192deg); }
+.ClockAngle33 { transform: rotate(198deg); }
+.ClockAngle34 { transform: rotate(204deg); }
+.ClockAngle35 { transform: rotate(210deg); }
+.ClockAngle36 { transform: rotate(216deg); }
+.ClockAngle37 { transform: rotate(222deg); }
+.ClockAngle38 { transform: rotate(228deg); }
+.ClockAngle39 { transform: rotate(234deg); }
+.ClockAngle40 { transform: rotate(240deg); }
+.ClockAngle41 { transform: rotate(246deg); }
+.ClockAngle42 { transform: rotate(252deg); }
+.ClockAngle43 { transform: rotate(258deg); }
+.ClockAngle44 { transform: rotate(264deg); }
+.ClockAngle45 { transform: rotate(270deg); }
+.ClockAngle46 { transform: rotate(276deg); }
+.ClockAngle47 { transform: rotate(282deg); }
+.ClockAngle48 { transform: rotate(288deg); }
+.ClockAngle49 { transform: rotate(294deg); }
+.ClockAngle50 { transform: rotate(300deg); }
+.ClockAngle51 { transform: rotate(306deg); }
+.ClockAngle52 { transform: rotate(312deg); }
+.ClockAngle53 { transform: rotate(318deg); }
+.ClockAngle54 { transform: rotate(324deg); }
+.ClockAngle55 { transform: rotate(330deg); }
+.ClockAngle56 { transform: rotate(336deg); }
+.ClockAngle57 { transform: rotate(342deg); }
+.ClockAngle58 { transform: rotate(348deg); }
+.ClockAngle59 { transform: rotate(354deg); }

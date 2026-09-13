@@ -1,0 +1,55 @@
+{
+    "LastCheckedTimestamp": 1794172585.9339454,
+    "LastUpdatedTimestamp": 1794172585.9339454,
+    "RolesHash": "INITIAL_GUILD_ROLES_HASH",
+    "RoleMapping": {
+        "1549159643396178052": [
+            "Administrator"
+        ],
+        "1549126097331949618": [
+            "Story Manager (DND5thEdition)"
+        ],
+        "1549129174457778177": [
+            "Story Manager (Traveller2ndEdition)"
+        ],
+        "1549163823494070392": [
+            "Story Manager (DND5thEdition)"
+        ],
+        "1549163841542299788": [
+            "Story Manager (Traveller2ndEdition)"
+        ],
+        "1549126322222268526": [
+            "Sheet Checker (DND5thEdition)"
+        ],
+        "1549126544243294360": [
+            "Sheet Checker (Traveller2ndEdition)"
+        ],
+        "1549172461088542872": [
+            "Character Owner (DND5thEdition)"
+        ],
+        "1549172513605427342": [
+            "Character Owner (DND5thEdition)"
+        ],
+        "1549172616894353408": [
+            "Character Owner (DND5thEdition)"
+        ],
+        "1549172664738910268": [
+            "Character Owner (DND5thEdition)"
+        ],
+        "1549172838915637311": [
+            "Character Owner (DND5thEdition)"
+        ],
+        "1549172876320444527": [
+            "Character Owner (DND5thEdition)"
+        ],
+        "1549171532016656454": [
+            "Character Owner (Traveller2ndEdition)"
+        ],
+        "1549397512220049478": [
+            "Character Owner (Traveller2ndEdition)"
+        ],
+        "1549397480960163940": [
+            "Character Owner (Traveller2ndEdition)"
+        ]
+    }
+}

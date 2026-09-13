@@ -1,0 +1,52 @@
+{% if Characters %}
+  <div class="SearchCharactersGrid">
+    {% for Entry in Characters %}
+      <div class="SearchCharacterCard" data-character-id="{{ Entry.Character.ID }}" data-game-system="{{ Entry.GameSystemName }}">
+        {% if Entry.PortraitFileID %}
+          <img class="SearchCharacterCardPortrait" src="/API/Storage/Files/{{ Entry.PortraitFileID }}/Stream" alt="{{ Entry.Character.Name }}" />
+        {% elif Entry.PortraitURL %}
+          <img class="SearchCharacterCardPortrait" src="{{ Entry.PortraitURL }}" alt="{{ Entry.Character.Name }}" />
+        {% else %}
+          <div class="SearchCharacterCardPlaceholder">
+            <span>NO PORTRAIT</span>
+          </div>
+        {% endif %}
+
+        <div class="SearchCharacterBadgeColumn">
+          {% if Entry.GameSystemName == "DND5thEdition" %}
+            <span class="Badge BadgeDND5thEdition">DND5thEdition</span>
+          {% else %}
+            <span class="Badge BadgeTraveller2ndEdition">Traveller2ndEdition</span>
+          {% endif %}
+          {% if Entry.Character.IsArchived %}
+            <span class="Badge BadgeArchived">Archived</span>
+          {% else %}
+            {% if Entry.Character.IsPublic %}
+              <span class="Badge BadgePublic">Public</span>
+            {% else %}
+              <span class="Badge BadgePrivate">Private</span>
+            {% endif %}
+            {% if not Entry.Character.IsAccepted %}
+              <span class="Badge BadgeUnderReview">Under Review</span>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <div class="SearchCharacterCardOverlay">
+          <div class="SearchCharacterCardName" title="{{ Entry.Character.Name }}">{{ Entry.Character.Name }}</div>
+          <div class="SearchCharacterDetailsList">
+            {% if Entry.GameSystemName == "DND5thEdition" %}
+              <div class="SearchCharacterDetailLine">Class: {{ Entry.CharacterClass or "Adventurer" }}</div>
+              <div class="SearchCharacterDetailLine">Level: {{ Entry.CharacterLevel }}</div>
+              <div class="SearchCharacterDetailLine">Species: {{ Entry.CharacterSpecies or "Unknown" }}</div>
+            {% elif Entry.GameSystemName == "Traveller2ndEdition" %}
+              <div class="SearchCharacterDetailLine">Career: {{ Entry.CharacterCareer or "Citizen" }}</div>
+              <div class="SearchCharacterDetailLine">Terms: {{ Entry.CharacterTerms }}</div>
+              <div class="SearchCharacterDetailLine">Homeworld: {{ Entry.CharacterHomeworld or "Core" }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

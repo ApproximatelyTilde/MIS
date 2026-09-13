@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="currentColor" shape-rendering="crispEdges">
+  <path d="M 12,4 H 52 V 8 H 12 Z M 8,8 H 12 V 12 H 8 Z M 52,8 H 56 V 12 H 52 Z M 4,12 H 8 V 52 H 4 Z M 56,12 H 60 V 52 H 56 Z M 8,52 H 12 V 56 H 8 Z M 52,52 H 56 V 56 H 52 Z M 12,56 H 52 V 60 H 12 Z M 16,16 H 48 V 20 H 16 Z M 16,20 H 20 V 44 H 16 Z M 44,20 H 48 V 44 H 44 Z M 16,44 H 48 V 48 H 16 Z M 24,24 H 40 V 28 H 24 Z M 24,28 H 28 V 36 H 24 Z M 36,28 H 40 V 36 H 36 Z M 24,36 H 40 V 40 H 24 Z M 30,30 H 34 V 34 H 30 Z"/>
+</svg>

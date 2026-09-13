@@ -1,0 +1,44 @@
+{% if IsSuccess %}
+  <div class="TerminalPane CharacterImportSuccessPane">
+    <div class="TextGreen HeaderText MarginBottomSmall">Character Imported Successfully!</div>
+    <div class="CharacterImportSuccessDetails">
+      <div class="FlexRow MarginBottomTiny">
+        <span class="CharacterImportDetailLabel TextMuted">Name:</span>
+        <strong class="CharacterImportDetailValue TextCold">{{ Character.Name }}</strong>
+      </div>
+      <div class="FlexRow MarginBottomTiny">
+        <span class="CharacterImportDetailLabel TextMuted">System:</span>
+        <span class="Badge BadgeDND5thEdition">{{ GameSystem }}</span>
+        {% if Character.IsProtected %}
+          <span class="Badge BadgeProtected MarginLeftSmall">Protected</span>
+        {% endif %}
+      </div>
+      <div class="FlexRow MarginBottomTiny">
+        <span class="CharacterImportDetailLabel TextMuted">Class & Level:</span>
+        <span class="TextCold">{{ Character.SummaryData.get('Class', 'Adventurer') }} (Level {{ Character.SummaryData.get('Level', 1) }})</span>
+      </div>
+      <div class="FlexRow MarginBottomTiny">
+        <span class="CharacterImportDetailLabel TextMuted">Species:</span>
+        <span class="TextCold">{{ Character.SummaryData.get('Species', 'Unknown') }}</span>
+      </div>
+      <div class="FlexRow MarginBottomTiny">
+        <span class="CharacterImportDetailLabel TextMuted">Hit Points / AC:</span>
+        <span class="TextCold">HP: {{ Character.SummaryData.get('HitPoints', 0) }} | AC: {{ Character.SummaryData.get('ArmorClass', 10) }}</span>
+      </div>
+      <div class="FlexRow MarginBottomSmall">
+        <span class="CharacterImportDetailLabel TextMuted">Utility:</span>
+        <span class="Badge BadgePublic">{{ UtilityName }}</span>
+      </div>
+    </div>
+    <div class="FlexRow AlignCenter MarginTopSmall">
+      <button type="button" id="CharacterImportOpenSheetButton" class="Button ButtonPrimary" data-character-id="{{ Character.ID }}" data-game-system="{{ GameSystem }}">Open Character Sheet</button>
+      <button type="button" id="CharacterImportAnotherButton" class="Button MarginLeftSmall">Import Another</button>
+    </div>
+  </div>
+{% else %}
+  <div class="TerminalPane CharacterImportErrorPane">
+    <div class="TextDanger HeaderText MarginBottomSmall">Import Failed</div>
+    <div class="TextDanger MarginBottomSmall">{{ ErrorMessage }}</div>
+    <div class="TextMuted SmallText">Please verify the URL format, character visibility, or service availability and try again.</div>
+  </div>
+{% endif %}

@@ -1,0 +1,52 @@
+<div class="WindowContainer CharacterImportContainer">
+  {% if not IsAuthenticated %}
+    <div class="TerminalPane MarginTopMedium">
+      <div class="TextDanger HeaderText MarginBottomSmall">ACCESS RESTRICTED</div>
+      <div class="TextMuted">Please log in to import character sheets.</div>
+    </div>
+  {% elif not IsInGuild %}
+    <div class="TerminalPane MarginTopMedium">
+      <div class="TextWarm HeaderText MarginBottomSmall">GUILD MEMBERSHIP REQUIRED</div>
+      <div class="TextMuted">You must be a member of the guild to import characters into this system.</div>
+    </div>
+  {% else %}
+    <form id="CharacterImportForm" hx-post="/API/Characters/Import/Partial" hx-swap="none">
+      <div class="FormGroup MarginBottomSmall">
+        <label class="FormLabel" for="CharacterImportURLInput">Character Sheet URL</label>
+        <input type="text" id="CharacterImportURLInput" name="ImportURL" class="CharacterImportURLInput" placeholder="https://v1.dicecloud.com/character/... or https://www.dndbeyond.com/characters/..." autocomplete="off" spellcheck="false" required hx-get="/API/Characters/Import/Overview/Partial" hx-trigger="input delay:400ms, paste, change" hx-target="#CharacterImportOverviewContainer" hx-swap="innerHTML" />
+      </div>
+
+      <div class="CharacterImportDetectionPanel MarginBottomSmall">
+        <div class="FlexRow AlignCenter">
+          <span class="CharacterImportDetectionLabel TextMuted">Mapping Utility:</span>
+          <span id="CharacterImportUtilityBadge" class="Badge BadgeMuted">Awaiting URL</span>
+          <span id="CharacterImportSystemBadge" class="Badge BadgeMuted MarginLeftSmall HiddenElement">DND5thEdition</span>
+        </div>
+      </div>
+
+      <div class="FlexRow AlignCenter MarginBottomSmall">
+        <button type="button" id="CharacterImportResetButton" class="Button">Clear</button>
+        <button type="submit" id="CharacterImportSubmitButton" class="Button ButtonPrimary MarginLeftAuto" disabled>Import</button>
+      </div>
+    </form>
+
+    <div id="CharacterImportOverviewContainer" class="CharacterImportOverviewContainer">
+      <div class="CharacterImportOverviewStatus TextMuted FontTerminal">Enter a character sheet URL above to preview details.</div>
+    </div>
+
+    <div id="CharacterImportErrorModal" class="CharacterSheetModalOverlay HiddenElement">
+      <div class="CharacterSheetModalPanel">
+        <div class="CharacterSheetModalTitlebar">
+          <span class="CharacterSheetModalTitle">Import Error</span>
+        </div>
+        <div class="CharacterSheetModalBody">
+          <div id="CharacterImportErrorMessage" class="CharacterImportErrorMessage TextDanger MarginBottomSmall"></div>
+          <div class="CharacterSheetModalButtonRow MarginTopSmall">
+            <button type="button" id="CharacterImportErrorTryAgainButton" class="Button">Try Again</button>
+            <button type="button" id="CharacterImportErrorOKButton" class="Button ButtonPrimary">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>

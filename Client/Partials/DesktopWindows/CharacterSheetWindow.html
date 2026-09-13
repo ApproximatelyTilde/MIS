@@ -1,0 +1,892 @@
+<div class="WindowContainer">
+  {% if not IsAllowed %}
+    <div class="TerminalPane MarginTopMedium">
+      <div class="TextDanger HeaderText MarginBottomSmall">ACCESS RESTRICTED</div>
+      <div class="TextMuted">Server membership is required to create a new character. Please join the Discord server.</div>
+    </div>
+  {% else %}
+    <form id="CharacterSheetCreationForm" hx-post="/API/Characters/Manual/Partial" hx-swap="none" data-is-overridden="{% if IsOverridden %}true{% else %}false{% endif %}" data-is-protected="{% if IsProtected %}true{% else %}false{% endif %}">
+      <input type="hidden" name="GameSystem" value="{{ GameSystem }}" />
+      <input type="hidden" name="CharacterID" id="CharacterSheetIDInput" value="{{ CharacterID or '' }}" />
+      <input type="hidden" name="IsProtectedState" id="CharacterSheetIsProtectedStateInput" value="{% if IsProtected %}true{% else %}false{% endif %}" />
+      <input type="hidden" name="IsOverriddenState" id="CharacterSheetIsOverriddenStateInput" value="{% if IsOverridden %}true{% else %}false{% endif %}" />
+      <input type="hidden" name="Inspiration" value="no" id="CharacterSheetInspirationHiddenInput" />
+      <input type="hidden" name="ActiveTab" id="CharacterSheetActiveTabHiddenInput" value="{{ ActiveTab or 'CharacterSheetOverviewTab' }}" />
+
+      <div class="TabNavigationContainer">
+        <div class="TabNavigation CharacterSheetTabNavigation">
+          <button type="button" class="TabButton CharacterSheetTabButton {% if (ActiveTab == 'CharacterSheetOverviewTab') or (not ActiveTab) %}ActiveTab{% endif %}" data-target-tab="CharacterSheetOverviewTab">Overview</button>
+          <button type="button" class="TabButton CharacterSheetTabButton {% if ActiveTab == 'CharacterSheetAbilitiesTab' %}ActiveTab{% endif %}" data-target-tab="CharacterSheetAbilitiesTab">Abilities</button>
+          <button type="button" class="TabButton CharacterSheetTabButton {% if ActiveTab == 'CharacterSheetInventoryTab' %}ActiveTab{% endif %}" data-target-tab="CharacterSheetInventoryTab">Inventory</button>
+          <button type="button" class="TabButton CharacterSheetTabButton {% if ActiveTab == 'CharacterSheetDescriptionTab' %}ActiveTab{% endif %}" data-target-tab="CharacterSheetDescriptionTab">Description</button>
+        </div>
+        <div id="CharacterSheetActionContainer" class="TabActionContainer">
+          <button type="button" id="CharacterSheetProtectButton" class="Button ButtonSquare TabSearchButton CharacterSheetProtectButton {% if IsProtected %}ButtonActive{% endif %}" title="Protect Character Sheet" aria-label="Protect Character Sheet"
+                  hx-post="/API/Characters/{{ CharacterID or 'Current' }}/Protect/Partial"
+                  hx-target="closest .WindowContainer"
+                  hx-swap="outerHTML"
+                  hx-include="#CharacterSheetCreationForm"
+                  {% if IsOverridden %}disabled{% endif %}>
+            <span class="FunctionIcon FunctionIconProtect" aria-hidden="true"></span>
+          </button>
+          <button type="button" id="CharacterSheetOverrideButton" class="Button ButtonSquare ButtonWarning TabSearchButton CharacterSheetOverrideButton {% if IsOverridden %}ButtonActive{% endif %}" title="Override Character Sheet" aria-label="Override Character Sheet"
+                  hx-post="/API/Characters/{{ CharacterID or 'Current' }}/Override/Partial"
+                  hx-target="closest .WindowContainer"
+                  hx-swap="outerHTML"
+                  hx-include="#CharacterSheetCreationForm">
+            <span class="FunctionIcon FunctionIconOverride" aria-hidden="true"></span>
+          </button>
+          <button type="submit" id="CharacterSheetSaveButton" class="Button ButtonSquare ButtonPrimary TabSearchButton CharacterSheetSaveButton" title="Save Character Sheet" aria-label="Save Character Sheet" {% if IsProtected and not IsOverridden %}disabled{% endif %}>
+            <span class="FunctionIcon FunctionIconSave" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <fieldset class="CharacterSheetFieldset" id="CharacterSheetFieldset" {% if IsProtected and not IsOverridden %}disabled{% endif %}>
+
+      <div id="CharacterSheetOverviewTab" class="CharacterSheetTabContent {% if ActiveTab and (ActiveTab != 'CharacterSheetOverviewTab') %}HiddenElement{% endif %}">
+        <div class="CharacterSheetIdentitySection">
+          <div class="CharacterSheetPortraitColumn">
+            {% include "Characters/CharacterPortraitPartial.html" %}
+          </div>
+          <div class="CharacterSheetIdentityFieldsColumn">
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetNameInput">Character Name</label>
+                  <input type="text" id="CharacterSheetNameInput" name="Name" required placeholder="Enter character name" value="{{ CharacterName or '' }}" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetProficiencyBonusInput" title="Proficiency Bonus">Proficiency Bonus</label>
+                  <input type="number" id="CharacterSheetProficiencyBonusInput" name="ProficiencyBonus" value="{{ ProficiencyBonus or 2 }}" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetSpeciesInput">Species</label>
+                  <input type="text" id="CharacterSheetSpeciesInput" name="Species" placeholder="e.g. Elf, Dwarf, Human" value="{{ SpeciesName or '' }}" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetInitiativeInput" title="Initiative Bonus">Initiative Bonus</label>
+                  <input type="number" id="CharacterSheetInitiativeInput" name="InitiativeBonus" value="{{ InitiativeBonus or 0 }}" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetBackgroundInput">Background</label>
+                  <input type="text" id="CharacterSheetBackgroundInput" name="Background" placeholder="e.g. Folk Hero, Acolyte" value="{{ BackgroundName or '' }}" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetExperienceInput" title="Experience Points">Experience Points</label>
+                  <input type="number" id="CharacterSheetExperienceInput" name="ExperiencePoints" value="{{ ExperiencePoints or 0 }}" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetAlignmentInput">Alignment</label>
+                  <input type="text" id="CharacterSheetAlignmentInput" name="Alignment" placeholder="e.g. Neutral Good" value="{{ Alignment or '' }}" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetPassivePerceptionInput" title="Passive Perception">Passive Perception</label>
+                  <input type="number" id="CharacterSheetPassivePerceptionInput" name="PassivePerception" value="{{ PassivePerception or 10 }}" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetHitPointsInput" title="Hit Points">Hit Points</label>
+                <input type="number" id="CharacterSheetHitPointsInput" value="{{ HitPoints or 10 }}" min="1" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+                <input type="hidden" name="HitPoints" value="{{ HitPoints or 10 }}" id="CharacterSheetHitPointsHiddenInput" />
+              </div>
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetArmorClassInput" title="Armor Class">Armor Class</label>
+                <input type="number" id="CharacterSheetArmorClassInput" value="{{ ArmorClass or 10 }}" min="0" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+                <input type="hidden" name="ArmorClass" value="{{ ArmorClass or 10 }}" id="CharacterSheetArmorClassHiddenInput" />
+              </div>
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetSpeedInput" title="Speed (Feet)">Speed (Feet)</label>
+                <input type="number" id="CharacterSheetSpeedInput" value="{{ Speed or 30 }}" min="0" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+                <input type="hidden" name="Speed" value="{{ Speed or 30 }}" id="CharacterSheetSpeedHiddenInput" />
+              </div>
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetPassiveInvestigationInput" title="Passive Investigation">Passive Investigation</label>
+                <input type="number" id="CharacterSheetPassiveInvestigationInput" name="PassiveInvestigation" value="{{ PassiveInvestigation or 10 }}" {% if not IsOverridden %}readonly disabled class="InputDisabled"{% endif %} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="CharacterSheetAbilitiesGrid">
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetStrengthInput">Strength</label>
+            <input type="number" id="CharacterSheetStrengthInput" name="Strength" value="{{ AbilityScores['Strength'] if AbilityScores else 10 }}" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetDexterityInput">Dexterity</label>
+            <input type="number" id="CharacterSheetDexterityInput" name="Dexterity" value="{{ AbilityScores['Dexterity'] if AbilityScores else 10 }}" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetConstitutionInput">Constitution</label>
+            <input type="number" id="CharacterSheetConstitutionInput" name="Constitution" value="{{ AbilityScores['Constitution'] if AbilityScores else 10 }}" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetIntelligenceInput">Intelligence</label>
+            <input type="number" id="CharacterSheetIntelligenceInput" name="Intelligence" value="{{ AbilityScores['Intelligence'] if AbilityScores else 10 }}" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetWisdomInput">Wisdom</label>
+            <input type="number" id="CharacterSheetWisdomInput" name="Wisdom" value="{{ AbilityScores['Wisdom'] if AbilityScores else 10 }}" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetCharismaInput">Charisma</label>
+            <input type="number" id="CharacterSheetCharismaInput" name="Charisma" value="{{ AbilityScores['Charisma'] if AbilityScores else 10 }}" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+        </div>
+
+        <div class="CharacterSheetDetailsSection">
+          <div class="CharacterSheetSkillsColumn">
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Strength</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Athletics'] if SkillProficiencyStates else 0 }}" data-skill-name="Athletics">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyAthletics" value="{{ SkillProficiencyStates['Athletics'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Athletics</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Dexterity</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Acrobatics'] if SkillProficiencyStates else 0 }}" data-skill-name="Acrobatics">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyAcrobatics" value="{{ SkillProficiencyStates['Acrobatics'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Acrobatics</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['SleightOfHand'] if SkillProficiencyStates else 0 }}" data-skill-name="SleightOfHand">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencySleightOfHand" value="{{ SkillProficiencyStates['SleightOfHand'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Sleight of Hand</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Stealth'] if SkillProficiencyStates else 0 }}" data-skill-name="Stealth">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyStealth" value="{{ SkillProficiencyStates['Stealth'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Stealth</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Intelligence</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Arcana'] if SkillProficiencyStates else 0 }}" data-skill-name="Arcana">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyArcana" value="{{ SkillProficiencyStates['Arcana'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Arcana</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['History'] if SkillProficiencyStates else 0 }}" data-skill-name="History">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyHistory" value="{{ SkillProficiencyStates['History'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">History</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Investigation'] if SkillProficiencyStates else 0 }}" data-skill-name="Investigation">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyInvestigation" value="{{ SkillProficiencyStates['Investigation'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Investigation</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Nature'] if SkillProficiencyStates else 0 }}" data-skill-name="Nature">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyNature" value="{{ SkillProficiencyStates['Nature'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Nature</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Religion'] if SkillProficiencyStates else 0 }}" data-skill-name="Religion">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyReligion" value="{{ SkillProficiencyStates['Religion'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Religion</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Wisdom</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['AnimalHandling'] if SkillProficiencyStates else 0 }}" data-skill-name="AnimalHandling">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyAnimalHandling" value="{{ SkillProficiencyStates['AnimalHandling'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Animal Handling</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Insight'] if SkillProficiencyStates else 0 }}" data-skill-name="Insight">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyInsight" value="{{ SkillProficiencyStates['Insight'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Insight</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Medicine'] if SkillProficiencyStates else 0 }}" data-skill-name="Medicine">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyMedicine" value="{{ SkillProficiencyStates['Medicine'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Medicine</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Perception'] if SkillProficiencyStates else 0 }}" data-skill-name="Perception">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyPerception" value="{{ SkillProficiencyStates['Perception'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Perception</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Survival'] if SkillProficiencyStates else 0 }}" data-skill-name="Survival">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencySurvival" value="{{ SkillProficiencyStates['Survival'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Survival</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Charisma</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Deception'] if SkillProficiencyStates else 0 }}" data-skill-name="Deception">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyDeception" value="{{ SkillProficiencyStates['Deception'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Deception</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Intimidation'] if SkillProficiencyStates else 0 }}" data-skill-name="Intimidation">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyIntimidation" value="{{ SkillProficiencyStates['Intimidation'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Intimidation</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Performance'] if SkillProficiencyStates else 0 }}" data-skill-name="Performance">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyPerformance" value="{{ SkillProficiencyStates['Performance'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Performance</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="{{ SkillProficiencyStates['Persuasion'] if SkillProficiencyStates else 0 }}" data-skill-name="Persuasion">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyPersuasion" value="{{ SkillProficiencyStates['Persuasion'] if SkillProficiencyStates else 0 }}" />
+                <div class="CharacterSheetSkillName">Persuasion</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="CharacterSheetStatsColumn">
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetWeaponProficienciesInput">Weapon Proficiencies</label>
+                  <div class="TagInputContainer" data-category="WeaponProficiencies" data-target-input-id="CharacterSheetWeaponProficienciesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add proficiency..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetWeaponProficienciesInput" name="WeaponProficiencies" class="TagHiddenValueInput" value="{{ WeaponProficienciesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetResistancesInput">Damage Resistances</label>
+                  <div class="TagInputContainer" data-category="DamageTypes" data-target-input-id="CharacterSheetResistancesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add resistance..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetResistancesInput" name="DamageResistances" class="TagHiddenValueInput" value="{{ DamageResistancesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetArmorProficienciesInput">Armor Proficiencies</label>
+                  <div class="TagInputContainer" data-category="ArmorProficiencies" data-target-input-id="CharacterSheetArmorProficienciesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add proficiency..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetArmorProficienciesInput" name="ArmorProficiencies" class="TagHiddenValueInput" value="{{ ArmorProficienciesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetImmunitiesInput">Damage Immunities</label>
+                  <div class="TagInputContainer" data-category="DamageTypes" data-target-input-id="CharacterSheetImmunitiesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add immunity..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetImmunitiesInput" name="DamageImmunities" class="TagHiddenValueInput" value="{{ DamageImmunitiesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetToolProficienciesInput">Tool Proficiencies</label>
+                  <div class="TagInputContainer" data-category="ToolProficiencies" data-target-input-id="CharacterSheetToolProficienciesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add proficiency..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetToolProficienciesInput" name="ToolProficiencies" class="TagHiddenValueInput" value="{{ ToolProficienciesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetVulnerabilitiesInput">Damage Vulnerabilities</label>
+                  <div class="TagInputContainer" data-category="DamageTypes" data-target-input-id="CharacterSheetVulnerabilitiesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add vulnerability..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetVulnerabilitiesInput" name="DamageVulnerabilities" class="TagHiddenValueInput" value="{{ DamageVulnerabilitiesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetLanguagesInput">Languages</label>
+                  <div class="TagInputContainer" data-category="Languages" data-target-input-id="CharacterSheetLanguagesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add language..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetLanguagesInput" name="Languages" class="TagHiddenValueInput" value="{{ LanguagesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetConditionImmunitiesInput">Condition Immunities</label>
+                  <div class="TagInputContainer" data-category="Conditions" data-target-input-id="CharacterSheetConditionImmunitiesInput">
+                    <div class="TagList"></div>
+                    <input type="text" class="TagTextInput" placeholder="Add condition..." autocomplete="off" />
+                    <input type="hidden" id="CharacterSheetConditionImmunitiesInput" name="ConditionImmunities" class="TagHiddenValueInput" value="{{ ConditionImmunitiesString or '' }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="CharacterSheetAbilitiesTab" class="CharacterSheetTabContent {% if ActiveTab != 'CharacterSheetAbilitiesTab' %}HiddenElement{% endif %}">
+        <div class="CharacterSheetAbilitiesColumns">
+          <div class="CharacterSheetClassColumn">
+            <div class="CharacterSheetSectionHeader">
+              <div class="CharacterSheetSectionTitle">Classes</div>
+            </div>
+
+            <div id="CharacterSheetClassContainerList" class="CharacterSheetClassContainerList">
+              {% for ClassItem in ClassesList %}
+              <div class="ClassContainer" data-class-index="{{ ClassItem.Index }}" data-initial-class="{{ 'true' if ClassItem.IsInitialClass else 'false' }}">
+                <input type="hidden" name="Classes[{{ ClassItem.Index }}].IsInitialClass" value="{{ 'true' if ClassItem.IsInitialClass else 'false' }}" class="ClassInitialInput" />
+                <div class="ClassContainerFields">
+                  <div class="FormRow">
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Class</label>
+                        <input type="text" name="Classes[{{ ClassItem.Index }}].ClassName" value="{{ ClassItem.ClassName }}" class="ClassInputName" placeholder="e.g. Bard, Fighter, Rogue" />
+                      </div>
+                    </div>
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Subclass</label>
+                        <input type="text" name="Classes[{{ ClassItem.Index }}].Subclass" value="{{ ClassItem.Subclass }}" class="ClassInputSubclass {% if (not IsOverridden) and (ClassItem.Level < 3) %}InputDisabled{% endif %}" placeholder="e.g. Lore, Champion" {% if (not IsOverridden) and (ClassItem.Level < 3) %}disabled{% endif %} />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="FormRow">
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Level</label>
+                        <input type="number" name="Classes[{{ ClassItem.Index }}].Level" class="ClassInputLevel" value="{{ ClassItem.Level }}" min="1" max="20" />
+                      </div>
+                    </div>
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Experience Points</label>
+                        <div class="ClassExperienceRow">
+                          <input type="number" name="Classes[{{ ClassItem.Index }}].Experience" class="ClassInputExperience" value="{{ ClassItem.Experience }}" min="0" />
+                          <button type="button" class="Button ButtonSquare ButtonWarning ClassStarButton" title="{{ 'Initial Class' if ClassItem.IsInitialClass else 'Set as Initial Class' }}" aria-label="{{ 'Initial Class' if ClassItem.IsInitialClass else 'Set as Initial Class' }}" {% if ClassItem.IsInitialClass %}disabled{% endif %}>
+                            <span class="FunctionIcon FunctionIconStar" aria-hidden="true"></span>
+                          </button>
+                          <button type="button" class="Button ButtonSquare ButtonDanger ClassDeleteButton" title="Delete Class" aria-label="Delete Class" {% if ClassItem.IsInitialClass %}disabled{% endif %}>
+                            <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="AddClassControls">
+              <button type="button" id="CharacterSheetAddClassButton" class="Button ButtonSquare ButtonPrimary AddClassButton" title="Add Class" aria-label="Add Class">
+                <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <div class="CharacterSheetSectionHeader">
+              <div class="CharacterSheetSectionTitle">Features</div>
+            </div>
+            <textarea id="CharacterSheetFeaturesInput" name="Features" rows="6" placeholder="List features, traits, and feats separated by commas or line breaks (e.g. Second Wind, Action Surge, Darkvision, Alert)">{{ FeaturesString or '' }}</textarea>
+          </div>
+
+          <div class="CharacterSheetSpellColumn">
+            <div id="CharacterSheetSpellSlotsSection" class="CharacterSheetSpellSlotsSection {% if not HasAnySpellSlots %}HiddenElement{% endif %}">
+              <div id="CharacterSheetSpellcastingSlotsColumn" class="CharacterSheetSpellSlotsColumn {% if not HasRegularSpellSlots %}HiddenElement{% endif %}">
+                <div class="CharacterSheetSectionHeader">
+                  <div class="CharacterSheetSectionTitle">Spellcasting</div>
+                </div>
+                <div id="CharacterSheetSpellSlotsContainer" class="SpellSlotGrid">
+                  {% for SlotLevel in range(1, 10) %}
+                  {% set SlotData = SpellSlotDataMap[SlotLevel] %}
+                  <div class="SpellSlotRow {% if not SlotData.IsVisible %}HiddenElement{% endif %}" data-slot-level="{{ SlotLevel }}">
+                    <span class="SpellSlotLevelLabel">Level {{ SlotLevel }}</span>
+                    <div class="SpellSlotIcons" data-slot-level="{{ SlotLevel }}">
+                      {% for SlotIndex in range(SlotData.Total) %}
+                      {% set IsSlotUsed = (SlotIndex < SlotData.Used) %}
+                      <div class="SpellSlotIcon" data-slot-state="{{ '1' if IsSlotUsed else '0' }}">
+                        <div class="SpellSlotBackground"></div>
+                        <div class="SpellSlotForeground"></div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    <input type="hidden" name="SpellSlots[{{ SlotLevel }}].Level" value="{{ SlotLevel }}" />
+                    <input type="hidden" name="SpellSlots[{{ SlotLevel }}].Total" value="{{ SlotData.Total }}" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[{{ SlotLevel }}].Used" value="{{ SlotData.Used }}" class="SpellSlotUsedInput" />
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div id="CharacterSheetPactMagicSlotsColumn" class="CharacterSheetSpellSlotsColumn {% if not HasPactMagic %}HiddenElement{% endif %}">
+                <div class="CharacterSheetSectionHeader">
+                  <div class="CharacterSheetSectionTitle">Pact Magic</div>
+                </div>
+                <div id="CharacterSheetPactMagicSlotsContainer" class="SpellSlotGrid">
+                  {% for SlotLevel in range(1, 6) %}
+                  <div class="SpellSlotRow {% if (not PactMagicData) or (PactMagicData.SlotLevel != SlotLevel) %}HiddenElement{% endif %}" data-slot-level="{{ SlotLevel }}">
+                    <span class="SpellSlotLevelLabel">Level {{ SlotLevel }}</span>
+                    <div class="SpellSlotIcons" data-slot-level="{{ SlotLevel }}">
+                      {% if PactMagicData and (PactMagicData.SlotLevel == SlotLevel) %}
+                        {% for SlotIndex in range(PactMagicData.TotalSlots) %}
+                        {% set IsPactUsed = (SlotIndex < PactMagicData.UsedSlots) %}
+                        <div class="SpellSlotIcon" data-slot-type="pact" data-slot-state="{{ '1' if IsPactUsed else '0' }}">
+                          <div class="SpellSlotBackground"></div>
+                          <div class="SpellSlotForeground"></div>
+                        </div>
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                <input type="hidden" name="PactMagic.SlotLevel" id="CharacterSheetPactMagicSlotLevelInput" value="{{ PactMagicData.SlotLevel if PactMagicData else 0 }}" />
+                <input type="hidden" name="PactMagic.TotalSlots" id="CharacterSheetPactMagicTotalSlotsInput" value="{{ PactMagicData.TotalSlots if PactMagicData else 0 }}" />
+                <input type="hidden" name="PactMagic.UsedSlots" id="CharacterSheetPactMagicUsedSlotsInput" value="{{ PactMagicData.UsedSlots if PactMagicData else 0 }}" />
+              </div>
+            </div>
+
+            <div class="CharacterSheetSectionHeader">
+              <div class="CharacterSheetSectionTitle">Spells</div>
+            </div>
+            <div class="AddSpellControls">
+              <input type="text" id="NewSpellNameInput" class="NewSpellNameInput" placeholder="Spell Name" />
+              <select id="NewSpellTargetListSelect" class="NewSpellTargetListSelect">
+                {% if SpellListsRenderData %}
+                  {% for ListData in SpellListsRenderData %}
+                  <option value="{{ ListData.Name }}">{{ ListData.Name }}</option>
+                  {% endfor %}
+                {% else %}
+                  <option value="Spellbook">Spellbook</option>
+                  <option value="Prepared Spells">Prepared Spells</option>
+                  <option value="Cantrips">Cantrips</option>
+                {% endif %}
+              </select>
+              <button type="button" id="AddSpellButton" class="Button ButtonSquare ButtonPrimary AddSpellButton" title="Add Spell" aria-label="Add Spell">
+                <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <div id="CharacterSheetSpellListContainer" class="CharacterSheetSpellListContainer">
+              {% for ListData in SpellListsRenderData %}
+              <div class="SpellListContainer" data-list-index="{{ ListData.Index }}" data-list-name="{{ ListData.Name|lower }}" {% if ListData.IsCustomList %}data-custom-list="true"{% endif %}>
+                <div class="SpellListHeader">
+                  <div class="SpellListTitle">{{ ListData.Name }}</div>
+                  <div class="SpellListControls">
+                    <select class="SpellListAbilitySelect" title="Spellcasting Ability">
+                      {% for AbilityName in ["None", "Intelligence", "Wisdom", "Charisma", "Strength", "Dexterity", "Constitution"] %}
+                      <option value="{{ AbilityName }}" {% if ListData.Ability == AbilityName %}selected{% endif %}>{{ AbilityName }}</option>
+                      {% endfor %}
+                    </select>
+                    {% if ListData.CanDelete %}
+                    <button type="button" class="Button ButtonSquare ButtonDanger DeleteSpellListButton" title="Delete Spell List (Hold Shift to discard spells)" aria-label="Delete Spell List">
+                      <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                    </button>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="SpellListStats">
+                  <div class="SpellListStatItem">Mod: <span class="SpellListStatModifier SpellListStatValue">{{ ListData.ModifierText }}</span></div>
+                  <div class="SpellListStatItem">Atk: <span class="SpellListStatAttack SpellListStatValue">{{ ListData.AttackText }}</span></div>
+                  <div class="SpellListStatItem">DC: <span class="SpellListStatSaveDC SpellListStatValue">{{ ListData.SaveDCText }}</span></div>
+                </div>
+                <div class="SpellListSpells">
+                  {% for SpellName in ListData.Spells %}
+                  <div class="SpellListSpellEntry" data-spell-name="{{ SpellName|lower }}">
+                    <span>{{ SpellName }}</span>
+                    <button type="button" class="Button ButtonSquare ButtonDanger RemoveSpellButton" title="Remove Spell" aria-label="Remove Spell">
+                      <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  {% endfor %}
+                </div>
+                <input type="hidden" name="SpellLists[{{ ListData.Index }}].Name" value="{{ ListData.Name }}" class="SpellListNameInput" />
+                <input type="hidden" name="SpellLists[{{ ListData.Index }}].Ability" value="{{ ListData.Ability }}" class="SpellListAbilityInput" />
+                <input type="hidden" name="SpellLists[{{ ListData.Index }}].Spells" value="{{ ListData.SpellsJoined }}" class="SpellListSpellsInput" />
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="CreateSpellListControls">
+              <button type="button" id="CreateSpellListButton" class="Button ButtonSquare ButtonPrimary CreateSpellListButton" title="Create List" aria-label="Create List">
+                <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="CharacterSheetInventoryTab" class="CharacterSheetTabContent {% if ActiveTab != 'CharacterSheetInventoryTab' %}HiddenElement{% endif %}">
+        <div id="CharacterSheetInventoryContainerList" class="CharacterSheetInventoryContainerList">
+          <div id="CharacterSheetInventoryColumnLeft" class="CharacterSheetInventoryColumn">
+            <div class="CharacterSheetInventoryControlColumn">
+              <div class="CharacterSheetInventoryControlSurface">
+                <div class="CarryingCapacityControlSection">
+                  <div class="CarryingCapacityHeaderRow">
+                    <span class="ControlSurfaceLabel">Carrying Capacity</span>
+                    <span class="CarryingCapacityText">
+                      <span id="CharacterSheetCarryingWeightValue" class="CarryingCapacityValue">{{ TotalCarriedWeightPounds or 0 }}</span>
+                      <span class="CarryingCapacitySeparator"> / </span>
+                      <span id="CharacterSheetCarryingCapacityValue" class="CarryingCapacityLimit">{{ CarryingCapacityPounds or 150 }}</span>
+                      <span class="CarryingCapacityUnit"> lbs</span>
+                    </span>
+                  </div>
+                  <div class="CarryingCapacityProgressBar">
+                    <div id="CharacterSheetCarryingCapacityBarFill" class="CarryingCapacityProgressFill"></div>
+                  </div>
+                </div>
+                <div class="AttunementControlSection">
+                  <span class="ControlSurfaceLabel">Attuned:</span>
+                  <div id="CharacterSheetAttunementSlots" class="AttunementSlotIcons"></div>
+                  <input type="hidden" id="CharacterSheetAttunementTotalSlotsInput" name="AttunementTotalSlots" value="{{ AttunementTotalSlots or 3 }}" />
+                  <input type="hidden" id="CharacterSheetAttunementUsedSlotsInput" name="AttunementUsedSlots" value="{{ AttunementUsedSlots or 0 }}" />
+                </div>
+              </div>
+
+              <div class="AddInventoryItemControls">
+                <input type="text" id="NewInventoryItemNameInput" class="NewInventoryItemNameInput" placeholder="Item Name" />
+                <select id="NewInventoryTargetContainerSelect" class="NewInventoryTargetContainerSelect">
+                  {% if ContainersRenderData %}
+                    {% for ContainerData in ContainersRenderData %}
+                    <option value="{{ ContainerData.Name }}">{{ ContainerData.Name }}</option>
+                    {% endfor %}
+                  {% else %}
+                    <option value="Equipment">Equipment</option>
+                    <option value="Carried">Carried</option>
+                  {% endif %}
+                </select>
+                <button type="button" id="AddInventoryItemButton" class="Button ButtonSquare ButtonPrimary AddInventoryItemButton" title="Add Item" aria-label="Add Item">
+                  <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+
+            {% for ContainerData in ContainersRenderData %}
+            {% if ContainerData.ID == 'equipment' %}
+            <div class="InventoryContainer" data-container-index="{{ ContainerData.Index }}" data-container-name="{{ ContainerData.Name|lower }}" {% if ContainerData.IsCustomContainer %}data-custom-container="true"{% endif %}>
+              <div class="InventoryContainerHeader">
+                <div class="InventoryContainerTitle">{{ ContainerData.Name }}</div>
+                <div class="InventoryContainerControls">
+                  {% if ContainerData.CanDelete %}
+                  <button type="button" class="Button ButtonSquare ButtonDanger DeleteInventoryContainerButton" title="Delete Container (Hold Shift to discard items)" aria-label="Delete Container">
+                    <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                  </button>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="InventoryContainerStats">
+                <div class="InventoryContainerStatItem">Weight: <span class="InventoryContainerWeightValue">{{ ContainerData.TotalWeight }}</span> lbs</div>
+                <div class="InventoryContainerStatItem">Items: <span class="InventoryContainerCountValue">{{ ContainerData.ItemCount }}</span></div>
+              </div>
+              <div class="InventoryContainerItems">
+                {% for Item in ContainerData.Items %}
+                <div class="InventoryItemEntry" data-item-name="{{ Item.Name|lower }}" data-item-weight="{{ Item.WeightPounds }}" data-item-quantity="{{ Item.Quantity }}">
+                  <span class="InventoryItemName">{{ Item.Name }}</span>
+                  <button type="button" class="Button ButtonSquare ButtonDanger RemoveInventoryItemButton" title="Remove Item" aria-label="Remove Item">
+                    <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                  </button>
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].Name" class="ItemNameInput" value="{{ Item.Name }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].WeightPounds" class="ItemWeightInput" value="{{ Item.WeightPounds }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].Quantity" class="ItemQuantityInput" value="{{ Item.Quantity }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].ContainerID" class="ItemContainerInput" value="{{ Item.ContainerID }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].IsEquipped" class="ItemEquippedInput" value="{{ 'true' if Item.IsEquipped else 'false' }}" />
+                </div>
+                {% endfor %}
+              </div>
+              <input type="hidden" name="Containers[{{ ContainerData.Index }}].Name" value="{{ ContainerData.Name }}" class="ContainerNameInput" />
+              <input type="hidden" name="Containers[{{ ContainerData.Index }}].ID" value="{{ ContainerData.ID }}" class="ContainerIDInput" />
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+
+          <div id="CharacterSheetInventoryColumnRight" class="CharacterSheetInventoryColumn">
+            {% for ContainerData in ContainersRenderData %}
+            {% if ContainerData.ID != 'equipment' %}
+            <div class="InventoryContainer" data-container-index="{{ ContainerData.Index }}" data-container-name="{{ ContainerData.Name|lower }}" {% if ContainerData.IsCustomContainer %}data-custom-container="true"{% endif %}>
+              <div class="InventoryContainerHeader">
+                <div class="InventoryContainerTitle">{{ ContainerData.Name }}</div>
+                <div class="InventoryContainerControls">
+                  {% if ContainerData.CanDelete %}
+                  <button type="button" class="Button ButtonSquare ButtonDanger DeleteInventoryContainerButton" title="Delete Container (Hold Shift to discard items)" aria-label="Delete Container">
+                    <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                  </button>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="InventoryContainerStats">
+                <div class="InventoryContainerStatItem">Weight: <span class="InventoryContainerWeightValue">{{ ContainerData.TotalWeight }}</span> lbs</div>
+                <div class="InventoryContainerStatItem">Items: <span class="InventoryContainerCountValue">{{ ContainerData.ItemCount }}</span></div>
+              </div>
+              <div class="InventoryContainerItems">
+                {% for Item in ContainerData.Items %}
+                <div class="InventoryItemEntry" data-item-name="{{ Item.Name|lower }}" data-item-weight="{{ Item.WeightPounds }}" data-item-quantity="{{ Item.Quantity }}">
+                  <span class="InventoryItemName">{{ Item.Name }}</span>
+                  <button type="button" class="Button ButtonSquare ButtonDanger RemoveInventoryItemButton" title="Remove Item" aria-label="Remove Item">
+                    <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                  </button>
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].Name" class="ItemNameInput" value="{{ Item.Name }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].WeightPounds" class="ItemWeightInput" value="{{ Item.WeightPounds }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].Quantity" class="ItemQuantityInput" value="{{ Item.Quantity }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].ContainerID" class="ItemContainerInput" value="{{ Item.ContainerID }}" />
+                  <input type="hidden" name="Inventory[{{ Item.GlobalIndex }}].IsEquipped" class="ItemEquippedInput" value="{{ 'true' if Item.IsEquipped else 'false' }}" />
+                </div>
+                {% endfor %}
+              </div>
+              <input type="hidden" name="Containers[{{ ContainerData.Index }}].Name" value="{{ ContainerData.Name }}" class="ContainerNameInput" />
+              <input type="hidden" name="Containers[{{ ContainerData.Index }}].ID" value="{{ ContainerData.ID }}" class="ContainerIDInput" />
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="CreateInventoryContainerControls">
+          <button type="button" id="CreateInventoryContainerButton" class="Button ButtonSquare ButtonPrimary CreateInventoryContainerButton" title="Create Container" aria-label="Create Container">
+            <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div id="CharacterSheetDescriptionTab" class="CharacterSheetTabContent {% if ActiveTab != 'CharacterSheetDescriptionTab' %}HiddenElement{% endif %}">
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetFaithInput">Faith</label>
+              <input type="text" id="CharacterSheetFaithInput" name="Faith" value="{{ Faith or '' }}" placeholder="e.g. Selûne" />
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetLifestyleInput">Lifestyle</label>
+              <input type="text" id="CharacterSheetLifestyleInput" name="Lifestyle" value="{{ Lifestyle or '' }}" placeholder="e.g. Modest" />
+            </div>
+          </div>
+        </div>
+
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetPersonalityInput">Personality Traits</label>
+              <textarea id="CharacterSheetPersonalityInput" name="PersonalityTraits" rows="2" placeholder="Describe personality traits">{{ PersonalityTraits or '' }}</textarea>
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetIdealsInput">Ideals</label>
+              <textarea id="CharacterSheetIdealsInput" name="Ideals" rows="2" placeholder="Describe character ideals">{{ Ideals or '' }}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetBondsInput">Bonds</label>
+              <textarea id="CharacterSheetBondsInput" name="Bonds" rows="2" placeholder="Describe character bonds">{{ Bonds or '' }}</textarea>
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetFlawsInput">Flaws</label>
+              <textarea id="CharacterSheetFlawsInput" name="Flaws" rows="2" placeholder="Describe character flaws">{{ Flaws or '' }}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetAgeInput">Age</label>
+              <input type="text" id="CharacterSheetAgeInput" name="Age" value="{{ Age or '' }}" placeholder="e.g. 28" />
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetHeightInput">Height</label>
+              <input type="text" id="CharacterSheetHeightInput" name="Height" value="{{ Height or '' }}" placeholder="e.g. 5'11&quot;" />
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetWeightInput">Weight</label>
+              <input type="text" id="CharacterSheetWeightInput" name="Weight" value="{{ Weight or '' }}" placeholder="e.g. 175 lbs" />
+            </div>
+          </div>
+        </div>
+
+        <div class="FormGroup">
+          <label class="FormLabel" for="CharacterSheetBackstoryInput">Backstory</label>
+          <textarea id="CharacterSheetBackstoryInput" name="Backstory" rows="3" placeholder="Enter backstory notes and background history">{{ Backstory or '' }}</textarea>
+        </div>
+      </div>
+      </fieldset>
+    </form>
+  {% endif %}
+
+  <div id="CharacterSheetCreateSpellListModal" class="CharacterSheetModalOverlay HiddenElement">
+    <div class="CharacterSheetModalPanel">
+      <div class="CharacterSheetModalTitlebar">
+        <span class="CharacterSheetModalTitle">Create Spell List</span>
+      </div>
+      <div class="CharacterSheetModalBody">
+        <div class="FormGroup">
+          <label class="FormLabel" for="ModalSpellListNameInput">List Name</label>
+          <input type="text" id="ModalSpellListNameInput" class="ModalSpellListNameInput" placeholder="e.g. Rituals, Domain Spells" />
+        </div>
+        <div class="FormGroup MarginTopSmall">
+          <label class="FormLabel" for="ModalSpellListAbilitySelect">Spellcasting Ability</label>
+          <select id="ModalSpellListAbilitySelect" class="ModalSpellListAbilitySelect">
+            <option value="None">None</option>
+            <option value="Intelligence">Intelligence</option>
+            <option value="Wisdom">Wisdom</option>
+            <option value="Charisma">Charisma</option>
+            <option value="Strength">Strength</option>
+            <option value="Dexterity">Dexterity</option>
+            <option value="Constitution">Constitution</option>
+          </select>
+        </div>
+        <div class="CharacterSheetModalButtonRow MarginTopMedium">
+          <button type="button" id="ModalSpellListCancelButton" class="Button">Cancel</button>
+          <button type="button" id="ModalSpellListConfirmButton" class="Button ButtonPrimary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="CharacterSheetCreateContainerModal" class="CharacterSheetModalOverlay HiddenElement">
+    <div class="CharacterSheetModalPanel">
+      <div class="CharacterSheetModalTitlebar">
+        <span class="CharacterSheetModalTitle">Create Container</span>
+      </div>
+      <div class="CharacterSheetModalBody">
+        <div class="FormGroup">
+          <label class="FormLabel" for="ModalContainerNameInput">Container Name</label>
+          <input type="text" id="ModalContainerNameInput" class="ModalContainerNameInput" placeholder="e.g. Backpack, Bag of Holding, Pouch" />
+        </div>
+        <div class="CharacterSheetModalButtonRow MarginTopMedium">
+          <button type="button" id="ModalContainerCancelButton" class="Button">Cancel</button>
+          <button type="button" id="ModalContainerConfirmButton" class="Button ButtonPrimary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

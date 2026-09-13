@@ -1,0 +1,18 @@
+<div class="WindowContainer">
+  <div class="TabNavigation">
+    <button class="TabButton ActiveTab CalendarTabButton" data-target-tab="HarptosCalendarTab">DND5thEdition</button>
+    <button class="TabButton CalendarTabButton" data-target-tab="ImperialCalendarTab">Traveller2ndEdition</button>
+  </div>
+
+  <div id="HarptosCalendarTab" class="CalendarTabContent" hx-get="/API/Tools/Calendar/Harptos/Partial" hx-trigger="load" hx-swap="innerHTML">
+    <div class="TextMuted">Loading Harptos Calendar...</div>
+  </div>
+
+  <div id="ImperialCalendarTab" class="CalendarTabContent HiddenElement">
+    <div class="TextWarm HeaderText">Third Imperium: Year 1105</div>
+    <div class="TextCold MarginTopSmall">
+      <div><strong>Day 001:</strong> Imperial Holiday (Celebrated across all charted space)</div>
+      <div><strong>Days 002 - 365:</strong> 52 standard seven-day workweeks</div>
+    </div>
+  </div>
+</div>

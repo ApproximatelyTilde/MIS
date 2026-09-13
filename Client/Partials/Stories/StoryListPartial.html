@@ -1,0 +1,46 @@
+{% if Stories %}
+  {% for Entry in Stories %}
+    <div class="SearchCharacterCard StoryCard" data-story-id="{{ Entry.Story.ID }}" data-game-system="{{ Entry.GameSystemName }}">
+      <div class="SearchCharacterCardPlaceholder StoryCardPlaceholder">
+        <span>STORY</span>
+      </div>
+
+      <div class="SearchCharacterBadgeColumn">
+        {% if Entry.GameSystemName == "DND5thEdition" %}
+          <span class="Badge BadgeDND5thEdition">DND5thEdition</span>
+        {% else %}
+          <span class="Badge BadgeTraveller2ndEdition">Traveller2ndEdition</span>
+        {% endif %}
+        {% if Entry.Story.IsArchived %}
+          <span class="Badge BadgeArchived">Archived</span>
+        {% else %}
+          {% if Entry.Story.IsPublic %}
+            <span class="Badge BadgePublic">Public</span>
+          {% else %}
+            <span class="Badge BadgePrivate">Private</span>
+          {% endif %}
+          {% if Entry.IsMember %}
+            <span class="Badge BadgePublic">Member</span>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      <div class="SearchCharacterCardOverlay">
+        <div class="SearchCharacterCardName" title="{{ Entry.Story.Title }}">{{ Entry.Story.Title }}</div>
+        <div class="SearchCharacterDetailsList">
+          <div class="SearchCharacterDetailLine" title="{{ Entry.Story.Description or 'No description recorded.' }}">{{ Entry.Story.Description or "No description recorded." }}</div>
+        </div>
+        {% if Entry.CanRequestJoin %}
+          <div class="CharacterCardActionRow">
+            <button type="button" class="Button ButtonSmall ButtonPrimary StoryJoinButton"
+                    hx-post="/API/Stories/{{ Entry.Story.ID }}/JoinRequest/Partial"
+                    hx-target="#StoriesRosterContainer"
+                    hx-swap="innerHTML">Request to Join</button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="TextMuted">No stories available for viewing under current role.</div>
+{% endif %}

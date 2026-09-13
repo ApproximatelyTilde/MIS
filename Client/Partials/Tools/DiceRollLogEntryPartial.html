@@ -1,0 +1,10 @@
+<div class="DiceLogEntry">
+  <span class="DiceLogTag TextWarm">[{{ GameSystem }}]</span>
+  <span class="DiceLogExpression">{{ Expression }}</span> &rarr;
+  <span class="DiceLogRolls">({{ RollsString }})</span>
+  <span class="DiceLogTotal TextWarm"><strong>Total: {{ Total }}</strong></span>
+  {% if Effect is not none %}
+    <span class="TextCold"> [Effect: {{ EffectFormatted }}]</span>
+  {% endif %}
+  <small class="TextMuted">({{ Description }})</small>
+</div>

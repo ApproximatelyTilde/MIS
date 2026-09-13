@@ -1,0 +1,7 @@
+[submodule "Server/Services/External/5eTools"]
+	path = Server/Services/External/5eTools
+	url = https://github.com/5etools-mirror-3/5etools-src
+[submodule "Server/Services/External/DiscordBot"]
+	path = Server/Services/External/DiscordBot
+	url = https://github.com/ApproximatelyTilde/MIS-Bot
+	branch = dev

@@ -1,0 +1,45 @@
+<div class="WindowContainer">
+  <form id="DiceRollerForm" hx-post="/API/Tools/Dice/Roll?Format=html" hx-target="#DiceTerminalOutput" hx-swap="afterbegin">
+    <div class="FlexRow MarginBottomSmall">
+      <div class="FlexOne">
+        <label class="FormLabel" for="DiceSystemSelect">System</label>
+        <select id="DiceSystemSelect" name="GameSystem">
+          <option value="DND5thEdition">DND5thEdition</option>
+          <option value="Traveller2ndEdition">Traveller2ndEdition</option>
+        </select>
+      </div>
+      <div class="FlexTwo FlexRow" id="DNDDiceInputsGroup">
+        <div class="FlexOne">
+          <label class="FormLabel" for="DiceExpressionInput">Formula</label>
+          <input type="text" id="DiceExpressionInput" name="Expression" value="1d20+5" placeholder="e.g. 1d20+3, 2d6+2" />
+        </div>
+        <div class="FlexOne">
+          <label class="FormLabel" for="DiceDifficultyInput">Difficulty</label>
+          <input type="number" id="DiceDifficultyInput" name="Difficulty" value="15" />
+        </div>
+      </div>
+      <div class="FlexTwo FlexRow HiddenElement" id="TravellerDiceInputsGroup">
+        <div class="FlexOne">
+          <label class="FormLabel" for="DiceModifierInput">Modifier</label>
+          <input type="number" id="DiceModifierInput" name="Modifier" value="0" />
+        </div>
+        <div class="FlexOne">
+          <label class="FormLabel" for="DiceTargetDifficultyInput">Target</label>
+          <input type="number" id="DiceTargetDifficultyInput" name="TargetDifficulty" value="8" />
+        </div>
+      </div>
+    </div>
+
+    <div class="FlexRow AlignCenter MarginBottomSmall">
+      <label id="AdvantageCheckboxLabel" class="CheckboxLabel"><input type="checkbox" name="Advantage" id="DiceAdvantageCheckbox" value="true" /> Advantage</label>
+      <label id="DisadvantageCheckboxLabel" class="CheckboxLabel"><input type="checkbox" name="Disadvantage" id="DiceDisadvantageCheckbox" value="true" /> Disadvantage</label>
+      <label id="BoonCheckboxLabel" class="CheckboxLabel HiddenElement"><input type="checkbox" name="HasBoon" id="DiceBoonCheckbox" value="true" /> Boon</label>
+      <label id="BaneCheckboxLabel" class="CheckboxLabel HiddenElement"><input type="checkbox" name="HasBane" id="DiceBaneCheckbox" value="true" /> Bane</label>
+      <button type="submit" class="Button ButtonPrimary MarginLeftAuto">ROLL DICE</button>
+    </div>
+  </form>
+
+  <div class="TerminalPane FontTerminal" id="DiceTerminalOutput">
+    <div class="TextMuted">Dice log initialized. Ready for rolls...</div>
+  </div>
+</div>

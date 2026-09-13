@@ -1,0 +1,28 @@
+<div class="WindowContainer MailWindowContainer">
+  <div class="MailContainer">
+    <div class="MailPanelLeft">
+      <div class="MailToolbar">
+        {% if IsGameMaster %}
+          <button id="MailComposeButton" class="Button ButtonSmall ButtonPrimary MailToolbarButton" type="button">
+            <span>+ Compose</span>
+          </button>
+        {% endif %}
+        <div class="MailFilterButtonGroup">
+          <button class="Button ButtonSmall MailFilterButton ActiveMailFilter" type="button" hx-get="/API/Mail/List/Partial?Filter=All" hx-target="#MailListContainer" hx-swap="innerHTML">All</button>
+          <button class="Button ButtonSmall MailFilterButton" type="button" hx-get="/API/Mail/List/Partial?Filter=Unread" hx-target="#MailListContainer" hx-swap="innerHTML">Unread</button>
+        </div>
+      </div>
+      <div id="MailListContainer" class="MailListContainer" hx-get="/API/Mail/List/Partial" hx-trigger="load, RefreshMailList from:body" hx-swap="innerHTML">
+        <div class="TextMuted MailLoadingNotice">Loading messages...</div>
+      </div>
+    </div>
+    <div class="MailPanelDivider"></div>
+    <div class="MailPanelRight">
+      <div id="MailMessageContainer" class="MailMessageContainer">
+        <div class="MailPlaceholderContainer">
+          <div class="MailPlaceholderText">Select a message from the list to view its contents.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

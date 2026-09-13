@@ -1,0 +1,3552 @@
+.Button {
+    font-family: 'JPN12', monospace;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--Color7);
+    color: var(--Color0);
+    border: 2px outset var(--Color15);
+    font-weight: normal;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+.Button:active,
+.ButtonActive {
+    border-style: inset;
+    border-color: var(--Color8);
+    background-color: var(--Color7);
+    background-image: repeating-conic-gradient(var(--Color15) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 2px 2px;
+    image-rendering: pixelated;
+    color: var(--Color0);
+}
+
+.ButtonPrimary {
+    background-color: var(--Color4);
+    color: var(--Color15);
+    border-color: var(--Color12);
+    font-weight: normal;
+}
+
+.ButtonPrimary:active,
+.ButtonPrimary.ButtonActive {
+    border-style: inset;
+    border-color: var(--Color8);
+    background-color: var(--Color7);
+    background-image: repeating-conic-gradient(var(--Color15) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 2px 2px;
+    image-rendering: pixelated;
+    color: var(--Color4);
+}
+
+.ButtonSuccess {
+    background-color: var(--Color2);
+    color: var(--Color15);
+    border-color: var(--Color10);
+}
+
+.ButtonSuccess:active,
+.ButtonSuccess.ButtonActive {
+    border-style: inset;
+    border-color: var(--Color8);
+    background-color: var(--Color7);
+    background-image: repeating-conic-gradient(var(--Color15) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 2px 2px;
+    image-rendering: pixelated;
+    color: var(--Color2);
+}
+
+.ButtonDanger {
+    background-color: var(--Color1);
+    color: var(--Color15);
+    border-color: var(--Color9);
+}
+
+.ButtonDanger:active,
+.ButtonDanger.ButtonActive {
+    border-style: inset;
+    border-color: var(--Color8);
+    background-color: var(--Color7);
+    background-image: repeating-conic-gradient(var(--Color15) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 2px 2px;
+    image-rendering: pixelated;
+    color: var(--Color1);
+}
+
+.ButtonWarning {
+    background-color: var(--Color3);
+    color: var(--Color15);
+    border-color: var(--Color11);
+}
+
+.ButtonWarning:active,
+.ButtonWarning.ButtonActive {
+    border-style: inset;
+    border-color: var(--Color8);
+    background-color: var(--Color7);
+    background-image: repeating-conic-gradient(var(--Color15) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 2px 2px;
+    image-rendering: pixelated;
+    color: var(--Color3);
+}
+
+.ButtonSmall {
+    padding: 2px 6px;
+    font-size: 2rem;
+}
+
+.ButtonSquare {
+    width: 4rem;
+    height: 4rem;
+    min-width: 4rem;
+    min-height: 4rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.Button:disabled,
+.Button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-style: solid;
+}
+
+input[type="text"]:not(.TeletypeInputField),
+input[type="number"],
+input[type="password"],
+input[type="url"],
+select,
+textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px 6px;
+    background-color: var(--Color15);
+    color: var(--Color0);
+    border: 2px inset var(--Color8);
+    font-size: 2rem;
+    outline: none;
+}
+
+input[type="text"]:not(.TeletypeInputField),
+input[type="number"],
+input[type="password"],
+input[type="url"],
+select {
+    height: 4rem;
+    line-height: 1;
+}
+
+select {
+    padding: 0 6px;
+    line-height: normal;
+}
+
+textarea {
+    resize: none;
+    field-sizing: content;
+    min-height: 4rem;
+    line-height: 1.5;
+    overflow-y: hidden;
+}
+
+input[type="text"]:not(.TeletypeInputField):focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--Color4);
+}
+
+.InputDisabled,
+input:disabled,
+input[disabled],
+select:disabled,
+textarea:disabled {
+    background-color: var(--Color7);
+    color: var(--Color8);
+    cursor: not-allowed;
+}
+
+fieldset.CharacterSheetFieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-inline-size: min-content;
+}
+
+fieldset.CharacterSheetFieldset:disabled,
+fieldset.CharacterSheetFieldset[disabled] {
+    pointer-events: none;
+}
+
+
+.FormGroup {
+    margin-bottom: 6px;
+}
+
+.FormRow .FormGroup {
+    margin-bottom: 0;
+}
+
+.FormLabel {
+    font-family: 'JPN12', monospace;
+    display: block;
+    font-size: 2rem;
+    line-height: 2rem;
+    font-weight: normal;
+    margin-bottom: 6px;
+    color: var(--Color4);
+    text-transform: uppercase;
+}
+
+.DataTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--Color8);
+    font-size: 2rem;
+}
+
+.DataTable th {
+    font-family: 'JPN12', monospace;
+    background-color: var(--Color7);
+    color: var(--Color0);
+    font-weight: normal;
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 2px solid var(--Color6);
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+
+.DataTable td {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--Color7);
+    color: var(--Color0);
+}
+
+.DataTable tr:nth-child(even) {
+    background-color: var(--Color7);
+}
+
+.CalendarMonthCell {
+    white-space: nowrap;
+}
+
+.CalendarMonthPrimaryName {
+    font-weight: normal;
+}
+
+.CalendarMonthParenthesesName {
+    color: var(--Color3);
+    font-size: 2rem;
+}
+
+.Badge {
+    font-family: 'JPN12', monospace;
+    display: inline-block;
+    padding: 1px 5px;
+    font-size: 2rem;
+    font-weight: normal;
+    border-radius: 2px;
+    border: 1px solid currentColor;
+}
+
+.BadgeDND5thEdition {
+    color: var(--Color1);
+    background-color: var(--Color7);
+}
+
+.BadgeTraveller2ndEdition {
+    color: var(--Color4);
+    background-color: var(--Color7);
+}
+
+.BadgePublic {
+    color: var(--Color2);
+    background-color: var(--Color7);
+}
+
+.BadgePrivate {
+    color: var(--Color8);
+    background-color: var(--Color7);
+}
+
+.BadgeArchived {
+    color: var(--Color1);
+    background-color: var(--Color7);
+}
+
+.BadgeUnderReview {
+    color: var(--Color3);
+    background-color: var(--Color7);
+}
+
+.BadgeMuted {
+    color: var(--Color8);
+    background-color: var(--Color7);
+}
+
+.BadgeDanger {
+    color: var(--Color1);
+    background-color: var(--Color7);
+}
+
+.BadgeProtected {
+    color: var(--Color3);
+    background-color: var(--Color7);
+}
+
+.InputReadOnly {
+    background-color: var(--Color7);
+    color: var(--Color8);
+    cursor: default;
+}
+
+.TabNavigationContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--Color8);
+    margin-bottom: 12px;
+}
+
+.TabNavigationContainer .TabNavigation {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.TabSearchContainer,
+.TabActionContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+
+.AccountSearchInputWrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.AccountSearchInput {
+    width: 32rem;
+    max-width: 32rem;
+    height: 4rem;
+    box-sizing: border-box;
+}
+
+.AccountSearchClearButton {
+    height: 4rem;
+    box-sizing: border-box;
+}
+
+.TabSearchButton {
+    margin-bottom: 0;
+}
+
+.CharacterSheetOverrideButton {
+    background-color: var(--Color3);
+    color: var(--Color15);
+    border-color: var(--Color11);
+}
+
+.AccountCharacterGrid,
+.AccountStoryGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.CharacterPinButton {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 3;
+    background-color: var(--Color15);
+    border: 1px solid var(--Color8);
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--Color8);
+    width: 4rem;
+    height: 4rem;
+    box-sizing: border-box;
+}
+
+.CharacterPinButton:hover {
+    border-color: var(--Color12);
+}
+
+.CharacterPinButton.CharacterPinned {
+    color: var(--Color3);
+}
+
+.CharacterCardActionRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.StoryCard {
+    cursor: default;
+}
+
+.StoryCardPlaceholder {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+}
+
+.StoryJoinButton {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.CharacterCardHeaderTitle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+}
+
+.CharacterCardName {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    min-width: 0;
+}
+
+.CharacterBadgeGroup {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.FunctionIcon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    image-rendering: pixelated;
+    shape-rendering: crispEdges;
+    pointer-events: none;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+.FunctionIconSearch {
+    -webkit-mask-image: url("/Resources/SVG/Function-Search.svg");
+    mask-image: url("/Resources/SVG/Function-Search.svg");
+}
+
+.FunctionIconShowItem {
+    -webkit-mask-image: url("/Resources/SVG/Function-ShowItem.svg");
+    mask-image: url("/Resources/SVG/Function-ShowItem.svg");
+}
+
+.FunctionIconHideItem {
+    -webkit-mask-image: url("/Resources/SVG/Function-HideItem.svg");
+    mask-image: url("/Resources/SVG/Function-HideItem.svg");
+}
+
+.FunctionIconOptions {
+    -webkit-mask-image: url("/Resources/SVG/Function-Options.svg");
+    mask-image: url("/Resources/SVG/Function-Options.svg");
+}
+
+.FunctionIconStar {
+    -webkit-mask-image: url("/Resources/SVG/Function-Star.svg");
+    mask-image: url("/Resources/SVG/Function-Star.svg");
+}
+
+.FunctionIconSave {
+    -webkit-mask-image: url("/Resources/SVG/Function-Save.svg");
+    mask-image: url("/Resources/SVG/Function-Save.svg");
+}
+
+.FunctionIconPlus {
+    -webkit-mask-image: url("/Resources/SVG/Function-Plus.svg");
+    mask-image: url("/Resources/SVG/Function-Plus.svg");
+}
+
+.FunctionIconProtect {
+    -webkit-mask-image: url("/Resources/SVG/Function-Protect.svg");
+    mask-image: url("/Resources/SVG/Function-Protect.svg");
+}
+
+.FunctionIconOverride {
+    -webkit-mask-image: url("/Resources/SVG/Function-Override.svg");
+    mask-image: url("/Resources/SVG/Function-Override.svg");
+}
+
+.FunctionIconDelete {
+    -webkit-mask-image: url("/Resources/SVG/Function-Delete.svg");
+    mask-image: url("/Resources/SVG/Function-Delete.svg");
+}
+
+.FunctionIconDownload {
+    -webkit-mask-image: url("/Resources/SVG/Function-Download.svg");
+    mask-image: url("/Resources/SVG/Function-Download.svg");
+}
+
+.FunctionIconShare {
+    -webkit-mask-image: url("/Resources/SVG/Function-Share.svg");
+    mask-image: url("/Resources/SVG/Function-Share.svg");
+}
+
+.FunctionIconPlayPause {
+    -webkit-mask-image: url("/Resources/SVG/Function-PlayPause.svg");
+    mask-image: url("/Resources/SVG/Function-PlayPause.svg");
+}
+
+.FunctionIconCross {
+    -webkit-mask-image: url("/Resources/SVG/Function-Cross.svg");
+    mask-image: url("/Resources/SVG/Function-Cross.svg");
+}
+
+.FunctionIconSmallCross {
+    -webkit-mask-image: url("/Resources/SVG/Function-SmallCross.svg");
+    mask-image: url("/Resources/SVG/Function-SmallCross.svg");
+}
+
+.FunctionIconFilter {
+    -webkit-mask-image: url("/Resources/SVG/Function-Filter.svg");
+    mask-image: url("/Resources/SVG/Function-Filter.svg");
+}
+
+.FunctionIconSort {
+    -webkit-mask-image: url("/Resources/SVG/Function-Sort.svg");
+    mask-image: url("/Resources/SVG/Function-Sort.svg");
+}
+
+.FunctionIconCheck {
+    -webkit-mask-image: url("/Resources/SVG/Function-Check.svg");
+    mask-image: url("/Resources/SVG/Function-Check.svg");
+}
+
+.FunctionIconDocumentR {
+    -webkit-mask-image: url("/Resources/SVG/Function-Document_R.svg");
+    mask-image: url("/Resources/SVG/Function-Document_R.svg");
+}
+
+.TabNavigation {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    border-bottom: 2px solid var(--Color8);
+    margin-bottom: 12px;
+}
+
+.TabButton {
+    font-family: 'JPN12', monospace;
+    padding: 5px 12px;
+    background-color: var(--Color7);
+    border: 1px solid var(--Color8);
+    border-bottom: none;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 2rem;
+    color: var(--Color0);
+}
+
+.TabButton.ActiveTab {
+    background-color: var(--Color15);
+    border-top: 2px solid var(--Color4);
+    border-bottom: none;
+    font-weight: normal;
+    margin-bottom: -4px;
+    padding-bottom: 8px;
+    color: var(--Color0);
+    position: relative;
+    z-index: 2;
+}
+
+.TerminalPane {
+    background-color: var(--Color15);
+    border: 1px inset var(--Color8);
+    padding: 6px;
+    min-height: 120px;
+    max-height: 240px;
+    overflow-y: auto;
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    margin-bottom: 12px;
+    color: var(--Color0);
+}
+
+.DiceLogEntry {
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--Color8);
+}
+
+.ProgressBarContainer {
+    width: 100%;
+    height: 18px;
+    background-color: var(--Color7);
+    border: 1px inset var(--Color8);
+    overflow: hidden;
+    position: relative;
+}
+
+.ProgressBarFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--Color6), var(--Color4));
+    transition: width 0.3s ease;
+}
+
+.CardsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.EntityCard {
+    background-color: var(--Color15);
+    border: 1px solid var(--Color8);
+    box-shadow: 2px 2px 0px var(--Color8);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.EntityCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--Color8);
+    padding-bottom: 4px;
+}
+
+.EntityCardBody {
+    font-size: 2rem;
+    flex: 1;
+}
+
+.EntityCardActions {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    border-top: 1px dashed var(--Color8);
+    padding-top: 4px;
+}
+
+.FlexRow {
+    display: flex;
+    gap: 8px;
+}
+
+.FlexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.FlexSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.FlexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.FlexOne {
+    flex: 1;
+}
+
+.FlexTwo {
+    flex: 2;
+}
+
+.AlignCenter {
+    align-items: center;
+}
+
+.GapSmall {
+    gap: 6px;
+}
+
+.WidthFull {
+    width: 100%;
+}
+
+.HeightFull {
+    height: 100%;
+}
+
+.MarginBottomSmall {
+    margin-bottom: 8px;
+}
+
+.MarginBottomMedium {
+    margin-bottom: 12px;
+}
+
+.MarginTopSmall {
+    margin-top: 6px;
+}
+
+.MarginTopMedium {
+    margin-top: 12px;
+}
+
+.MarginLeftAuto {
+    margin-left: auto;
+}
+
+.HiddenElement {
+    display: none !important;
+}
+
+.SmallText {
+    font-size: 2rem;
+}
+
+.HeaderText {
+    font-family: 'JPN12', monospace;
+    font-weight: normal;
+}
+
+.CheckboxLabel {
+    font-size: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.UploadDropZone {
+    border: 2px dashed var(--Color8);
+    padding: 12px;
+    text-align: center;
+    margin-bottom: 12px;
+    background-color: var(--Color7);
+}
+
+.CalendarTableScroll {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.AudioPlayerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.AudioWaveSymbol {
+    font-size: 6rem;
+    color: var(--Color4);
+}
+
+.AudioTrackTitle {
+    font-family: 'JPN12', monospace;
+    font-weight: normal;
+    font-size: 2rem;
+}
+
+.AudioControlElement {
+    width: 100%;
+    filter: invert(0.8);
+}
+
+.ImageViewerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--Color7);
+    padding: 8px;
+}
+
+.ImageViewerElement {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid var(--Color8);
+}
+
+.VideoPlayerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--Color7);
+    padding: 6px;
+}
+
+.VideoControlElement {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid var(--Color8);
+}
+
+.StorageActionRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#WindowCharacterSheet {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.CharacterSheetTabNavigation {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.CharacterSheetTabButton {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    padding: 5px 12px;
+}
+
+.CharacterSheetTabContent {
+    padding-top: 6px;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.CharacterSheetTabContent>.FormGroup {
+    margin-bottom: 0;
+}
+
+.CharacterSheetIdentitySection {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+}
+
+.CharacterSheetPortraitColumn {
+    grid-column: 1 / span 2;
+    min-width: 0;
+    padding-top: 18px;
+    box-sizing: border-box;
+}
+
+.CharacterPortraitContainer {
+    width: 100%;
+}
+
+.CharacterPortraitBox {
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border: 2px inset var(--Color8);
+    background-color: var(--Color15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.CharacterPortraitImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.CharacterPortraitPlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--Color7);
+}
+
+.CharacterPortraitPlaceholderText {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+    text-align: center;
+}
+
+.CharacterSheetIdentityFieldsColumn {
+    grid-column: 3 / span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.CharacterSheetIdentityRow {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+}
+
+.CharacterSheetIdentityRow .FormGroup {
+    margin-bottom: 0;
+}
+
+.CharacterSheetIdentityColumnLeft {
+    grid-column: 1 / span 3;
+}
+
+.CharacterSheetIdentityColumnRight {
+    grid-column: 4;
+}
+
+.CharacterSheetIdentityRow .FormLabel,
+.CharacterSheetIdentityColumnRight .FormLabel {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.CharacterSheetAbilitiesGrid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+}
+
+.CharacterSheetAbilityBox {
+    background-color: var(--Color7);
+    border: 2px outset var(--Color15);
+    padding: 6px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.CharacterSheetAbilityInput {
+    text-align: center;
+    font-family: 'JPN12', monospace;
+    font-size: 3rem;
+    height: 4rem;
+}
+
+.FormRow {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+}
+
+.FormColumn {
+    flex: 1;
+    min-width: 0;
+}
+
+.CharacterSheetDetailsSection {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 6px;
+}
+
+.CharacterSheetSkillsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.CharacterSheetSkillCategory {
+    background-color: var(--Color7);
+    border: 2px outset var(--Color15);
+    padding: 6px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.CharacterSheetSkillCategoryTitle {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    text-align: center;
+    border-bottom: 2px solid var(--Color8);
+    padding-bottom: 2px;
+    margin-bottom: 0;
+}
+
+.CharacterSheetSkillRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.CharacterSheetSkillName {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    flex-grow: 1;
+}
+
+.SkillProficiencyIcon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.SkillProficiencyBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mask-image: url('/Resources/SVG/Proficiency-Background.svg');
+    mask-size: cover;
+    background-color: var(--Color8);
+}
+
+.SkillProficiencyForegroundFull {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mask-image: url('/Resources/SVG/Proficiency-ForegroundFull.svg');
+    mask-size: cover;
+    display: none;
+}
+
+.SkillProficiencyForegroundHalf {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mask-image: url('/Resources/SVG/Proficiency-ForegroundHalf.svg');
+    mask-size: cover;
+    display: none;
+}
+
+.SkillProficiencyIcon[data-proficiency-state="1"] .SkillProficiencyForegroundFull {
+    display: block;
+    background-color: var(--Color0);
+}
+
+.SkillProficiencyIcon[data-proficiency-state="2"] .SkillProficiencyForegroundFull {
+    display: block;
+    background-color: var(--Color1);
+}
+
+.SkillProficiencyIcon[data-proficiency-state="3"] .SkillProficiencyForegroundHalf {
+    display: block;
+    background-color: var(--Color0);
+}
+
+.CharacterSheetStatsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.CharacterSheetStatsColumn>.FormGroup {
+    margin-bottom: 0;
+}
+
+.PortraitPickerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.PortraitPickerActionBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 6px;
+    background-color: var(--Color7);
+    border: 2px outset var(--Color15);
+    box-sizing: border-box;
+}
+
+.PortraitPickerContent {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 180px;
+}
+
+.PortraitPickerGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(102px, 1fr));
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.PortraitPickerForm {
+    margin: 0;
+    display: block;
+}
+
+.PortraitPickerCard {
+    width: 100%;
+    background-color: var(--Color7);
+    border: 2px outset var(--Color15);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.PortraitPickerCard:active {
+    background-color: var(--Color8);
+    color: var(--Color15);
+}
+
+.PortraitPickerThumbnailWrapper {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: var(--Color15);
+    border: 1px solid var(--Color8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.PortraitPickerThumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.PortraitPickerFileName {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    color: var(--Color0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.PortraitPickerFileSize {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    color: var(--Color8);
+}
+
+.CharacterSheetAbilitiesColumns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.CharacterSheetClassColumn,
+.CharacterSheetSpellColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 0;
+}
+
+.CharacterSheetSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--Color7);
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.CharacterSheetSectionTitle {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--Color0);
+    text-transform: uppercase;
+}
+
+.CharacterSheetClassContainerList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 360px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.ClassContainer {
+    background-color: var(--Color7);
+    border: 1px solid var(--Color8);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.ClassContainerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.ClassExperienceRow {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.ClassExperienceRow .ClassInputExperience {
+    flex: 1;
+    min-width: 0;
+}
+
+.ClassStarButton,
+.ClassDeleteButton {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.ClassStarButton {
+    background-color: var(--Color3);
+    color: var(--Color15);
+    border-color: var(--Color11);
+}
+
+.ClassDeleteButton {
+    background-color: var(--Color1);
+    color: var(--Color15);
+    border-color: var(--Color9);
+}
+
+.ClassStarButton .FunctionIcon,
+.ClassDeleteButton .FunctionIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.ClassContainer[data-initial-class="true"] .ClassStarButton {
+    border-style: inset;
+    border-color: var(--Color8);
+    background-color: var(--Color7);
+    background-image: repeating-conic-gradient(var(--Color15) 0% 25%, var(--Color7) 0% 50%);
+    background-size: 2px 2px;
+    image-rendering: pixelated;
+    color: var(--Color3);
+    opacity: 1;
+}
+
+.ClassContainerFields {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.AddClassButton,
+.AddSpellButton,
+.CreateSpellListButton {
+    height: 4rem;
+    box-sizing: border-box;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.CharacterSheetSpellSlotsSection {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.CharacterSheetSpellSlotsColumn {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+.SpellSlotGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background-color: var(--Color7);
+    border: 1px solid var(--Color8);
+    padding: 6px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.SpellSlotRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 24px;
+    margin: 0;
+}
+
+.SpellSlotLevelLabel {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    min-width: 60px;
+    color: var(--Color0);
+}
+
+.SpellSlotIcons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.SpellSlotIcon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.SpellSlotBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-image: url('/Resources/SVG/SpellSlot-NormalBackground.svg');
+    mask-image: url('/Resources/SVG/SpellSlot-NormalBackground.svg');
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: var(--Color0);
+    pointer-events: none;
+}
+
+.SpellSlotForeground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-image: url('/Resources/SVG/SpellSlot-NormalForeground.svg');
+    mask-image: url('/Resources/SVG/SpellSlot-NormalForeground.svg');
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: var(--Color0);
+    display: block;
+    pointer-events: none;
+}
+
+.SpellSlotIcon[data-slot-type="pact"] .SpellSlotBackground {
+    -webkit-mask-image: url('/Resources/SVG/SpellSlot-PactBackground.svg');
+    mask-image: url('/Resources/SVG/SpellSlot-PactBackground.svg');
+}
+
+.SpellSlotIcon[data-slot-type="pact"] .SpellSlotForeground {
+    -webkit-mask-image: url('/Resources/SVG/SpellSlot-PactForeground.svg');
+    mask-image: url('/Resources/SVG/SpellSlot-PactForeground.svg');
+}
+
+.SpellSlotIcon[data-slot-state="1"] .SpellSlotForeground {
+    display: none;
+}
+
+.AddSpellControls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin: 0;
+}
+
+.NewSpellNameInput {
+    flex: 1;
+}
+
+.NewSpellTargetListSelect {
+    width: 26rem;
+    min-width: 26rem;
+    height: 4rem;
+    padding: 0 6px;
+    line-height: normal;
+}
+
+.AddClassControls,
+.CreateSpellListControls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+}
+
+.CharacterSheetSpellListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.SpellListContainer {
+    background-color: var(--Color7);
+    border: 1px solid var(--Color8);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.SpellListHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    border-bottom: 1px solid var(--Color8);
+    padding-bottom: 6px;
+}
+
+.SpellListTitle {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--Color0);
+}
+
+.SpellListControls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.SpellListAbilitySelect {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    height: 24px;
+    padding: 0 6px;
+    box-sizing: border-box;
+}
+
+.DeleteSpellListButton {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: var(--Color1);
+    color: var(--Color15);
+    border-color: var(--Color9);
+}
+
+.DeleteSpellListButton .FunctionIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.SpellListStats {
+    display: flex;
+    gap: 6px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    padding: 6px 0;
+    margin: 0;
+}
+
+.SpellListStatItem {
+    display: flex;
+    gap: 6px;
+}
+
+.SpellListStatValue {
+    font-weight: bold;
+    color: var(--Color1);
+}
+
+.SpellListSpells {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.SpellListSpellEntry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 6px;
+    background-color: var(--ColorBackground);
+    border: 1px solid var(--Color8);
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--ColorForeground);
+    box-sizing: border-box;
+}
+
+.RemoveSpellButton {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: var(--Color1);
+    color: var(--Color15);
+    border-color: var(--Color9);
+}
+
+.RemoveSpellButton .FunctionIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.CharacterSheetModalOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    background-color: var(--ColorTransparent);
+    box-sizing: border-box;
+}
+
+.CharacterSheetModalPanel {
+    position: relative;
+    width: 320px;
+    background-color: var(--Color15);
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--Color15), var(--Color15)), repeating-conic-gradient(var(--Color8) 0% 25%, var(--Color7) 0% 50%);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 4px 4px;
+    background-position: 0 0, 0 0;
+    image-rendering: pixelated;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.CharacterSheetModalTitlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    background-color: var(--Color6);
+    color: var(--Color15);
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.CharacterSheetModalTitle {
+    font-family: 'JPN12', monospace;
+    font-weight: normal;
+    font-size: 2rem;
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    text-align: left;
+}
+
+.CharacterSheetModalBody {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.CharacterSheetModalButtonRow {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.CharacterSheetInventoryControlColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+}
+
+.CharacterSheetInventoryControlSurface {
+    background-color: var(--Color7);
+    border: 1px solid var(--Color8);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.CarryingCapacityControlSection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.CarryingCapacityHeaderRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+}
+
+.CarryingCapacityText {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+}
+
+.CarryingCapacityProgressBar {
+    width: 100%;
+    height: 2rem;
+    background-color: var(--Color15);
+    border: 2px inset var(--Color8);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.CarryingCapacityProgressFill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--Color6);
+    transition: width 0.12s steps(4, end);
+}
+
+.CarryingCapacityProgressFill.BarDanger {
+    background-color: var(--Color1);
+}
+
+.ControlSurfaceLabel {
+    font-weight: bold;
+    color: var(--Color0);
+}
+
+.CarryingCapacityValue {
+    font-weight: bold;
+    color: var(--Color1);
+}
+
+.CarryingCapacityLimit,
+.CarryingCapacitySeparator,
+.CarryingCapacityUnit {
+    color: var(--Color0);
+}
+
+.AttunementControlSection {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+}
+
+.AttunementSlotIcons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.AttunementSlotIcon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.AttunementSlotBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-image: url('/Resources/SVG/Attunement-Background.svg');
+    mask-image: url('/Resources/SVG/Attunement-Background.svg');
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: var(--Color0);
+    pointer-events: none;
+}
+
+.AttunementSlotForeground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-image: url('/Resources/SVG/Attunement-Foreground.svg');
+    mask-image: url('/Resources/SVG/Attunement-Foreground.svg');
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: var(--Color0);
+    pointer-events: none;
+    display: none;
+}
+
+.AttunementSlotIcon[data-attuned="true"] .AttunementSlotForeground {
+    display: block;
+}
+
+.AddInventoryItemControls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.NewInventoryItemNameInput {
+    flex: 1;
+    min-width: 0;
+    height: 4rem;
+}
+
+.NewInventoryTargetContainerSelect {
+    width: 26rem;
+    min-width: 26rem;
+    height: 4rem;
+    padding: 0 6px;
+    line-height: normal;
+}
+
+.AddInventoryItemButton,
+.CreateInventoryContainerButton {
+    width: 4rem;
+    height: 4rem;
+    min-width: 4rem;
+    min-height: 4rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.CharacterSheetInventoryContainerList {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.CharacterSheetInventoryColumn {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.InventoryContainer {
+    background-color: var(--Color7);
+    border: 1px solid var(--Color8);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.InventoryContainerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    border-bottom: 1px solid var(--Color8);
+    padding-bottom: 6px;
+}
+
+.InventoryContainerTitle {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--Color0);
+}
+
+.InventoryContainerControls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.DeleteInventoryContainerButton {
+    width: 4rem;
+    height: 4rem;
+    min-width: 4rem;
+    min-height: 4rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: var(--Color1);
+    color: var(--Color15);
+    border-color: var(--Color9);
+}
+
+.DeleteInventoryContainerButton .FunctionIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.InventoryContainerStats {
+    display: flex;
+    gap: 6px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    padding: 0;
+    margin: 0;
+}
+
+.InventoryContainerStatItem {
+    display: flex;
+    gap: 6px;
+}
+
+.InventoryContainerWeightValue,
+.InventoryContainerCountValue {
+    font-weight: bold;
+    color: var(--Color1);
+}
+
+.InventoryContainerItems {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.InventoryItemEntry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 6px;
+    background-color: var(--ColorBackground);
+    border: 1px solid var(--Color8);
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--ColorForeground);
+    box-sizing: border-box;
+}
+
+.InventoryItemName {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.RemoveInventoryItemButton {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: var(--Color1);
+    color: var(--Color15);
+    border: 1px solid var(--Color9);
+}
+
+.RemoveInventoryItemButton .FunctionIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.CreateInventoryContainerControls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+}
+
+.TagInputContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    min-height: 4rem;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    background-color: var(--Color15);
+    border: 2px inset var(--Color8);
+}
+
+.TagInputContainer:focus-within,
+.TagInputContainer.TagInputFocused {
+    border-color: var(--Color4);
+}
+
+.TagList {
+    display: contents;
+}
+
+.TagItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: calc(4rem - 4px);
+    padding: 0 6px;
+    margin: 0;
+    background-color: var(--Color7);
+    color: var(--Color0);
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    line-height: calc(4rem - 4px);
+}
+
+.TagItemText {
+    white-space: nowrap;
+}
+
+.TagRemoveButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    padding: 0;
+    margin: 0;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.TagRemoveButton:focus,
+.TagRemoveButton:focus-visible,
+.TagRemoveButton:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.TagRemoveIcon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    mask: url('/Resources/SVG/Function-SmallCross.svg') no-repeat center / contain;
+    -webkit-mask: url('/Resources/SVG/Function-SmallCross.svg') no-repeat center / contain;
+    background-color: var(--Color1);
+    pointer-events: none;
+}
+
+.TagTextInput {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    font-family: 'ANK24', monospace !important;
+    font-size: 2rem !important;
+    color: var(--Color0) !important;
+    height: calc(4rem - 4px) !important;
+    min-width: 80px;
+    flex: 1 1 auto;
+    padding: 0 6px !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+}
+
+.FuzzySuggestionPopover {
+    position: absolute;
+    z-index: 1500;
+    background-color: var(--Color15);
+    border: 2px outset var(--Color15);
+    box-shadow: 2px 2px 0 var(--Color0);
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+    box-sizing: border-box;
+}
+
+.FuzzySuggestionButton {
+    background: transparent;
+    border: none;
+    color: var(--Color4);
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: normal;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.CharacterImportContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 6px;
+}
+
+.CharacterImportURLInput {
+    box-sizing: border-box;
+    width: 100%;
+    height: 4rem;
+    padding: 6px 6px;
+    background-color: var(--Color15);
+    color: var(--Color0);
+    border: 2px inset var(--Color8);
+    font-size: 2rem;
+    outline: none;
+}
+
+.CharacterImportDetectionPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    background-color: var(--Color7);
+    border: 2px inset var(--Color15);
+    box-sizing: border-box;
+}
+
+.CharacterImportDetectionLabel {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+}
+
+.CharacterImportOverviewContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.CharacterImportOverviewContent {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.CharacterImportOverviewHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.CharacterImportOverviewPortraitContainer {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border: 1px solid var(--Color8);
+    background-color: var(--Color7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.CharacterImportOverviewPortrait {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.CharacterImportOverviewIdentity {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.CharacterImportOverviewName {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.CharacterImportOverviewGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 0;
+    box-sizing: border-box;
+}
+
+.CharacterImportOverviewRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.CharacterImportOverviewLabel {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    min-width: 90px;
+}
+
+.CharacterImportOverviewValue {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+}
+
+.CharacterImportOverviewStatus {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    padding: 6px 0;
+}
+
+.CharacterImportErrorMessage {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    word-break: break-word;
+}
+
+.SearchCharactersContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 6px;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.SearchCharactersTopBar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--Color8);
+}
+
+.SearchCharactersControlsRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.SearchCharactersSortSelect {
+    flex: 0 0 auto;
+    width: auto;
+    height: 4rem;
+    padding: 0 6px;
+    background-color: var(--Color15);
+    color: var(--Color0);
+    border: 2px inset var(--Color8);
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    box-sizing: border-box;
+}
+
+.SearchCharactersInput {
+    flex: 1 1 0;
+    min-width: 120px;
+    width: 100%;
+    height: 4rem;
+    padding: 0 6px;
+    background-color: var(--Color15);
+    color: var(--Color0);
+    border: 2px inset var(--Color8);
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    box-sizing: border-box;
+}
+
+.SearchCharactersIconButton {
+    flex: 0 0 auto;
+    height: 4rem;
+    width: 4rem;
+    min-width: 4rem;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.SearchCharactersResultsArea {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 0;
+}
+
+.SearchCharactersGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.SearchCharacterCard {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    width: 144px;
+    min-width: 144px;
+    max-width: 144px;
+    height: 192px;
+    min-height: 192px;
+    max-height: 192px;
+    flex: 0 0 auto;
+    border: 2px inset var(--Color8);
+    background-color: var(--Color7);
+    overflow: hidden;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.SearchCharacterCard:hover {
+    border-color: var(--Color12);
+}
+
+.SearchCharacterCardPortrait {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    z-index: 1;
+}
+
+.SearchCharacterCardPlaceholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--Color7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+    z-index: 1;
+}
+
+.SearchCharacterBadgeColumn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    z-index: 3;
+}
+
+.SearchCharacterCardOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--Color15);
+    border-top: 2px solid var(--Color8);
+    padding: 6px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 2;
+}
+
+.SearchCharacterCardName {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    font-weight: bold;
+    color: var(--Color0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.SearchCharacterDetailsList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.SearchCharacterDetailLine {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    line-height: 2rem;
+    color: var(--Color6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.DualRangeSliderWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.DualRangeSliderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.DualRangeSliderLabel {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+}
+
+.DualRangeSliderValue {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color4);
+    font-weight: bold;
+}
+
+.DualRangeSliderTrackContainer {
+    position: relative;
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+}
+
+.DualRangeSliderBaseTrack {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background-color: var(--Color8);
+    border: 1px solid var(--Color0);
+    box-sizing: border-box;
+}
+
+.DualRangeSliderActiveBar {
+    position: absolute;
+    height: 6px;
+    background-color: var(--Color4);
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.DualRangeSliderInput {
+    position: absolute;
+    width: 100%;
+    height: 4rem;
+    margin: 0;
+    padding: 0;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+    z-index: 2;
+}
+
+.DualRangeSliderInput::-webkit-slider-thumb {
+    pointer-events: auto;
+    width: 12px;
+    height: 24px;
+    background-color: var(--Color7);
+    border: 2px outset var(--Color15);
+    cursor: pointer;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+.DualRangeSliderInput::-webkit-slider-thumb:active {
+    border-style: inset;
+    background-color: var(--Color8);
+}
+
+.DualRangeSliderInput::-moz-range-thumb {
+    pointer-events: auto;
+    width: 12px;
+    height: 24px;
+    background-color: var(--Color7);
+    border: 2px outset var(--Color15);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.DualRangeSliderInput::-moz-range-thumb:active {
+    border-style: inset;
+    background-color: var(--Color8);
+}
+
+.FilterCheckboxRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 4rem;
+    box-sizing: border-box;
+}
+
+.FilterCheckboxLabel {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    cursor: pointer;
+}
+
+.SearchCharactersModalOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 600;
+    box-sizing: border-box;
+    background-color: var(--ColorTransparent);
+}
+
+.MailWindowContainer {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--ColorBackground);
+}
+
+.MailContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.MailPanelLeft {
+    width: 288px;
+    min-width: 288px;
+    max-width: 288px;
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--Color15);
+    box-sizing: border-box;
+}
+
+.MailPanelDivider {
+    width: 2px;
+    height: 100%;
+    background-color: var(--Color8);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.MailPanelRight {
+    flex: 1;
+    width: calc(100% - 290px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--ColorBackground);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.MailToolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    background-color: var(--Color7);
+    border-bottom: 2px solid var(--Color8);
+    box-sizing: border-box;
+}
+
+.MailToolbarButton {
+    width: 100%;
+    height: 4rem;
+    box-sizing: border-box;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+}
+
+.MailFilterButtonGroup {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+.MailFilterButton {
+    flex: 1;
+    height: 4rem;
+    box-sizing: border-box;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+}
+
+.ActiveMailFilter {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.MailListContainer {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    box-sizing: border-box;
+    background-color: var(--Color15);
+}
+
+.MailLoadingNotice, .MailEmptyNotice {
+    padding: 12px;
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+    text-align: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.MailEntryCard {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 84px;
+    gap: 0;
+    padding: 0;
+    background-color: var(--ColorBackground);
+    border: 2px solid var(--Color7);
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.MailEntryCard:hover {
+    border-color: var(--Color8);
+    background-color: var(--Color7);
+}
+
+.MailEntryCard:hover .MailEntrySenderPortrait {
+    border-right-color: var(--Color8);
+}
+
+.ActiveMailEntry {
+    border-color: var(--Color6);
+    background-color: var(--Color7);
+}
+
+.ActiveMailEntry .MailEntrySenderPortrait {
+    border-right-color: var(--Color6);
+}
+
+.MailEntryUnread {
+    font-weight: bold;
+}
+
+.MailEntrySenderPortrait {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border: none;
+    border-right: 2px solid var(--Color7);
+    background-color: var(--ColorBackground);
+    image-rendering: pixelated;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.MailEntryDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6px;
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.MailEntryCardTopRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+.MailEntrySenderGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.MailUnreadPip {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: var(--Color4);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.MailEntrySenderName {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.MailEntryTimestamp {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.MailEntrySubject {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.MailEntryBadgeRow {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+.MailPlaceholderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.MailPlaceholderText {
+    font-family: 'ANK24', monospace;
+    font-size: 3rem;
+    color: var(--Color8);
+}
+
+.MailMessageContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.MailNoticeBanner {
+    padding: 6px 12px;
+    background-color: var(--Color2);
+    color: var(--Color15);
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    box-sizing: border-box;
+}
+
+.MailMessageViewWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    gap: 12px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.MailMessageHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--Color7);
+    border: 2px solid var(--Color8);
+    box-sizing: border-box;
+}
+
+.MailSenderContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.MailHeaderPortrait {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border: 2px solid var(--Color8);
+    background-color: var(--ColorBackground);
+    image-rendering: pixelated;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.MailHeaderDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.MailHeaderRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 4rem;
+    box-sizing: border-box;
+}
+
+.MailHeaderRowLeft {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+.MailHeaderRowRight {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+.MailSenderName {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--Color0);
+}
+
+.StatusIndicator {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    vertical-align: middle;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.StatusIndicatorOnline {
+    background-color: var(--Color2);
+    -webkit-mask-image: url("/Resources/SVG/StatusIndicator-Online.svg");
+    mask-image: url("/Resources/SVG/StatusIndicator-Online.svg");
+}
+
+.StatusIndicatorIdle {
+    background-color: var(--Color3);
+    -webkit-mask-image: url("/Resources/SVG/StatusIndicator-Idle.svg");
+    mask-image: url("/Resources/SVG/StatusIndicator-Idle.svg");
+}
+
+.StatusIndicatorDoNotDisturb {
+    background-color: var(--Color1);
+    -webkit-mask-image: url("/Resources/SVG/StatusIndicator-DoNotDisturb.svg");
+    mask-image: url("/Resources/SVG/StatusIndicator-DoNotDisturb.svg");
+}
+
+.BadgeFlair {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.MailLastActiveText {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+}
+
+.MailMessageBody {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background-color: var(--Color15);
+    border: 2px solid var(--Color8);
+    box-sizing: border-box;
+    overflow-y: auto;
+    min-height: 120px;
+}
+
+.MailMessageText {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-sizing: border-box;
+}
+
+.MailRawTextBody {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.MailRawPre {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 6px;
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    background-color: transparent;
+    border: none;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-sizing: border-box;
+}
+
+.MailMessageFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--Color7);
+    border: 2px solid var(--Color8);
+    box-sizing: border-box;
+}
+
+.MailFooterRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 4rem;
+    box-sizing: border-box;
+}
+
+.MailFooterRowLeft {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.MailFooterRowRight {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.MailFooterSubjectText {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    font-weight: normal;
+    color: var(--Color8);
+}
+
+.MailFooterSubjectSerif {
+    font-family: serif;
+    font-size: 2rem;
+    font-weight: normal;
+    color: var(--Color0);
+}
+
+.MailSentTimestamp {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+}
+
+.MailFooterRefText {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+}
+
+.MailFooterIDItem {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+}
+
+.MailReplySection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    background-color: var(--Color7);
+    border: 2px solid var(--Color8);
+    box-sizing: border-box;
+}
+
+.MailReplySectionDisabled {
+    opacity: 0.5;
+    background-color: var(--Color7);
+    cursor: not-allowed;
+}
+
+.MailReplySectionDisabled * {
+    cursor: not-allowed;
+}
+
+.MailReplyHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.MailReplyTitle {
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--Color0);
+}
+
+.MailReplyInput {
+    width: 100%;
+    height: 72px;
+    min-height: 72px;
+    max-height: 72px;
+    overflow-y: auto;
+    resize: none;
+    box-sizing: border-box;
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color0);
+    background-color: var(--Color15);
+    border: 2px solid var(--Color8);
+    padding: 6px;
+}
+
+.MailReplyButton {
+    height: 4rem;
+    padding: 0 18px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    box-sizing: border-box;
+}
+
+.MailComposeWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.MailComposeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.MailComposeRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.MailComposeLabel {
+    width: 72px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--Color0);
+    box-sizing: border-box;
+}
+
+.MailComposeInput, .MailComposeSelect {
+    flex: 1;
+    height: 4rem;
+    box-sizing: border-box;
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    border: 2px solid var(--Color8);
+    background-color: var(--Color15);
+    color: var(--Color0);
+    padding: 0 6px;
+}
+
+.MailComposeBodyRow {
+    align-items: stretch;
+    flex: 1;
+    min-height: 200px;
+}
+
+.MailComposePanesContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    flex: 1;
+    width: 100%;
+    min-height: 200px;
+    box-sizing: border-box;
+}
+
+.MailComposeTextarea {
+    flex: 1;
+    height: 100%;
+    min-height: 200px;
+    resize: none;
+    box-sizing: border-box;
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    border: 2px solid var(--Color8);
+    background-color: var(--Color15);
+    color: var(--Color0);
+    padding: 6px;
+    overflow-y: auto;
+}
+
+.BadgeStatusOnline {
+    background-color: var(--Color2);
+    color: var(--Color15);
+}
+
+.BadgeStatusIdle {
+    background-color: var(--Color3);
+    color: var(--Color15);
+}
+
+.BadgeStatusDND {
+    background-color: var(--Color1);
+    color: var(--Color15);
+}
+
+.BadgeStatusOffline {
+    background-color: var(--Color8);
+    color: var(--Color15);
+}
+
+.BadgeStatusSystem {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.BadgeSystemAlert {
+    background-color: var(--Color1);
+    color: var(--Color15);
+}
+
+.BadgeCharacterReview {
+    background-color: var(--Color4);
+    color: var(--Color15);
+}
+
+.BadgeStoryNotice {
+    background-color: var(--Color5);
+    color: var(--Color15);
+}
+
+.BadgeAdministrative {
+    background-color: var(--Color6);
+    color: var(--Color15);
+}
+
+.BadgeGeneralMessage {
+    background-color: var(--Color8);
+    color: var(--Color15);
+}
+
+.MailMessageText h1,
+.MailMarkdownBody h1,
+.MailPreviewPane h1,
+.MailMessageText h2,
+.MailMarkdownBody h2,
+.MailPreviewPane h2,
+.MailMessageText h3,
+.MailMarkdownBody h3,
+.MailPreviewPane h3,
+.MailMessageText h4,
+.MailMarkdownBody h4,
+.MailPreviewPane h4 {
+    font-family: 'JPN12', monospace;
+    color: var(--Color0);
+    font-weight: bold;
+}
+
+.MailMessageText h1, .MailMarkdownBody h1, .MailPreviewPane h1 {
+    font-size: 4rem;
+    margin: 8px 0 4px 0;
+}
+
+.MailMessageText h2, .MailMarkdownBody h2, .MailPreviewPane h2 {
+    font-size: 3rem;
+    margin: 6px 0 2px 0;
+}
+
+.MailMessageText h3, .MailMarkdownBody h3, .MailPreviewPane h3 {
+    font-size: 2rem;
+    color: var(--Color0);
+    margin: 4px 0 2px 0;
+}
+
+.MailMessageText h4, .MailMarkdownBody h4, .MailPreviewPane h4 {
+    font-size: 2rem;
+    color: var(--Color8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 4px 0 2px 0;
+}
+
+.MailMessageText .MailSubtitle,
+.MailMarkdownBody .MailSubtitle,
+.MailPreviewPane .MailSubtitle {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    color: var(--Color8);
+    margin: 2px 0 6px 0;
+}
+
+.MailMessageText p, .MailMarkdownBody p, .MailPreviewPane p {
+    margin: 6px 0;
+}
+
+.MailMessageText ul, .MailMarkdownBody ul, .MailPreviewPane ul,
+.MailMessageText ol, .MailMarkdownBody ol, .MailPreviewPane ol {
+    margin: 6px 0 6px 18px;
+    padding: 0;
+}
+
+.MailMessageText li, .MailMarkdownBody li, .MailPreviewPane li {
+    margin: 3px 0;
+}
+
+.MailMessageText blockquote, .MailMarkdownBody blockquote, .MailPreviewPane blockquote {
+    margin: 6px 0;
+    padding: 0 12px;
+    border-left: 4px solid var(--Color8);
+    background-color: transparent;
+}
+
+.MailMessageText u, .MailMarkdownBody u, .MailPreviewPane u {
+    text-decoration: underline;
+}
+
+.MailMessageText code, .MailMarkdownBody code, .MailPreviewPane code {
+    font-family: 'ANK24', monospace;
+    font-size: 2rem;
+    background-color: var(--Color7);
+    padding: 2px 4px;
+    border: 1px solid var(--Color8);
+}
+
+.MailMessageText pre, .MailMarkdownBody pre, .MailPreviewPane pre {
+    background-color: var(--Color7);
+    border: 2px solid var(--Color8);
+    padding: 6px 12px;
+    overflow-x: auto;
+    margin: 6px 0;
+}
+
+.MailMessageText pre code, .MailMarkdownBody pre code, .MailPreviewPane pre code {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.MailMessageText table, .MailMarkdownBody table, .MailPreviewPane table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0;
+    border: 2px solid var(--Color8);
+}
+
+.MailMessageText th, .MailMarkdownBody th, .MailPreviewPane th,
+.MailMessageText td, .MailMarkdownBody td, .MailPreviewPane td {
+    padding: 6px;
+    border: 1px solid var(--Color8);
+    text-align: left;
+}
+
+.MailMessageText th, .MailMarkdownBody th, .MailPreviewPane th {
+    background-color: var(--Color7);
+    font-family: 'JPN12', monospace;
+}
+
+.MailMessageText strong,
+.MailMarkdownBody strong,
+.MailPreviewPane strong,
+.MailMessageText b,
+.MailMarkdownBody b,
+.MailPreviewPane b {
+    font-family: 'JPN12', monospace;
+    font-weight: bold;
+    text-shadow: 1px 0 0 currentColor;
+}
+
+.admonition {
+    margin: 12px 0;
+    padding: 6px 12px;
+    border: none;
+    box-sizing: border-box;
+}
+
+.admonition-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+}
+
+.admonition-title::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    flex-shrink: 0;
+}
+
+.admonition.note,
+.admonition.info {
+    border-left: 6px solid var(--Color4);
+    background-color: color-mix(in srgb, var(--Color4) 50%, transparent);
+}
+.admonition.note .admonition-title,
+.admonition.info .admonition-title {
+    color: var(--Color4);
+}
+.admonition.note .admonition-title::before,
+.admonition.info .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Note.svg");
+    mask-image: url("/Resources/SVG/Admonition-Note.svg");
+}
+
+.admonition.attention {
+    border-left: 6px solid var(--Color3);
+    background-color: color-mix(in srgb, var(--Color3) 50%, transparent);
+}
+.admonition.attention .admonition-title {
+    color: var(--Color3);
+}
+.admonition.attention .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Attention.svg");
+    mask-image: url("/Resources/SVG/Admonition-Attention.svg");
+}
+
+.admonition.caution {
+    border-left: 6px solid var(--Color3);
+    background-color: color-mix(in srgb, var(--Color3) 50%, transparent);
+}
+.admonition.caution .admonition-title {
+    color: var(--Color3);
+}
+.admonition.caution .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Caution.svg");
+    mask-image: url("/Resources/SVG/Admonition-Caution.svg");
+}
+
+.admonition.warning {
+    border-left: 6px solid var(--Color3);
+    background-color: color-mix(in srgb, var(--Color3) 50%, transparent);
+}
+.admonition.warning .admonition-title {
+    color: var(--Color3);
+}
+.admonition.warning .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Warning.svg");
+    mask-image: url("/Resources/SVG/Admonition-Warning.svg");
+}
+
+.admonition.danger,
+.admonition.critical {
+    border-left: 6px solid var(--Color1);
+    background-color: color-mix(in srgb, var(--Color1) 50%, transparent);
+}
+.admonition.danger .admonition-title,
+.admonition.critical .admonition-title {
+    color: var(--Color1);
+}
+.admonition.danger .admonition-title::before,
+.admonition.critical .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Danger.svg");
+    mask-image: url("/Resources/SVG/Admonition-Danger.svg");
+}
+
+.admonition.error {
+    border-left: 6px solid var(--Color1);
+    background-color: color-mix(in srgb, var(--Color1) 50%, transparent);
+}
+.admonition.error .admonition-title {
+    color: var(--Color1);
+}
+.admonition.error .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Error.svg");
+    mask-image: url("/Resources/SVG/Admonition-Error.svg");
+}
+
+.admonition.hint {
+    border-left: 6px solid var(--Color2);
+    background-color: color-mix(in srgb, var(--Color2) 50%, transparent);
+}
+.admonition.hint .admonition-title {
+    color: var(--Color2);
+}
+.admonition.hint .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Hint.svg");
+    mask-image: url("/Resources/SVG/Admonition-Hint.svg");
+}
+
+.admonition.important {
+    border-left: 6px solid var(--Color6);
+    background-color: color-mix(in srgb, var(--Color6) 50%, transparent);
+}
+.admonition.important .admonition-title {
+    color: var(--Color6);
+}
+.admonition.important .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Important.svg");
+    mask-image: url("/Resources/SVG/Admonition-Important.svg");
+}
+
+.admonition.tip,
+.admonition.success {
+    border-left: 6px solid var(--Color2);
+    background-color: color-mix(in srgb, var(--Color2) 50%, transparent);
+}
+.admonition.tip .admonition-title,
+.admonition.success .admonition-title {
+    color: var(--Color2);
+}
+.admonition.tip .admonition-title::before,
+.admonition.success .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Tip.svg");
+    mask-image: url("/Resources/SVG/Admonition-Tip.svg");
+}
+
+.MailPreviewPane {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    padding: 12px;
+    background-color: var(--Color15);
+    border: 2px solid var(--Color8);
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.MailTagInputContainer {
+    flex: 1;
+    min-height: 4rem;
+    box-sizing: border-box;
+}
+
+.MailComposeSuccessContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.MailComposeWindowContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+

@@ -1,0 +1,120 @@
+{% if Characters %}
+  {% for Entry in Characters %}
+    <div class="SearchCharacterCard" data-character-id="{{ Entry.Character.ID }}" data-game-system="{{ Entry.GameSystemName }}">
+      {% if Entry.PortraitFileID %}
+        <img class="SearchCharacterCardPortrait" src="/API/Storage/Files/{{ Entry.PortraitFileID }}/Stream" alt="{{ Entry.Character.Name }}" />
+      {% elif Entry.PortraitURL %}
+        <img class="SearchCharacterCardPortrait" src="{{ Entry.PortraitURL }}" alt="{{ Entry.Character.Name }}" />
+      {% else %}
+        <div class="SearchCharacterCardPlaceholder">
+          <span>NO PORTRAIT</span>
+        </div>
+      {% endif %}
+
+      {% if Entry.CanModify and not Entry.Character.IsArchived %}
+        <button type="button" class="CharacterPinButton {% if Entry.Character.IsPinned %}CharacterPinned{% endif %}"
+                hx-post="/API/Characters/{{ Entry.Character.ID }}/Pin/Partial"
+                hx-target="#CharacterRosterContainer"
+                hx-swap="innerHTML"
+                hx-include="#CharacterSearchInput"
+                title="{% if Entry.Character.IsPinned %}Unpin Character{% else %}Pin Character{% endif %}"
+                aria-label="{% if Entry.Character.IsPinned %}Unpin Character{% else %}Pin Character{% endif %}">
+          <span class="FunctionIcon FunctionIconStar" aria-hidden="true"></span>
+        </button>
+      {% endif %}
+
+      <div class="SearchCharacterBadgeColumn">
+        {% if Entry.GameSystemName == "DND5thEdition" %}
+          <span class="Badge BadgeDND5thEdition">DND5thEdition</span>
+        {% else %}
+          <span class="Badge BadgeTraveller2ndEdition">Traveller2ndEdition</span>
+        {% endif %}
+        {% if Entry.Character.IsArchived %}
+          <span class="Badge BadgeArchived">Archived</span>
+        {% else %}
+          {% if Entry.Character.IsPublic %}
+            <span class="Badge BadgePublic">Public</span>
+          {% else %}
+            <span class="Badge BadgePrivate">Private</span>
+          {% endif %}
+          {% if not Entry.Character.IsAccepted %}
+            <span class="Badge BadgeUnderReview">Under Review</span>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      <div class="SearchCharacterCardOverlay">
+        <div class="SearchCharacterCardName" title="{{ Entry.Character.Name }}">{{ Entry.Character.Name }}</div>
+        <div class="SearchCharacterDetailsList">
+          {% if Entry.GameSystemName == "DND5thEdition" %}
+            <div class="SearchCharacterDetailLine">Class: {{ Entry.CharacterClass or "Adventurer" }}</div>
+            <div class="SearchCharacterDetailLine">Level: {{ Entry.CharacterLevel }}</div>
+            <div class="SearchCharacterDetailLine">Species: {{ Entry.CharacterSpecies or "Unknown" }}</div>
+          {% elif Entry.GameSystemName == "Traveller2ndEdition" %}
+            <div class="SearchCharacterDetailLine">Career: {{ Entry.CharacterCareer or "Citizen" }}</div>
+            <div class="SearchCharacterDetailLine">Terms: {{ Entry.CharacterTerms }}</div>
+            <div class="SearchCharacterDetailLine">Homeworld: {{ Entry.CharacterHomeworld or "Core" }}</div>
+          {% endif %}
+        </div>
+        {% if Entry.CanModify or Entry.CanArchive %}
+          <div class="CharacterCardActionRow">
+            {% if Entry.CanModify %}
+              <button type="button" class="Button ButtonSmall ButtonSquare EditCharacterButton"
+                      title="Edit Character"
+                      aria-label="Edit Character"
+                      data-character-id="{{ Entry.Character.ID }}"
+                      data-game-system="{{ Entry.GameSystemName }}">
+                <span class="FunctionIcon FunctionIconOptions" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="Button ButtonSmall ButtonSquare CharacterVisibilityButton"
+                      hx-post="/API/Characters/{{ Entry.Character.ID }}/Visibility/Partial"
+                      hx-target="#CharacterRosterContainer"
+                      hx-swap="innerHTML"
+                      hx-include="#CharacterSearchInput"
+                      title="{% if Entry.Character.IsPublic %}Make Character Private{% else %}Make Character Public{% endif %}"
+                      aria-label="{% if Entry.Character.IsPublic %}Make Character Private{% else %}Make Character Public{% endif %}">
+                {% if Entry.Character.IsPublic %}
+                  <span class="FunctionIcon FunctionIconHideItem" aria-hidden="true"></span>
+                {% else %}
+                  <span class="FunctionIcon FunctionIconShowItem" aria-hidden="true"></span>
+                {% endif %}
+              </button>
+            {% endif %}
+            {% if Entry.CanArchive %}
+              {% if Entry.Character.IsArchived %}
+                <button type="button" class="Button ButtonSmall ButtonSquare"
+                        hx-post="/API/Characters/{{ Entry.Character.ID }}/Archive/Partial"
+                        hx-target="#CharacterRosterContainer"
+                        hx-swap="innerHTML"
+                        hx-include="#CharacterSearchInput"
+                        title="Restore Character"
+                        aria-label="Restore Character">
+                  <span class="FunctionIcon FunctionIconCheck" aria-hidden="true"></span>
+                </button>
+              {% elif Entry.Character.IsPinned %}
+                <button type="button" class="Button ButtonSmall ButtonSquare ButtonDanger"
+                        disabled
+                        title="Pinned characters cannot be archived"
+                        aria-label="Archive Character">
+                  <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                </button>
+              {% else %}
+                <button type="button" class="Button ButtonSmall ButtonSquare ButtonDanger"
+                        hx-post="/API/Characters/{{ Entry.Character.ID }}/Archive/Partial"
+                        hx-target="#CharacterRosterContainer"
+                        hx-swap="innerHTML"
+                        hx-include="#CharacterSearchInput"
+                        title="Archive Character"
+                        aria-label="Archive Character">
+                  <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                </button>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="TextMuted">No accessible characters found under current role permissions.</div>
+{% endif %}
