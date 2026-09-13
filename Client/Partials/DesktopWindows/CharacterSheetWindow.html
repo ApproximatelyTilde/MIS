@@ -1,0 +1,703 @@
+<div class="WindowContainer">
+  {% if not IsAllowed %}
+    <div class="TerminalPane MarginTopMedium">
+      <div class="TextDanger HeaderText MarginBottomSmall">ACCESS RESTRICTED</div>
+      <div class="TextMuted">Server membership is required to create a new character. Please join the Discord server.</div>
+    </div>
+  {% else %}
+    <form id="CharacterSheetCreationForm" hx-post="/API/Characters/Manual/Partial" hx-swap="none">
+      <input type="hidden" name="GameSystem" value="{{ GameSystem }}" />
+
+      <div class="TabNavigationContainer">
+        <div class="TabNavigation CharacterSheetTabNavigation">
+          <button type="button" class="TabButton ActiveTab CharacterSheetTabButton" data-target-tab="CharacterSheetOverviewTab">Overview</button>
+          <button type="button" class="TabButton CharacterSheetTabButton" data-target-tab="CharacterSheetAbilitiesTab">Abilities</button>
+          <button type="button" class="TabButton CharacterSheetTabButton" data-target-tab="CharacterSheetFluffTab">Fluff</button>
+        </div>
+        <div id="CharacterSheetActionContainer" class="TabActionContainer">
+          <button type="button" id="CharacterSheetProtectButton" class="Button ButtonSquare TabSearchButton CharacterSheetProtectButton" title="Protect Character Sheet" aria-label="Protect Character Sheet">
+            <span class="FunctionIcon FunctionIconProtect" aria-hidden="true"></span>
+          </button>
+          <button type="button" id="CharacterSheetOverrideButton" class="Button ButtonSquare ButtonWarning TabSearchButton CharacterSheetOverrideButton" title="Override Character Sheet" aria-label="Override Character Sheet">
+            <span class="FunctionIcon FunctionIconOverride" aria-hidden="true"></span>
+          </button>
+          <button type="submit" id="CharacterSheetSaveButton" class="Button ButtonSquare ButtonPrimary TabSearchButton CharacterSheetSaveButton" title="Save Character Sheet" aria-label="Save Character Sheet">
+            <span class="FunctionIcon FunctionIconSave" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div id="CharacterSheetOverviewTab" class="CharacterSheetTabContent">
+        <div class="CharacterSheetIdentitySection">
+          <div class="CharacterSheetPortraitColumn">
+            {% include "Characters/CharacterPortraitPartial.html" %}
+          </div>
+          <div class="CharacterSheetIdentityFieldsColumn">
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetNameInput">Character Name</label>
+                  <input type="text" id="CharacterSheetNameInput" name="Name" required placeholder="Enter character name" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetProficiencyBonusInput" title="Proficiency Bonus">Proficiency Bonus</label>
+                  <input type="number" id="CharacterSheetProficiencyBonusInput" name="ProficiencyBonus" value="2" readonly disabled class="InputDisabled" />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetSpeciesInput">Species</label>
+                  <input type="text" id="CharacterSheetSpeciesInput" name="Species" placeholder="e.g. Elf, Dwarf, Human" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetInitiativeInput" title="Initiative Bonus">Initiative Bonus</label>
+                  <input type="number" id="CharacterSheetInitiativeInput" name="InitiativeBonus" value="0" readonly disabled class="InputDisabled" />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetBackgroundInput">Background</label>
+                  <input type="text" id="CharacterSheetBackgroundInput" name="Background" placeholder="e.g. Folk Hero, Acolyte" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetExperienceInput" title="Experience Points">Experience Points</label>
+                  <input type="number" id="CharacterSheetExperienceInput" name="ExperiencePoints" value="0" readonly disabled class="InputDisabled" />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="CharacterSheetIdentityColumnLeft">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetAlignmentInput">Alignment</label>
+                  <input type="text" id="CharacterSheetAlignmentInput" name="Alignment" placeholder="e.g. Neutral Good" />
+                </div>
+              </div>
+              <div class="CharacterSheetIdentityColumnRight">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetPassivePerceptionInput" title="Passive Perception">Passive Perception</label>
+                  <input type="number" id="CharacterSheetPassivePerceptionInput" name="PassivePerception" value="10" readonly disabled class="InputDisabled" />
+                </div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetIdentityRow">
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetInspirationSelect" title="Inspiration">Inspiration</label>
+                <select id="CharacterSheetInspirationSelect" name="Inspiration">
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
+                </select>
+              </div>
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetHitPointsInput" title="Hit Points">Hit Points</label>
+                <input type="number" id="CharacterSheetHitPointsInput" value="10" min="1" readonly disabled class="InputDisabled" />
+                <input type="hidden" name="HitPoints" value="10" id="CharacterSheetHitPointsHiddenInput" />
+              </div>
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetArmorClassInput" title="Armor Class">Armor Class</label>
+                <input type="number" id="CharacterSheetArmorClassInput" value="10" min="0" readonly disabled class="InputDisabled" />
+                <input type="hidden" name="ArmorClass" value="10" id="CharacterSheetArmorClassHiddenInput" />
+              </div>
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetSpeedInput" title="Speed (Feet)">Speed (Feet)</label>
+                <input type="number" id="CharacterSheetSpeedInput" value="30" min="0" readonly disabled class="InputDisabled" />
+                <input type="hidden" name="Speed" value="30" id="CharacterSheetSpeedHiddenInput" />
+              </div>
+              <div class="FormGroup">
+                <label class="FormLabel" for="CharacterSheetPassiveInvestigationInput" title="Passive Investigation">Passive Investigation</label>
+                <input type="number" id="CharacterSheetPassiveInvestigationInput" name="PassiveInvestigation" value="10" readonly disabled class="InputDisabled" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="CharacterSheetAbilitiesGrid">
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetStrengthInput">Strength</label>
+            <input type="number" id="CharacterSheetStrengthInput" name="Strength" value="10" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetDexterityInput">Dexterity</label>
+            <input type="number" id="CharacterSheetDexterityInput" name="Dexterity" value="10" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetConstitutionInput">Constitution</label>
+            <input type="number" id="CharacterSheetConstitutionInput" name="Constitution" value="10" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetIntelligenceInput">Intelligence</label>
+            <input type="number" id="CharacterSheetIntelligenceInput" name="Intelligence" value="10" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetWisdomInput">Wisdom</label>
+            <input type="number" id="CharacterSheetWisdomInput" name="Wisdom" value="10" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+          <div class="CharacterSheetAbilityBox">
+            <label class="FormLabel" for="CharacterSheetCharismaInput">Charisma</label>
+            <input type="number" id="CharacterSheetCharismaInput" name="Charisma" value="10" min="1" max="30" class="CharacterSheetAbilityInput" />
+          </div>
+        </div>
+
+        <div class="CharacterSheetDetailsSection">
+          <div class="CharacterSheetSkillsColumn">
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Strength</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Athletics">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyAthletics" value="0" />
+                <div class="CharacterSheetSkillName">Athletics</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Dexterity</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Acrobatics">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyAcrobatics" value="0" />
+                <div class="CharacterSheetSkillName">Acrobatics</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="SleightOfHand">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencySleightOfHand" value="0" />
+                <div class="CharacterSheetSkillName">Sleight of Hand</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Stealth">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyStealth" value="0" />
+                <div class="CharacterSheetSkillName">Stealth</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Intelligence</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Arcana">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyArcana" value="0" />
+                <div class="CharacterSheetSkillName">Arcana</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="History">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyHistory" value="0" />
+                <div class="CharacterSheetSkillName">History</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Investigation">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyInvestigation" value="0" />
+                <div class="CharacterSheetSkillName">Investigation</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Nature">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyNature" value="0" />
+                <div class="CharacterSheetSkillName">Nature</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Religion">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyReligion" value="0" />
+                <div class="CharacterSheetSkillName">Religion</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Wisdom</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="AnimalHandling">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyAnimalHandling" value="0" />
+                <div class="CharacterSheetSkillName">Animal Handling</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Insight">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyInsight" value="0" />
+                <div class="CharacterSheetSkillName">Insight</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Medicine">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyMedicine" value="0" />
+                <div class="CharacterSheetSkillName">Medicine</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Perception">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyPerception" value="0" />
+                <div class="CharacterSheetSkillName">Perception</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Survival">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencySurvival" value="0" />
+                <div class="CharacterSheetSkillName">Survival</div>
+              </div>
+            </div>
+
+            <div class="CharacterSheetSkillCategory">
+              <div class="CharacterSheetSkillCategoryTitle">Charisma</div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Deception">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyDeception" value="0" />
+                <div class="CharacterSheetSkillName">Deception</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Intimidation">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyIntimidation" value="0" />
+                <div class="CharacterSheetSkillName">Intimidation</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Performance">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyPerformance" value="0" />
+                <div class="CharacterSheetSkillName">Performance</div>
+              </div>
+              <div class="CharacterSheetSkillRow">
+                <div class="SkillProficiencyIcon" data-proficiency-state="0" data-skill-name="Persuasion">
+                  <div class="SkillProficiencyBackground"></div>
+                  <div class="SkillProficiencyForegroundHalf"></div>
+                  <div class="SkillProficiencyForegroundFull"></div>
+                </div>
+                <input type="hidden" name="SkillProficiencyPersuasion" value="0" />
+                <div class="CharacterSheetSkillName">Persuasion</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="CharacterSheetStatsColumn">
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetWeaponProficienciesInput">Weapon Proficiencies</label>
+                  <textarea id="CharacterSheetWeaponProficienciesInput" name="WeaponProficiencies" rows="1" placeholder="e.g. Simple, Martial"></textarea>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetResistancesInput">Damage Resistances</label>
+                  <textarea id="CharacterSheetResistancesInput" name="DamageResistances" rows="1" placeholder="e.g. Poison, Fire"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetArmorProficienciesInput">Armor Proficiencies</label>
+                  <textarea id="CharacterSheetArmorProficienciesInput" name="ArmorProficiencies" rows="1" placeholder="e.g. Light, Medium"></textarea>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetImmunitiesInput">Damage Immunities</label>
+                  <textarea id="CharacterSheetImmunitiesInput" name="DamageImmunities" rows="1" placeholder="e.g. Poison"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetToolProficienciesInput">Tool Proficiencies</label>
+                  <textarea id="CharacterSheetToolProficienciesInput" name="ToolProficiencies" rows="1" placeholder="e.g. Thieves' Tools"></textarea>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetVulnerabilitiesInput">Damage Vulnerabilities</label>
+                  <textarea id="CharacterSheetVulnerabilitiesInput" name="DamageVulnerabilities" rows="1" placeholder="e.g. Bludgeoning"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="FormRow">
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetLanguagesInput">Languages</label>
+                  <textarea id="CharacterSheetLanguagesInput" name="Languages" rows="1" placeholder="e.g. Common, Elvish"></textarea>
+                </div>
+              </div>
+              <div class="FormColumn">
+                <div class="FormGroup">
+                  <label class="FormLabel" for="CharacterSheetConditionImmunitiesInput">Condition Immunities</label>
+                  <textarea id="CharacterSheetConditionImmunitiesInput" name="ConditionImmunities" rows="1" placeholder="e.g. Charmed"></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="CharacterSheetAbilitiesTab" class="CharacterSheetTabContent HiddenElement">
+        <div class="CharacterSheetAbilitiesColumns">
+          <div class="CharacterSheetClassColumn">
+            <div class="CharacterSheetSectionHeader">
+              <div class="CharacterSheetSectionTitle">Classes</div>
+            </div>
+
+            <div id="CharacterSheetClassContainerList" class="CharacterSheetClassContainerList">
+              <div class="ClassContainer" data-class-index="0" data-initial-class="true">
+                <input type="hidden" name="Classes[0].IsInitialClass" value="true" class="ClassInitialInput" />
+                <div class="ClassContainerFields">
+                  <div class="FormRow">
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Class</label>
+                        <input type="text" name="Classes[0].ClassName" class="ClassInputName" placeholder="e.g. Bard, Fighter, Rogue" />
+                      </div>
+                    </div>
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Subclass</label>
+                        <input type="text" name="Classes[0].Subclass" class="ClassInputSubclass InputDisabled" placeholder="e.g. Lore, Champion" disabled />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="FormRow">
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Level</label>
+                        <input type="number" name="Classes[0].Level" class="ClassInputLevel" value="1" min="1" max="20" />
+                      </div>
+                    </div>
+                    <div class="FormColumn">
+                      <div class="FormGroup">
+                        <label class="FormLabel">Experience Points</label>
+                        <div class="ClassExperienceRow">
+                          <input type="number" name="Classes[0].Experience" class="ClassInputExperience" value="0" min="0" />
+                          <button type="button" class="Button ButtonSquare ButtonWarning ClassStarButton" title="Initial Class" aria-label="Initial Class" disabled>
+                            <span class="FunctionIcon FunctionIconStar" aria-hidden="true"></span>
+                          </button>
+                          <button type="button" class="Button ButtonSquare ButtonDanger ClassDeleteButton" title="Delete Class" aria-label="Delete Class" disabled>
+                            <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="AddClassControls">
+              <button type="button" id="CharacterSheetAddClassButton" class="Button ButtonSquare ButtonPrimary AddClassButton" title="Add Class" aria-label="Add Class">
+                <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <div class="CharacterSheetSectionHeader">
+              <div class="CharacterSheetSectionTitle">Features</div>
+            </div>
+            <textarea id="CharacterSheetFeaturesInput" name="Features" rows="6" placeholder="List features, traits, and feats separated by commas or line breaks (e.g. Second Wind, Action Surge, Darkvision, Alert)"></textarea>
+          </div>
+
+          <div class="CharacterSheetSpellColumn">
+            <div id="CharacterSheetSpellSlotsSection" class="CharacterSheetSpellSlotsSection HiddenElement">
+              <div id="CharacterSheetSpellcastingSlotsColumn" class="CharacterSheetSpellSlotsColumn HiddenElement">
+                <div class="CharacterSheetSectionHeader">
+                  <div class="CharacterSheetSectionTitle">Spellcasting</div>
+                </div>
+                <div id="CharacterSheetSpellSlotsContainer" class="SpellSlotGrid">
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="1">
+                    <span class="SpellSlotLevelLabel">Level 1</span>
+                    <div class="SpellSlotIcons" data-slot-level="1"></div>
+                    <input type="hidden" name="SpellSlots[1].Level" value="1" />
+                    <input type="hidden" name="SpellSlots[1].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[1].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="2">
+                    <span class="SpellSlotLevelLabel">Level 2</span>
+                    <div class="SpellSlotIcons" data-slot-level="2"></div>
+                    <input type="hidden" name="SpellSlots[2].Level" value="2" />
+                    <input type="hidden" name="SpellSlots[2].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[2].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="3">
+                    <span class="SpellSlotLevelLabel">Level 3</span>
+                    <div class="SpellSlotIcons" data-slot-level="3"></div>
+                    <input type="hidden" name="SpellSlots[3].Level" value="3" />
+                    <input type="hidden" name="SpellSlots[3].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[3].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="4">
+                    <span class="SpellSlotLevelLabel">Level 4</span>
+                    <div class="SpellSlotIcons" data-slot-level="4"></div>
+                    <input type="hidden" name="SpellSlots[4].Level" value="4" />
+                    <input type="hidden" name="SpellSlots[4].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[4].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="5">
+                    <span class="SpellSlotLevelLabel">Level 5</span>
+                    <div class="SpellSlotIcons" data-slot-level="5"></div>
+                    <input type="hidden" name="SpellSlots[5].Level" value="5" />
+                    <input type="hidden" name="SpellSlots[5].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[5].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="6">
+                    <span class="SpellSlotLevelLabel">Level 6</span>
+                    <div class="SpellSlotIcons" data-slot-level="6"></div>
+                    <input type="hidden" name="SpellSlots[6].Level" value="6" />
+                    <input type="hidden" name="SpellSlots[6].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[6].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="7">
+                    <span class="SpellSlotLevelLabel">Level 7</span>
+                    <div class="SpellSlotIcons" data-slot-level="7"></div>
+                    <input type="hidden" name="SpellSlots[7].Level" value="7" />
+                    <input type="hidden" name="SpellSlots[7].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[7].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="8">
+                    <span class="SpellSlotLevelLabel">Level 8</span>
+                    <div class="SpellSlotIcons" data-slot-level="8"></div>
+                    <input type="hidden" name="SpellSlots[8].Level" value="8" />
+                    <input type="hidden" name="SpellSlots[8].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[8].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="9">
+                    <span class="SpellSlotLevelLabel">Level 9</span>
+                    <div class="SpellSlotIcons" data-slot-level="9"></div>
+                    <input type="hidden" name="SpellSlots[9].Level" value="9" />
+                    <input type="hidden" name="SpellSlots[9].Total" value="0" class="SpellSlotTotalInput" />
+                    <input type="hidden" name="SpellSlots[9].Used" value="0" class="SpellSlotUsedInput" />
+                  </div>
+                </div>
+              </div>
+
+              <div id="CharacterSheetPactMagicSlotsColumn" class="CharacterSheetSpellSlotsColumn HiddenElement">
+                <div class="CharacterSheetSectionHeader">
+                  <div class="CharacterSheetSectionTitle">Pact Magic</div>
+                </div>
+                <div id="CharacterSheetPactMagicSlotsContainer" class="SpellSlotGrid">
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="1">
+                    <span class="SpellSlotLevelLabel">Level 1</span>
+                    <div class="SpellSlotIcons" data-slot-level="1"></div>
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="2">
+                    <span class="SpellSlotLevelLabel">Level 2</span>
+                    <div class="SpellSlotIcons" data-slot-level="2"></div>
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="3">
+                    <span class="SpellSlotLevelLabel">Level 3</span>
+                    <div class="SpellSlotIcons" data-slot-level="3"></div>
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="4">
+                    <span class="SpellSlotLevelLabel">Level 4</span>
+                    <div class="SpellSlotIcons" data-slot-level="4"></div>
+                  </div>
+                  <div class="SpellSlotRow HiddenElement" data-slot-level="5">
+                    <span class="SpellSlotLevelLabel">Level 5</span>
+                    <div class="SpellSlotIcons" data-slot-level="5"></div>
+                  </div>
+                </div>
+                <input type="hidden" name="PactMagic.SlotLevel" id="CharacterSheetPactMagicSlotLevelInput" value="0" />
+                <input type="hidden" name="PactMagic.TotalSlots" id="CharacterSheetPactMagicTotalSlotsInput" value="0" />
+                <input type="hidden" name="PactMagic.UsedSlots" id="CharacterSheetPactMagicUsedSlotsInput" value="0" />
+              </div>
+            </div>
+
+            <div class="CharacterSheetSectionHeader">
+              <div class="CharacterSheetSectionTitle">Spells</div>
+            </div>
+            <div class="AddSpellControls">
+              <input type="text" id="NewSpellNameInput" class="NewSpellNameInput" placeholder="Spell Name" />
+              <select id="NewSpellTargetListSelect" class="NewSpellTargetListSelect">
+                <option value="Spellbook">Spellbook</option>
+                <option value="Prepared Spells">Prepared Spells</option>
+                <option value="Cantrips">Cantrips</option>
+              </select>
+              <button type="button" id="AddSpellButton" class="Button ButtonSquare ButtonPrimary AddSpellButton" title="Add Spell" aria-label="Add Spell">
+                <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <div id="CharacterSheetSpellListContainer" class="CharacterSheetSpellListContainer">
+            </div>
+
+            <div class="CreateSpellListControls">
+              <button type="button" id="CreateSpellListButton" class="Button ButtonSquare ButtonPrimary CreateSpellListButton" title="Create List" aria-label="Create List">
+                <span class="FunctionIcon FunctionIconPlus" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="CharacterSheetFluffTab" class="CharacterSheetTabContent HiddenElement">
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetFaithInput">Faith</label>
+              <input type="text" id="CharacterSheetFaithInput" name="Faith" placeholder="e.g. Selûne" />
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetLifestyleInput">Lifestyle</label>
+              <input type="text" id="CharacterSheetLifestyleInput" name="Lifestyle" placeholder="e.g. Modest" />
+            </div>
+          </div>
+        </div>
+
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetPersonalityInput">Personality Traits</label>
+              <textarea id="CharacterSheetPersonalityInput" name="PersonalityTraits" rows="2" placeholder="Describe personality traits"></textarea>
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetIdealsInput">Ideals</label>
+              <textarea id="CharacterSheetIdealsInput" name="Ideals" rows="2" placeholder="Describe character ideals"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetBondsInput">Bonds</label>
+              <textarea id="CharacterSheetBondsInput" name="Bonds" rows="2" placeholder="Describe character bonds"></textarea>
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetFlawsInput">Flaws</label>
+              <textarea id="CharacterSheetFlawsInput" name="Flaws" rows="2" placeholder="Describe character flaws"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="FormRow">
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetAgeInput">Age</label>
+              <input type="text" id="CharacterSheetAgeInput" name="Age" placeholder="e.g. 28" />
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetHeightInput">Height</label>
+              <input type="text" id="CharacterSheetHeightInput" name="Height" placeholder="e.g. 5'11&quot;" />
+            </div>
+          </div>
+          <div class="FormColumn">
+            <div class="FormGroup">
+              <label class="FormLabel" for="CharacterSheetWeightInput">Weight</label>
+              <input type="text" id="CharacterSheetWeightInput" name="Weight" placeholder="e.g. 175 lbs" />
+            </div>
+          </div>
+        </div>
+
+        <div class="FormGroup">
+          <label class="FormLabel" for="CharacterSheetBackstoryInput">Backstory</label>
+          <textarea id="CharacterSheetBackstoryInput" name="Backstory" rows="3" placeholder="Enter backstory notes and background history"></textarea>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+
+  <div id="CharacterSheetCreateSpellListModal" class="CharacterSheetModalOverlay HiddenElement">
+    <div class="CharacterSheetModalPanel">
+      <div class="CharacterSheetModalTitlebar">
+        <span class="CharacterSheetModalTitle">Create Spell List</span>
+      </div>
+      <div class="CharacterSheetModalBody">
+        <div class="FormGroup">
+          <label class="FormLabel" for="ModalSpellListNameInput">List Name</label>
+          <input type="text" id="ModalSpellListNameInput" class="ModalSpellListNameInput" placeholder="e.g. Rituals, Domain Spells" />
+        </div>
+        <div class="FormGroup MarginTopSmall">
+          <label class="FormLabel" for="ModalSpellListAbilitySelect">Spellcasting Ability</label>
+          <select id="ModalSpellListAbilitySelect" class="ModalSpellListAbilitySelect">
+            <option value="None">None</option>
+            <option value="Intelligence">Intelligence</option>
+            <option value="Wisdom">Wisdom</option>
+            <option value="Charisma">Charisma</option>
+            <option value="Strength">Strength</option>
+            <option value="Dexterity">Dexterity</option>
+            <option value="Constitution">Constitution</option>
+          </select>
+        </div>
+        <div class="CharacterSheetModalButtonRow MarginTopMedium">
+          <button type="button" id="ModalSpellListCancelButton" class="Button">Cancel</button>
+          <button type="button" id="ModalSpellListConfirmButton" class="Button ButtonPrimary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

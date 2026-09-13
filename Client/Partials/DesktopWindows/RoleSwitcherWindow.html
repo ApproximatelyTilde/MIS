@@ -1,0 +1,13 @@
+<div class="WindowContainer">
+  <div class="TextWarm HeaderText MarginBottomSmall">SIMULATE DISCORD OAUTH ROLE:</div>
+  <div class="FlexColumn GapSmall">
+    <button class="Button" hx-post="/API/Auth/DevLogin/Partial?Role=Visitor" hx-target="#CurrentUserRoleLabel" hx-swap="innerHTML">Unauthenticated Visitor</button>
+    <button class="Button" hx-post="/API/Auth/DevLogin/Partial?Role=NormalUser" hx-target="#CurrentUserRoleLabel" hx-swap="innerHTML">Normal Authenticated User</button>
+    <button class="Button" hx-post="/API/Auth/DevLogin/Partial?Role=Checker" hx-target="#CurrentUserRoleLabel" hx-swap="innerHTML">Checker (Can create & modify any character)</button>
+    <button class="Button" hx-post="/API/Auth/DevLogin/Partial?Role=GameMaster" hx-target="#CurrentUserRoleLabel" hx-swap="innerHTML">Game Master (Can view all & manage stories)</button>
+    <button class="Button ButtonPrimary" hx-post="/API/Auth/DevLogin/Partial?Role=Administrator" hx-target="#CurrentUserRoleLabel" hx-swap="innerHTML">Administrator (Full Unrestricted Access)</button>
+  </div>
+  <div class="RoleSwitcherFooter">
+    <a href="/API/Auth/Discord/Login" class="Button ButtonSmall">&#128279; Live Discord OAuth Login</a>
+  </div>
+</div>

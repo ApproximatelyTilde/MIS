@@ -1,0 +1,7 @@
+{% if IsSuccess %}
+  <div class="TextGreen"><strong>Character Sheet Created & Saved Successfully!</strong></div>
+  <div class="TextCold">Name: {{ CharacterName }} ({{ GameSystem }})</div>
+  <div class="TextMuted SmallText">Status: <span class="Badge BadgeUnderReview">Under Review</span></div>
+{% else %}
+  <div class="TextDanger">Failed to create character sheet.</div>
+{% endif %}

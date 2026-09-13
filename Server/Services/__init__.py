@@ -1,0 +1,14 @@
+import Server.Services.OracleStorageService as OracleStorage
+import Server.Services.DiceRollerService as DiceRoller
+import Server.Services.CharacterGeneratorService as CharacterGenerator
+import Server.Services.CharacterMappingService as CharacterMapping
+import Server.Services.External5ETools as External5ETools
+import Server.Services.FuzzySearchService as FuzzySearch
+
+GLOBAL_STORAGE_SERVICE = OracleStorage.GLOBAL_STORAGE_SERVICE
+GLOBAL_DICE_ROLLER = DiceRoller.GLOBAL_DICE_ROLLER
+GLOBAL_CHARACTER_GENERATOR_SERVICE = CharacterGenerator.GLOBAL_CHARACTER_GENERATOR_SERVICE
+GLOBAL_CHARACTER_MAPPER = CharacterMapping.GLOBAL_CHARACTER_MAPPER
+GLOBAL_5E_TOOLS = External5ETools.External5ETools()
+GLOBAL_FUZZY_SEARCH = FuzzySearch.FuzzySearchService
+

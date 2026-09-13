@@ -1,0 +1,13 @@
+<div id="CharacterPortraitContainer" class="CharacterPortraitContainer">
+  <div class="CharacterPortraitBox" id="CharacterPortraitBoxTrigger">
+    {% if PortraitFileIdentifier %}
+      <img src="/API/Storage/Files/{{ PortraitFileIdentifier }}/Stream" alt="Character Portrait" class="CharacterPortraitImage" />
+    {% else %}
+      <div class="CharacterPortraitPlaceholder">
+        <span class="CharacterPortraitPlaceholderText">NO PORTRAIT</span>
+      </div>
+    {% endif %}
+  </div>
+  <input type="file" id="CharacterPortraitFileInput" name="File" accept="image/jpeg,image/png,image/webp" class="HiddenElement" hx-post="/API/Characters/Portrait/Upload/Partial" hx-target="#CharacterPortraitContainer" hx-swap="outerHTML" hx-encoding="multipart/form-data" hx-params="File" hx-trigger="change" />
+  <input type="hidden" id="CharacterPortraitFileIdentifier" name="PortraitFileIdentifier" value="{{ PortraitFileIdentifier or '' }}" />
+</div>

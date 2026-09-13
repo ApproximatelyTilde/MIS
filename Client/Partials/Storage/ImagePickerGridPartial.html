@@ -1,0 +1,24 @@
+{% if InfoMessage %}
+  <div class="TerminalPane MarginTopSmall">
+    <div class="TextMuted">{{ InfoMessage }}</div>
+  </div>
+{% elif Images %}
+  <div class="PortraitPickerGrid">
+    {% for Image in Images %}
+      <form hx-post="/API/Characters/Portrait/Select/Partial" hx-target="#CharacterPortraitContainer" hx-swap="outerHTML" class="PortraitPickerForm">
+        <input type="hidden" name="FileIdentifier" value="{{ Image.Identifier }}" />
+        <button type="submit" class="PortraitPickerCard" title="{{ Image.FileName }}">
+          <div class="PortraitPickerThumbnailWrapper">
+            <img src="/API/Storage/Files/{{ Image.Identifier }}/Stream" alt="{{ Image.FileName }}" class="PortraitPickerThumbnail" />
+          </div>
+          <div class="PortraitPickerFileName">{{ Image.FileName }}</div>
+          <div class="PortraitPickerFileSize">{{ Image.SizeKB }} KB</div>
+        </button>
+      </form>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="TerminalPane MarginTopSmall">
+    <div class="TextMuted">No image assets found in object storage.</div>
+  </div>
+{% endif %}

@@ -1,0 +1,84 @@
+{% if Characters %}
+  {% for Entry in Characters %}
+    <div class="EntityCard">
+      <div class="EntityCardHeader">
+        <div class="CharacterCardHeaderTitle">
+          {% if Entry.CanModify and not Entry.Character.IsArchived %}
+            <button type="button" class="CharacterPinButton {% if Entry.Character.IsPinned %}CharacterPinned{% endif %}"
+                    hx-post="/API/Characters/{{ Entry.Character.Identifier }}/Pin/Partial"
+                    hx-target="#CharacterRosterContainer"
+                    hx-swap="innerHTML"
+                    hx-include="#CharacterSearchInput"
+                    title="{% if Entry.Character.IsPinned %}Unpin Character{% else %}Pin Character{% endif %}"
+                    aria-label="{% if Entry.Character.IsPinned %}Unpin Character{% else %}Pin Character{% endif %}">
+              <span class="FunctionIcon FunctionIconStar" aria-hidden="true"></span>
+            </button>
+          {% endif %}
+          <strong class="CharacterCardName" data-full-name="{{ Entry.Character.Name }}" data-first-name="{{ Entry.FirstName }}" title="{{ Entry.Character.Name }}">{{ Entry.Character.Name }}</strong>
+        </div>
+        <div class="CharacterBadgeGroup">
+          {% if Entry.Character.GameSystem.value == "DND5thEdition" or Entry.Character.GameSystem == "DND5thEdition" %}
+            <span class="Badge BadgeDND5thEdition">DND5thEdition</span>
+          {% else %}
+            <span class="Badge BadgeTraveller2ndEdition">Traveller2ndEdition</span>
+          {% endif %}
+          {% if Entry.Character.IsArchived %}
+            <span class="Badge BadgeArchived">Archived</span>
+          {% else %}
+            {% if Entry.Character.IsPublic %}
+              <span class="Badge BadgePublic">Public</span>
+            {% else %}
+              <span class="Badge BadgePrivate">Private</span>
+            {% endif %}
+            {% if not Entry.Character.IsAccepted %}
+              <span class="Badge BadgeUnderReview">Under Review</span>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="EntityCardBody TextCold">
+        <div>{{ Entry.DetailsText }}</div>
+        <div class="TextMuted SmallText MarginTopSmall">Identifier: {{ Entry.Character.Identifier[:8] }}...</div>
+      </div>
+      <div class="EntityCardActions">
+        {% if Entry.CanModify %}
+          <button type="button" class="Button ButtonSmall ButtonSquare EditCharacterButton" title="Edit Character" aria-label="Edit Character" data-character-identifier="{{ Entry.Character.Identifier }}">
+            <span class="FunctionIcon FunctionIconOptions" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="Button ButtonSmall ButtonSquare CharacterVisibilityButton"
+                  hx-post="/API/Characters/{{ Entry.Character.Identifier }}/Visibility/Partial"
+                  hx-target="#CharacterRosterContainer"
+                  hx-swap="innerHTML"
+                  hx-include="#CharacterSearchInput"
+                  title="{% if Entry.Character.IsPublic %}Make Character Private{% else %}Make Character Public{% endif %}"
+                  aria-label="{% if Entry.Character.IsPublic %}Make Character Private{% else %}Make Character Public{% endif %}">
+            {% if Entry.Character.IsPublic %}
+              <span class="FunctionIcon FunctionIconHideItem" aria-hidden="true"></span>
+            {% else %}
+              <span class="FunctionIcon FunctionIconShowItem" aria-hidden="true"></span>
+            {% endif %}
+          </button>
+        {% endif %}
+        {% if Entry.CanArchive %}
+          {% if Entry.Character.IsArchived %}
+            <button type="button" class="Button ButtonSmall"
+                    hx-post="/API/Characters/{{ Entry.Character.Identifier }}/Archive/Partial"
+                    hx-target="#CharacterRosterContainer"
+                    hx-swap="innerHTML"
+                    hx-include="#CharacterSearchInput">Restore</button>
+          {% elif Entry.Character.IsPinned %}
+            <button type="button" class="Button ButtonSmall ButtonDanger" disabled title="Pinned characters cannot be archived">Archive</button>
+          {% else %}
+            <button type="button" class="Button ButtonSmall ButtonDanger"
+                    hx-post="/API/Characters/{{ Entry.Character.Identifier }}/Archive/Partial"
+                    hx-target="#CharacterRosterContainer"
+                    hx-swap="innerHTML"
+                    hx-include="#CharacterSearchInput">Archive</button>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="TextMuted">No accessible characters found under current role permissions.</div>
+{% endif %}

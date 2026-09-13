@@ -1,0 +1,43 @@
+{% if ErrorMessage %}
+  <tr><td colspan="4" class="TextDanger">{{ ErrorMessage }}</td></tr>
+{% elif InfoMessage %}
+  <tr><td colspan="4" class="TextMuted">{{ InfoMessage }}</td></tr>
+{% elif Files %}
+  {% for File in Files %}
+    <tr>
+      <td><strong>{{ File.FileName }}</strong></td>
+      <td>{{ File.Category }}</td>
+      <td>{{ File.SizeKB }} KB</td>
+      <td>
+        <div class="StorageActionRow">
+          {% if File.IsImage %}
+            <button type="button" class="Button ButtonSmall ButtonSquare ViewImageButton" data-file-identifier="{{ File.Identifier }}" data-file-name="{{ File.FileName }}" title="View Image">
+              <span class="FunctionIcon FunctionIconShowItem"></span>
+            </button>
+          {% endif %}
+          {% if File.IsAudio %}
+            <button type="button" class="Button ButtonSmall ButtonSquare PlayMediaButton" data-file-identifier="{{ File.Identifier }}" data-file-name="{{ File.FileName }}" data-media-type="audio" title="Play Audio">
+              <span class="FunctionIcon FunctionIconPlayPause"></span>
+            </button>
+          {% endif %}
+          {% if File.IsVideo %}
+            <button type="button" class="Button ButtonSmall ButtonSquare PlayMediaButton" data-file-identifier="{{ File.Identifier }}" data-file-name="{{ File.FileName }}" data-media-type="video" title="Play Video">
+              <span class="FunctionIcon FunctionIconPlayPause"></span>
+            </button>
+          {% endif %}
+          <button type="button" class="Button ButtonSmall ButtonSquare ShareFileButton" hx-post="/API/Storage/Files/{{ File.Identifier }}/Share/Partial" hx-swap="none" data-file-identifier="{{ File.Identifier }}" title="Share Permanent Link">
+            <span class="FunctionIcon FunctionIconShare"></span>
+          </button>
+          <a href="/API/Storage/Files/{{ File.Identifier }}/Download" download="{{ File.FileName }}" class="Button ButtonSmall ButtonSquare" title="Download File">
+            <span class="FunctionIcon FunctionIconDownload"></span>
+          </a>
+          <button type="button" class="Button ButtonSmall ButtonSquare ButtonDanger" hx-delete="/API/Storage/Files/{{ File.Identifier }}/Delete/Partial" hx-target="#StorageFilesTableBody" hx-swap="innerHTML" title="Delete File">
+            <span class="FunctionIcon FunctionIconDelete"></span>
+          </button>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+{% else %}
+  <tr><td colspan="4" class="TextMuted">No files uploaded yet.</td></tr>
+{% endif %}
