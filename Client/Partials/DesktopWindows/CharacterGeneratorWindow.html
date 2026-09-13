@@ -1,0 +1,41 @@
+<div class="WindowContainer">
+  <div class="TabNavigation">
+    <button type="button" class="TabButton CharacterGeneratorTabButton" data-target-tab="ManualCharacterTab">Manual</button>
+    <button type="button" class="TabButton ActiveTab CharacterGeneratorTabButton" data-target-tab="QuickCharacterTab">Quick</button>
+  </div>
+
+  <div id="ManualCharacterTab" class="CharacterGeneratorTabContent HiddenElement">
+    <div class="TerminalPane MarginTopMedium">
+      <div class="TextCold HeaderText MarginBottomSmall">MANUAL CHARACTER GENERATION</div>
+      <div class="TextMuted">Manual character creation module is currently under development (W.I.P).</div>
+    </div>
+  </div>
+
+  <div id="QuickCharacterTab" class="CharacterGeneratorTabContent">
+    <form id="CharacterGeneratorForm" hx-post="/API/Tools/CharacterGenerator/Quick/Partial" hx-target="#CharacterGeneratorResultDisplay" hx-swap="innerHTML">
+      <div class="FormGroup">
+        <label class="FormLabel" for="CharacterGeneratorSystemSelect">Game System</label>
+        <select id="CharacterGeneratorSystemSelect" name="GameSystem">
+          <option value="DND5thEdition">DND5thEdition</option>
+          <option value="Traveller2ndEdition">Traveller2ndEdition</option>
+        </select>
+      </div>
+      <div class="FormGroup">
+        <label class="FormLabel" for="CharacterGeneratorNameInput">Character Name</label>
+        <div class="FlexRow">
+          <input type="text" id="CharacterGeneratorNameInput" name="Name" class="FlexOne" value="Valen Starstrider" />
+          <button type="button" id="CharacterGeneratorRandomNameButton" class="Button">Random</button>
+        </div>
+      </div>
+      <div class="FormGroup">
+        <label class="FormLabel" id="CharacterGeneratorClassLabel" for="CharacterGeneratorClassInput">Class</label>
+        <input type="text" id="CharacterGeneratorClassInput" name="ClassOrCareer" placeholder="e.g. Fighter, Wizard, Rogue, Cleric" />
+      </div>
+      <button type="submit" class="Button ButtonPrimary WidthFull MarginTopSmall">GENERATE & SAVE PERSONA</button>
+    </form>
+
+    <div id="CharacterGeneratorResultDisplay" class="TerminalPane MarginTopMedium">
+      <div class="TextMuted">Awaiting persona synthesis request...</div>
+    </div>
+  </div>
+</div>

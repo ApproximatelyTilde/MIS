@@ -1,0 +1,32 @@
+{% if Characters %}
+  {% for Entry in Characters %}
+    <div class="EntityCard">
+      <div class="EntityCardHeader">
+        <strong>{{ Entry.Character.Name }}</strong>
+        <div>
+          {% if Entry.Character.GameSystem.value == "DND5thEdition" or Entry.Character.GameSystem == "DND5thEdition" %}
+            <span class="Badge BadgeDND5thEdition">DND5thEdition</span>
+          {% else %}
+            <span class="Badge BadgeTraveller2ndEdition">Traveller2ndEdition</span>
+          {% endif %}
+          {% if Entry.Character.IsPublic %}
+            <span class="Badge BadgePublic">Public</span>
+          {% else %}
+            <span class="Badge BadgePrivate">Private</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="EntityCardBody TextCold">
+        <div>{{ Entry.DetailsText }}</div>
+        <div class="TextMuted SmallText MarginTopSmall">Identifier: {{ Entry.Character.Identifier[:8] }}...</div>
+      </div>
+      <div class="EntityCardActions">
+        {% if Entry.CanArchive %}
+          <button class="Button ButtonSmall ButtonDanger" hx-post="/API/Characters/{{ Entry.Character.Identifier }}/Archive/Partial" hx-target="#CharacterRosterContainer" hx-swap="innerHTML">Archive</button>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="TextMuted">No accessible characters found under current role permissions.</div>
+{% endif %}

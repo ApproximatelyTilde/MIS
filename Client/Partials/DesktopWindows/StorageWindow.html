@@ -1,0 +1,24 @@
+<div class="WindowContainer">
+  <div class="MarginBottomSmall" id="StorageGaugeContainer" hx-get="/API/Storage/Gauge/Partial" hx-trigger="load" hx-swap="innerHTML">
+    <div class="TextMuted">Loading storage quota metrics...</div>
+  </div>
+
+  <form id="StorageUploadForm" hx-post="/API/Storage/Upload/Partial" hx-encoding="multipart/form-data" hx-target="#StorageFilesTableBody" hx-swap="innerHTML" class="UploadDropZone">
+    <input type="file" id="StorageFileInput" name="File" class="HiddenElement" />
+    <button type="button" id="StorageUploadTriggerButton" class="Button ButtonPrimary">Upload</button>
+  </form>
+
+  <table class="DataTable">
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>Type</th>
+        <th>Size</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="StorageFilesTableBody" hx-get="/API/Storage/Files/Partial" hx-trigger="load" hx-swap="innerHTML">
+      <tr><td colspan="4" class="TextMuted">Loading files via HTMX...</td></tr>
+    </tbody>
+  </table>
+</div>

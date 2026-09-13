@@ -1,0 +1,25 @@
+{% if ErrorMessage %}
+  <tr><td colspan="4" class="TextDanger">{{ ErrorMessage }}</td></tr>
+{% elif InfoMessage %}
+  <tr><td colspan="4" class="TextMuted">{{ InfoMessage }}</td></tr>
+{% elif Files %}
+  {% for File in Files %}
+    <tr>
+      <td><strong>{{ File.FileName }}</strong></td>
+      <td><span class="Badge BadgePublic">{{ File.ContentType }}</span></td>
+      <td>{{ File.SizeKB }} KB</td>
+      <td>
+        {% if File.IsAudio %}
+          <button type="button" class="Button ButtonSmall PlayAudioButton" data-file-identifier="{{ File.Identifier }}" data-file-name="{{ File.FileName }}">&#9658; Play</button>
+        {% endif %}
+        {% if File.IsImage %}
+          <button type="button" class="Button ButtonSmall ViewImageButton" data-file-identifier="{{ File.Identifier }}" data-file-name="{{ File.FileName }}">&#128065; View</button>
+        {% endif %}
+        <a href="/API/Storage/Files/{{ File.Identifier }}/Download" download="{{ File.FileName }}" class="Button ButtonSmall">Download</a>
+        <button type="button" class="Button ButtonSmall ButtonDanger" hx-delete="/API/Storage/Files/{{ File.Identifier }}/Delete/Partial" hx-target="#StorageFilesTableBody" hx-swap="innerHTML">&#10005;</button>
+      </td>
+    </tr>
+  {% endfor %}
+{% else %}
+  <tr><td colspan="4" class="TextMuted">No files uploaded yet.</td></tr>
+{% endif %}

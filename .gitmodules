@@ -1,0 +1,3 @@
+[submodule "Server/Services/External/5eTools"]
+	path = Server/Services/External/5eTools
+	url = https://github.com/5etools-mirror-3/5etools-src

@@ -1,0 +1,34 @@
+{% if Stories %}
+  {% for Entry in Stories %}
+    <div class="EntityCard">
+      <div class="EntityCardHeader">
+        <strong>{{ Entry.Story.Title }}</strong>
+        <div>
+          {% if Entry.Story.GameSystem.value == "DND5thEdition" or Entry.Story.GameSystem == "DND5thEdition" %}
+            <span class="Badge BadgeDND5thEdition">DND5thEdition</span>
+          {% else %}
+            <span class="Badge BadgeTraveller2ndEdition">Traveller2ndEdition</span>
+          {% endif %}
+          {% if Entry.Story.IsPublic %}
+            <span class="Badge BadgePublic">Public</span>
+          {% else %}
+            <span class="Badge BadgePrivate">Private</span>
+          {% endif %}
+          {% if Entry.IsMember %}
+            <span class="Badge BadgePublic">Member</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="EntityCardBody TextCold">
+        <div>{{ Entry.Story.Description or "No description recorded." }}</div>
+      </div>
+      <div class="EntityCardActions">
+        {% if Entry.CanRequestJoin %}
+          <button class="Button ButtonSmall ButtonPrimary" hx-post="/API/Stories/{{ Entry.Story.Identifier }}/JoinRequest/Partial" hx-target="#StoriesRosterContainer" hx-swap="innerHTML">Request to Join</button>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="TextMuted">No stories available for viewing under current role.</div>
+{% endif %}

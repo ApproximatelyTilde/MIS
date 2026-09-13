@@ -1,0 +1,29 @@
+<div class="TextWarm HeaderText">Faerûn / Toril Epoch: 1492 DR</div>
+<div class="TextMuted SmallText MarginBottomSmall">12 Months of 30 days, plus 5 intercalary festival holidays.</div>
+<div class="CalendarTableScroll">
+  <table class="DataTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Month Name</th>
+        <th>Days</th>
+        <th>Special Events</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for Month in Months %}
+        <tr>
+          <td>{{ Month.Number }}</td>
+          <td class="CalendarMonthCell">
+            <div class="CalendarMonthPrimaryName"><strong>{{ Month.Name }}</strong></div>
+            {% if Month.ParenthesesName %}
+              <div class="CalendarMonthParenthesesName">{{ Month.ParenthesesName }}</div>
+            {% endif %}
+          </td>
+          <td>{{ Month.Days }}</td>
+          <td class="TextCold">{{ Month.Special or '-' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

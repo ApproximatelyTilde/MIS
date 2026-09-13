@@ -1,0 +1,12 @@
+.agents/
+.venv/
+.vscode/
+.pytest_cache
+__pycache__/
+Examples/
+Scratch/
+Tests/
+Trash/
+
+.env
+Requirements.txt
