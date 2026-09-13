@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=VT323&display=swap');
+
+@font-face {
+  font-family: 'ANK24';
+  src: url('/Resources/WOFF2/ANK24.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JPN12';
+  src: url('/Resources/WOFF2/JPN12.woff2') format('woff2');
+}
+
+html {
+  font-size: 6px;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: geometricPrecision;
+}
+
+body, input, select, textarea {
+  font-family: 'ANK24', monospace;
+  font-size: 2rem;
+  line-height: 1.5;
+  color: var(--ColorForeground);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: geometricPrecision;
+}
+
+button {
+  font-family: 'JPN12', monospace;
+  font-size: 2rem;
+  line-height: 1.5;
+  color: var(--ColorForeground);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  text-rendering: geometricPrecision;
+}
+
+.FontTerminal {
+  font-family: 'VT323', 'Fira Code', monospace;
+  font-size: 3rem;
+  letter-spacing: 0.5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'JPN12', monospace;
+  font-weight: normal;
+  margin: 0 0 8px 0;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4, h5, h6 {
+  font-size: 2rem;
+}
+
+code, pre {
+  font-family: 'Fira Code', monospace;
+  font-size: 2rem;
+}
+
+b, strong, th {
+  font-weight: normal;
+}
+
+.TitlebarText {
+  font-family: 'JPN12', monospace;
+  font-weight: normal;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}

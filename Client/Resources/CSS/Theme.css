@@ -1,0 +1,73 @@
+:root {
+  --ColorForeground: #000000;
+  --ColorBackground: #ffffff;
+  --ColorCursor: #000000;
+  --Color0: #000000;
+  --Color1: #a60000;
+  --Color2: #005e00;
+  --Color3: #813e00;
+  --Color4: #0030a6;
+  --Color5: #721045;
+  --Color6: #00538b;
+  --Color7: #e0e0e0;
+  --Color8: #595959;
+  --Color9: #972500;
+  --Color10: #315b00;
+  --Color11: #70480f;
+  --Color12: #2a40b8;
+  --Color13: #8f0075;
+  --Color14: #005a5f;
+  --Color15: #ffffff;
+  --ColorTransparent: transparent;
+  --CRTPhosphorRed: rgba(255, 0, 0, 0.05);
+  --CRTPhosphorGreen: rgba(0, 255, 0, 0.05);
+  --CRTPhosphorBlue: rgba(0, 0, 255, 0.05);
+  --CRTScanlineDark: rgba(0, 0, 0, 0.28);
+  --CRTRollingBandDark: rgba(0, 0, 0, 0.09);
+  --CRTRollingBandDeep: rgba(0, 0, 0, 0.16);
+  --CRTRollingBandPeak: rgba(255, 255, 255, 0.025);
+  --CRTBeamBloomText: rgba(255, 255, 255, 0.65);
+  --CRTBeamBloomCore: rgba(255, 255, 255, 0.90);
+  --CRTBeamBloomSpread: rgba(255, 255, 255, 0.15);
+  --CRTBeamBloomAmbient: rgba(255, 255, 255, 0.015);
+  --CRTSpecularGlare: rgba(255, 255, 255, 0.05);
+  --CRTVignetteEdge: rgba(0, 0, 0, 0.05);
+  --CRTVignetteCorner: rgba(0, 0, 0, 0.18);
+  --CRTBezelOuterShadow: rgba(0, 0, 0, 0.35);
+  --CRTBezelTopShadow: rgba(0, 0, 0, 0.45);
+  --CRTBezelBottomShadow: rgba(0, 0, 0, 0.25);
+  --CRTBezelSideShadow: rgba(0, 0, 0, 0.25);
+  --CRTIgnitionFlash: rgba(255, 255, 255, 0.9);
+}
+
+.TextWarm {
+  color: var(--Color3);
+}
+
+.TextDanger {
+  color: var(--Color1);
+}
+
+.TextCold {
+  color: var(--Color6);
+}
+
+.TextBlue {
+  color: var(--Color4);
+}
+
+.TextGreen {
+  color: var(--Color2);
+}
+
+.TextMuted {
+  color: var(--Color8);
+}
+
+.BackgroundSunken {
+  background-color: var(--Color7);
+}
+
+.BackgroundRaised {
+  background-color: var(--Color15);
+}

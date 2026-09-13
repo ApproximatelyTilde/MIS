@@ -1,0 +1,54 @@
+<div class="WindowContainer">
+  <div class="TabNavigation">
+    <button class="TabButton ActiveTab AccountTabButton" data-target-tab="CharactersTab">My Characters</button>
+    <button class="TabButton AccountTabButton" data-target-tab="StoriesTab">My Stories</button>
+    <button class="TabButton AccountTabButton" data-target-tab="EconomyTab">My Transactions</button>
+  </div>
+
+  <div id="CharactersTab" class="AccountTabContent">
+    <div class="FlexSpaceBetween MarginBottomSmall">
+      <div></div>
+      <div class="FlexRow">
+        <button class="Button ButtonSmall" hx-get="/API/Characters/Partial" hx-target="#CharacterRosterContainer" hx-swap="innerHTML">Refresh</button>
+        <button class="Button ButtonSmall ButtonPrimary OpenCharacterGeneratorButton">New Character</button>
+      </div>
+    </div>
+    <div id="CharacterRosterContainer" class="CardsGrid" hx-get="/API/Characters/Partial" hx-trigger="load" hx-swap="innerHTML">
+      <div class="TextMuted">Loading character records via HTMX...</div>
+    </div>
+  </div>
+
+  <div id="StoriesTab" class="AccountTabContent HiddenElement">
+    <div class="FlexSpaceBetween MarginBottomSmall">
+      <div></div>
+      <button class="Button ButtonSmall" hx-get="/API/Stories/Partial" hx-target="#StoriesRosterContainer" hx-swap="innerHTML">Refresh</button>
+    </div>
+    <div id="StoriesRosterContainer" class="CardsGrid" hx-get="/API/Stories/Partial" hx-trigger="load" hx-swap="innerHTML">
+      <div class="TextMuted">Loading stories via HTMX...</div>
+    </div>
+  </div>
+
+  <div id="EconomyTab" class="AccountTabContent HiddenElement">
+    <div class="FormGroup">
+      <select id="EconomyCharacterSelect" name="CharacterIdentifier" hx-get="/API/Economy/Ledger/Partial" hx-target="#EconomyLedgerTableBody" hx-swap="innerHTML" hx-include="this">
+        <option value="">-- Choose Character --</option>
+      </select>
+    </div>
+    <div class="MarginTopSmall">
+      <table class="DataTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>System</th>
+            <th>Reason</th>
+            <th>Amount Change</th>
+            <th>Item Change</th>
+          </tr>
+        </thead>
+        <tbody id="EconomyLedgerTableBody">
+          <tr><td colspan="5" class="TextMuted">Select a character above to load transaction ledger.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

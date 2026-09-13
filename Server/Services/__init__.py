@@ -1,0 +1,9 @@
+import Server.Services.OracleStorageService as OracleStorage
+import Server.Services.DiceRollerService as DiceRoller
+import Server.Services.CharacterGeneratorService as CharacterGenerator
+import Server.Services.CharacterMappingService as CharacterMapping
+
+GLOBAL_STORAGE_SERVICE = OracleStorage.GLOBAL_STORAGE_SERVICE
+GLOBAL_DICE_ROLLER = DiceRoller.GLOBAL_DICE_ROLLER
+GLOBAL_CHARGEN_SERVICE = CharacterGenerator.GLOBAL_CHARGEN_SERVICE
+GLOBAL_CHARACTER_MAPPER = CharacterMapping.GLOBAL_CHARACTER_MAPPER

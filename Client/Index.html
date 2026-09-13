@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marten's Information System</title>
+    <link rel="icon" type="image/png" href="/Resources/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/Resources/favicon.svg">
+    <link rel="shortcut icon" href="/Resources/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Resources/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Marten's">
+    <link rel="manifest" href="/Resources/site.webmanifest">
+
+    <link rel="stylesheet" href="/Resources/CSS/Theme.css">
+    <link rel="stylesheet" href="/Resources/CSS/Typography.css">
+    <link rel="stylesheet" href="/Resources/CSS/DesktopEnvironment.css">
+    <link rel="stylesheet" href="/Resources/CSS/Components.css">
+    <link rel="stylesheet" href="/Resources/CSS/SystemBoot.css">
+
+    <script src="/Resources/JS/External/jQuery.js"></script>
+    <script src="/Resources/JS/External/HTMX.js"></script>
+    <script src="/Resources/JS/External/Tilt.js"></script>
+</head>
+
+<body>
+
+    <div id="WorkstationViewport">
+        <div id="WorkstationMotionStage">
+            <div id="WorkstationScene">
+                <div id="DesktopHardwareBackground"></div>
+
+                <div id="DesktopScreenContainer">
+                    <div id="DesktopScreenCRTOverlay">
+                        <div id="CRTPhosphorMatrixLayer"></div>
+                        <div id="CRTRollingScanlineLayer"></div>
+                        <div id="CRTBeamBloomLayer"></div>
+                        <div id="CRTSpecularGlassLayer"></div>
+                        <div id="CRTVignetteLayer"></div>
+                    </div>
+
+                    <div id="SystemBootScreenContainer">
+                        <div class="BootTerminalOutput"><span id="BootTerminalText"></span><span class="BootTerminalCursor"></span></div>
+                    </div>
+
+                    <div id="SystemSplashScreenContainer" class="HiddenElement">
+                        <div id="SystemSplashPanel">
+                            <div id="SystemSplashTitle" class="SystemSplashTitle">Marten's Information System</div>
+                            <div class="SystemSplashEmblemContainer">
+                                <img id="SystemSplashEmblem" class="SystemSplashEmblem" src="/Resources/PNG/Splash.png"
+                                    alt="Workstation Emblem">
+                            </div>
+                            <div class="SystemSplashProgressContainer">
+                                <div id="SystemSplashProgressBar" class="SystemSplashProgressBar">
+                                    <div id="SystemSplashProgressFill" class="SystemSplashProgressFill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="SystemLoginScreenContainer" class="HiddenElement">
+                        <div id="SystemLoginPanel">
+                            <div class="SystemLoginHeader">Marten's Information System</div>
+                            <div class="SystemLoginSubheader">Select Access Mode</div>
+                            <div class="SystemLoginOptionsRow">
+                                <button id="LoginButtonNetworkSignIn" class="LoginOptionButton" type="button">
+                                    <div class="LoginOptionIconContainer">
+                                        <img id="LoginNetworkIcon" class="LoginOptionIcon"
+                                            src="/Resources/SVG/LoginManagerButton-NetworkLogin.svg" alt="Authenticate">
+                                        <canvas id="LoginAvatarCanvas" class="LoginAvatarCanvas HiddenElement"
+                                            width="32" height="32"></canvas>
+                                    </div>
+                                    <span id="LoginNetworkLabel" class="LoginOptionLabel">Authenticate</span>
+                                </button>
+                                <button id="LoginButtonLocalSignIn" class="LoginOptionButton" type="button">
+                                    <div class="LoginOptionIconContainer">
+                                        <img id="LoginLocalIcon" class="LoginOptionIcon"
+                                            src="/Resources/SVG/LoginManagerButton-LocalLogin.svg" alt="Guest Account">
+                                    </div>
+                                    <span id="LoginLocalLabel" class="LoginOptionLabel">Guest Account</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="EmulatedTeletypeContainer" class="HiddenElement">
+                        <div id="TeletypeOutputArea" class="TeletypeOutputArea">
+                            <span id="TeletypeOutputText" class="TeletypeOutputText"></span>
+                            <div id="TeletypeCommandLine" class="TeletypeCommandLine">
+                                <span id="TeletypePrompt" class="TeletypePrompt">user@tty01:~$ </span>
+                                <input id="TeletypeInputField" class="TeletypeInputField" type="text" autocomplete="off"
+                                    spellcheck="false">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="DesktopContainer" class="HiddenElement">
+
+                        <div id="DesktopContextMenu" class="DesktopContextMenu HiddenElement">
+                            <div class="DesktopMenuList">
+                                <button id="ContextMenuButtonToggleIconManager" class="DesktopMenuItemButton"
+                                    type="button">
+                                    <span id="ContextMenuTitleToggleIconManager" class="DesktopMenuItemTitle">Hide
+                                        Launchpad</span>
+                                </button>
+                                <div class="DesktopMenuDivider"></div>
+                                <button id="ContextMenuButtonIconifyWindow" class="DesktopMenuItemButton" type="button">
+                                    <span id="ContextMenuTitleIconifyWindow" class="DesktopMenuItemTitle">Iconify
+                                        Window</span>
+                                </button>
+                                <button id="ContextMenuButtonRaiseWindow" class="DesktopMenuItemButton" type="button">
+                                    <span class="DesktopMenuItemTitle">Raise Window</span>
+                                </button>
+                                <button id="ContextMenuButtonLowerWindow" class="DesktopMenuItemButton" type="button">
+                                    <span class="DesktopMenuItemTitle">Lower Window</span>
+                                </button>
+                                <div class="DesktopMenuDivider"></div>
+                                <button id="ContextMenuButtonDeleteWindow"
+                                    class="DesktopMenuItemButton DesktopMenuDangerButton" type="button">
+                                    <span id="ContextMenuTitleDeleteWindow" class="DesktopMenuItemTitle">Kill
+                                        Process</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="SystemConfirmationModalContainer" class="SystemConfirmationModalContainer HiddenElement">
+                            <div id="SystemConfirmationPanel" class="SystemConfirmationPanel">
+                                <div class="SystemConfirmationTitlebar">
+                                    <span id="SystemConfirmationTitle" class="SystemConfirmationTitle">System Confirmation</span>
+                                </div>
+                                <div class="SystemConfirmationTitleDivider"></div>
+                                <div class="SystemConfirmationBody">
+                                    <div class="SystemConfirmationContent">
+                                        <div class="SystemConfirmationWarningBadge">!</div>
+                                        <div id="SystemConfirmationMessage" class="SystemConfirmationMessage"></div>
+                                    </div>
+                                    <div class="SystemConfirmationButtonRow">
+                                        <button id="SystemConfirmationButtonCancel" class="Button SystemConfirmationButton" type="button">
+                                            <span>Cancel</span>
+                                        </button>
+                                        <button id="SystemConfirmationButtonConfirm" class="Button SystemConfirmationButton" type="button">
+                                            <span id="SystemConfirmationButtonConfirmLabel">Confirm</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Resources/JS/WindowManager.js"></script>
+    <script src="/Resources/JS/AudioPlayer.js"></script>
+    <script src="/Resources/JS/ImageViewer.js"></script>
+    <script src="/Resources/JS/WorkstationTiltManager.js"></script>
+    <script src="/Resources/JS/SystemBootManager.js"></script>
+    <script src="/Resources/JS/DesktopApplication.js"></script>
+</body>
+
+</html>

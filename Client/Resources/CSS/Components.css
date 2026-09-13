@@ -1,0 +1,386 @@
+.Button {
+  font-family: 'JPN12', monospace;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background-color: var(--Color7);
+  color: var(--Color0);
+  border: 2px outset var(--Color15);
+  font-weight: normal;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+.Button:active {
+  border-style: inset;
+  background-color: var(--Color8);
+  color: var(--Color15);
+}
+
+.ButtonPrimary {
+  background-color: var(--Color4);
+  color: var(--Color15);
+  border-color: var(--Color12);
+  font-weight: normal;
+}
+
+.ButtonDanger {
+  background-color: var(--Color1);
+  color: var(--Color15);
+  border-color: var(--Color9);
+}
+
+.ButtonSmall {
+  padding: 2px 6px;
+  font-size: 2rem;
+}
+
+input[type="text"]:not(.TeletypeInputField), input[type="number"], input[type="password"], select, textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px 6px;
+  background-color: var(--Color15);
+  color: var(--Color0);
+  border: 2px inset var(--Color8);
+  font-size: 2rem;
+  outline: none;
+}
+
+input[type="text"]:not(.TeletypeInputField), input[type="number"], input[type="password"], select {
+  height: 4rem;
+  line-height: 1;
+}
+
+input[type="text"]:not(.TeletypeInputField):focus, input[type="number"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+  border-color: var(--Color4);
+}
+
+
+.FormGroup {
+  margin-bottom: 10px;
+}
+
+.FormLabel {
+  font-family: 'JPN12', monospace;
+  display: block;
+  font-size: 2rem;
+  font-weight: normal;
+  margin-bottom: 3px;
+  color: var(--Color4);
+  text-transform: uppercase;
+}
+
+.DataTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--Color8);
+  font-size: 2rem;
+}
+
+.DataTable th {
+  font-family: 'JPN12', monospace;
+  background-color: var(--Color7);
+  color: var(--Color0);
+  font-weight: normal;
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 2px solid var(--Color6);
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.DataTable td {
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--Color7);
+  color: var(--Color0);
+}
+
+.DataTable tr:nth-child(even) {
+  background-color: var(--Color7);
+}
+
+.CalendarMonthCell {
+  white-space: nowrap;
+}
+
+.CalendarMonthPrimaryName {
+  font-weight: normal;
+}
+
+.CalendarMonthParenthesesName {
+  color: var(--Color3);
+  font-size: 2rem;
+}
+
+.Badge {
+  font-family: 'JPN12', monospace;
+  display: inline-block;
+  padding: 1px 5px;
+  font-size: 2rem;
+  font-weight: normal;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+}
+
+.BadgeDND5thEdition {
+  color: var(--Color1);
+  background-color: var(--Color7);
+}
+
+.BadgeTraveller2ndEdition {
+  color: var(--Color4);
+  background-color: var(--Color7);
+}
+
+.BadgePublic {
+  color: var(--Color2);
+  background-color: var(--Color7);
+}
+
+.BadgePrivate {
+  color: var(--Color8);
+  background-color: var(--Color7);
+}
+
+.TabNavigation {
+  display: flex;
+  gap: 2px;
+  border-bottom: 2px solid var(--Color8);
+  margin-bottom: 12px;
+}
+
+.TabButton {
+  font-family: 'JPN12', monospace;
+  padding: 5px 12px;
+  background-color: var(--Color7);
+  border: 1px solid var(--Color8);
+  border-bottom: none;
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 2rem;
+  color: var(--Color0);
+}
+
+.TabButton.ActiveTab {
+  background-color: var(--Color15);
+  border-top: 2px solid var(--Color4);
+  font-weight: normal;
+  margin-bottom: -2px;
+  padding-bottom: 6px;
+  color: var(--Color0);
+}
+
+.TerminalPane {
+  background-color: var(--Color15);
+  border: 2px inset var(--Color8);
+  padding: 8px;
+  min-height: 120px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--Color0);
+}
+
+.DiceLogEntry {
+  padding: 3px 0;
+  border-bottom: 1px dashed var(--Color8);
+}
+
+.ProgressBarContainer {
+  width: 100%;
+  height: 16px;
+  background-color: var(--Color7);
+  border: 1px inset var(--Color8);
+  overflow: hidden;
+  position: relative;
+}
+
+.ProgressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--Color6), var(--Color4));
+  transition: width 0.3s ease;
+}
+
+.CardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.EntityCard {
+  background-color: var(--Color15);
+  border: 1px solid var(--Color8);
+  box-shadow: 2px 2px 0px var(--Color8);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.EntityCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--Color8);
+  padding-bottom: 4px;
+}
+
+.EntityCardBody {
+  font-size: 2rem;
+  flex: 1;
+}
+
+.EntityCardActions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+  border-top: 1px dashed var(--Color8);
+  padding-top: 4px;
+}
+
+.FlexRow {
+  display: flex;
+  gap: 8px;
+}
+
+.FlexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.FlexSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.FlexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FlexOne {
+  flex: 1;
+}
+
+.FlexTwo {
+  flex: 2;
+}
+
+.AlignCenter {
+  align-items: center;
+}
+
+.GapSmall {
+  gap: 6px;
+}
+
+.WidthFull {
+  width: 100%;
+}
+
+.HeightFull {
+  height: 100%;
+}
+
+.MarginBottomSmall {
+  margin-bottom: 8px;
+}
+
+.MarginBottomMedium {
+  margin-bottom: 12px;
+}
+
+.MarginTopSmall {
+  margin-top: 6px;
+}
+
+.MarginTopMedium {
+  margin-top: 12px;
+}
+
+.MarginLeftAuto {
+  margin-left: auto;
+}
+
+.HiddenElement {
+  display: none !important;
+}
+
+.SmallText {
+  font-size: 2rem;
+}
+
+.HeaderText {
+  font-family: 'JPN12', monospace;
+  font-weight: normal;
+}
+
+.CheckboxLabel {
+  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.UploadDropZone {
+  border: 2px dashed var(--Color8);
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 12px;
+  background-color: var(--Color7);
+}
+
+.CalendarTableScroll {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.AudioPlayerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.AudioWaveSymbol {
+  font-size: 6rem;
+  color: var(--Color4);
+}
+
+.AudioTrackTitle {
+  font-family: 'JPN12', monospace;
+  font-weight: normal;
+  font-size: 2rem;
+}
+
+.AudioControlElement {
+  width: 100%;
+  filter: invert(0.8);
+}
+
+.ImageViewerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--Color7);
+  padding: 8px;
+}
+
+.ImageViewerElement {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 1px solid var(--Color8);
+}

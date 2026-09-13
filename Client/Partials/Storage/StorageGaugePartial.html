@@ -1,0 +1,13 @@
+<div>
+  <div class="FlexSpaceBetween SmallText MarginBottomSmall">
+    <span class="TextWarm"><strong>Capacity</strong></span>
+    {% if IsAuthenticated %}
+      <span class="TextCold">{{ FreeMB }}MB ({{ UsedPercentage }}%)</span>
+    {% else %}
+      <span class="TextCold">100MB (0%)</span>
+    {% endif %}
+  </div>
+  <div class="ProgressBarContainer">
+    <progress class="ProgressBarFill" value="{{ QuotaInteger if IsAuthenticated else 0 }}" max="100"></progress>
+  </div>
+</div>
