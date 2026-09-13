@@ -1,0 +1,11 @@
+.agents/
+.pytest_cache/
+.trash/
+.uv_cache/
+.venv*/
+.vscode/
+__pycache__/
+Scratch/
+
+.env
+debug.log

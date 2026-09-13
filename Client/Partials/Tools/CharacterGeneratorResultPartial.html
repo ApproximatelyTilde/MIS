@@ -1,0 +1,7 @@
+{% if IsPermissionDenied %}
+  <div class="TextDanger">Permission Denied: Your current role cannot create characters.</div>
+{% else %}
+  <div class="TextGreen"><strong>Persona Created & Saved Successfully!</strong></div>
+  <div class="TextCold">Name: {{ CharacterName }} ({{ GameSystem }})</div>
+  <div class="TextMuted SmallText">Saved to Character Roster via HTMX.</div>
+{% endif %}

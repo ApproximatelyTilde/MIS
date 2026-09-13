@@ -1,0 +1,73 @@
+<div class="CharacterCompanionsSection">
+  {% if not ParentCharacter %}
+    <div class="TextMuted">Save this character before linking companions or vehicles.</div>
+  {% else %}
+    {% if CanModify %}
+      <div class="CharacterCompanionsControls">
+        <div class="FlexRow">
+          <button type="button" class="Button ButtonSmall ButtonPrimary CreateLinkedCompanionButton"
+                  data-parent-id="{{ ParentCharacter.ID }}"
+                  data-game-system="{{ ParentCharacter.GameSystem.value }}"
+                  data-entity-type="Companion">
+            Create Companion
+          </button>
+          <button type="button" class="Button ButtonSmall ButtonPrimary CreateLinkedVehicleButton"
+                  data-parent-id="{{ ParentCharacter.ID }}"
+                  data-game-system="{{ ParentCharacter.GameSystem.value }}"
+                  data-entity-type="Vehicle">
+            Create Vehicle
+          </button>
+        </div>
+
+        {% if LinkableEntities %}
+          <div class="CharacterCompanionsLinkRow">
+            <select id="LinkExistingCompanionSelect" name="CompanionID" class="Select CharacterCompanionsSelect">
+              <option value="">-- Select Companion or Vehicle to Link --</option>
+              {% for Candidate in LinkableEntities %}
+                <option value="{{ Candidate.ID }}">{{ Candidate.Name }} ({{ Candidate.EntityType.value }})</option>
+              {% endfor %}
+            </select>
+            <button type="button" class="Button ButtonSmall"
+                    hx-post="/API/Characters/{{ ParentCharacter.ID }}/Companions/Link/Partial"
+                    hx-target="#CharacterSheetCompanionsContainer"
+                    hx-swap="innerHTML"
+                    hx-include="#LinkExistingCompanionSelect">
+              Link Existing
+            </button>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if LinkedCompanions %}
+      <div class="CharacterCompanionsGrid">
+        {% for Entry in LinkedCompanions %}
+          <div class="CharacterCompanionCard">
+            <div class="CharacterCompanionCardHeader">
+              <span class="CharacterCompanionCardName">{{ Entry.Character.Name }}</span>
+              <span class="Badge BadgeEntityType BadgeEntity{{ Entry.EntityTypeName }}">{{ Entry.EntityTypeName }}</span>
+            </div>
+            <div class="CharacterCompanionCardDetails">{{ Entry.DetailsText }}</div>
+            <div class="CharacterCompanionCardActions">
+              <button type="button" class="Button ButtonSmall OpenLinkedChildSheetButton"
+                      data-character-id="{{ Entry.Character.ID }}"
+                      data-game-system="{{ Entry.GameSystemName }}">
+                Open Sheet
+              </button>
+              {% if CanModify %}
+                <button type="button" class="Button ButtonSmall ButtonDanger"
+                        hx-post="/API/Characters/{{ ParentCharacter.ID }}/Companions/{{ Entry.Character.ID }}/Unlink/Partial"
+                        hx-target="#CharacterSheetCompanionsContainer"
+                        hx-swap="innerHTML">
+                  Unlink
+                </button>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="TextMuted MarginTopSmall">No companions or vehicles are currently linked to this character.</div>
+    {% endif %}
+  {% endif %}
+</div>

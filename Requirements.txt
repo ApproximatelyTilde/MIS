@@ -1,0 +1,13 @@
+asyncpg
+boto3
+fastapi
+httpx2
+Jinja2
+Markdown
+Pillow
+pydantic-settings
+pymdown-extensions
+PyJWT
+python-multipart
+SQLAlchemy
+uvicorn[standard]

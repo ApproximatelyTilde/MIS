@@ -1,0 +1,63 @@
+<div class="WindowContainer MailComposeWindowContainer" id="MailComposeWindowContainer">
+  <div id="MailComposeFormContainer" class="MailComposeFormContainer">
+    <form hx-post="/API/Mail/Send" hx-target="#MailComposeFormContainer" hx-swap="innerHTML" class="MailComposeForm">
+      {% if RelatedEntityType %}
+        <input type="hidden" name="RelatedEntityType" value="{{ RelatedEntityType }}" />
+      {% endif %}
+      {% if RelatedEntityID %}
+        <input type="hidden" name="RelatedEntityID" value="{{ RelatedEntityID }}" />
+      {% endif %}
+
+      <div class="FormRow MailComposeRow">
+        <label class="FormLabel MailComposeLabel" for="MailRecipientTextInput">Recipients:</label>
+        <div id="MailRecipientTagContainer" class="TagInputContainer MailTagInputContainer" data-category="MailRecipients">
+          <div class="TagList" id="MailRecipientTagList">
+            {% for Recipient in PrefilledRecipients %}
+              <span class="TagItem" data-value="{{ Recipient.FormattedTag }}">
+                <span class="TagItemText">{{ Recipient.FormattedTag }}</span>
+                <button type="button" class="TagRemoveButton" aria-label="Remove {{ Recipient.FormattedTag }}">
+                  <span class="TagRemoveIcon" aria-hidden="true"></span>
+                </button>
+              </span>
+            {% endfor %}
+          </div>
+          <input type="text" id="MailRecipientTextInput" class="TagTextInput" placeholder="Type name or @username..." autocomplete="off" />
+          <input type="hidden" name="RecipientUsernames" id="MailRecipientHiddenInput" class="TagHiddenValueInput" value="{% for Recipient in PrefilledRecipients %}{{ Recipient.FormattedTag }}{% if not loop.last %}, {% endif %}{% endfor %}" required />
+        </div>
+      </div>
+
+      <div class="FormRow MailComposeRow">
+        <label class="FormLabel MailComposeLabel" for="MailComposeSubject">Subject:</label>
+        <input type="text" id="MailComposeSubject" name="Subject" class="FormInput MailComposeInput" value="{{ Subject }}" placeholder="Enter message subject..." required />
+      </div>
+
+      <div class="FormRow MailComposeRow">
+        <label class="FormLabel MailComposeLabel" for="MailComposeCategory">Category:</label>
+        <select id="MailComposeCategory" name="Category" class="FormInput MailComposeSelect" required>
+          {% for Option in CategoryOptions %}
+            <option value="{{ Option.Value }}" {% if Option.Value == Category %}selected{% endif %}>{{ Option.Label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="FormRow MailComposeRow MailComposeBodyRow">
+        <label class="FormLabel MailComposeLabel" for="MailComposeBody">Message:</label>
+        <div class="MailComposePanesContainer">
+          <textarea id="MailComposeBody" name="Body" class="FormInput MailComposeTextarea" placeholder="Write markdown message here..." required>{{ BodyTemplate }}</textarea>
+          <div id="MailPreviewPane" class="MailPreviewPane MailMarkdownBody">
+            <span class="TextMuted">Live markdown preview...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="FlexSpaceBetween MarginTopSmall">
+        <button type="button" class="Button MailCancelButton" id="MailComposeCancelButton">
+          <span>Cancel</span>
+        </button>
+        <button type="submit" class="Button ButtonPrimary MailTransmitButton" id="MailComposeSubmitButton">
+          <span>Send Message</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

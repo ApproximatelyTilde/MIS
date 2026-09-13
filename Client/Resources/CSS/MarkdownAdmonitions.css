@@ -1,0 +1,149 @@
+.admonition {
+    margin: 12px 0;
+    padding: 8px 12px;
+    border: none;
+    box-sizing: border-box;
+}
+
+.admonition-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'JPN12', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+}
+
+.admonition-title::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    flex-shrink: 0;
+}
+
+.admonition.note,
+.admonition.info {
+    border-left: 4px solid var(--Color4);
+    background-color: color-mix(in srgb, var(--Color4) 50%, transparent);
+}
+.admonition.note .admonition-title,
+.admonition.info .admonition-title {
+    color: var(--Color4);
+}
+.admonition.note .admonition-title::before,
+.admonition.info .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Note.svg");
+    mask-image: url("/Resources/SVG/Admonition-Note.svg");
+}
+
+.admonition.attention {
+    border-left: 4px solid var(--Color3);
+    background-color: color-mix(in srgb, var(--Color3) 50%, transparent);
+}
+.admonition.attention .admonition-title {
+    color: var(--Color3);
+}
+.admonition.attention .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Attention.svg");
+    mask-image: url("/Resources/SVG/Admonition-Attention.svg");
+}
+
+.admonition.caution {
+    border-left: 4px solid var(--Color3);
+    background-color: color-mix(in srgb, var(--Color3) 50%, transparent);
+}
+.admonition.caution .admonition-title {
+    color: var(--Color3);
+}
+.admonition.caution .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Caution.svg");
+    mask-image: url("/Resources/SVG/Admonition-Caution.svg");
+}
+
+.admonition.warning {
+    border-left: 4px solid var(--Color3);
+    background-color: color-mix(in srgb, var(--Color3) 50%, transparent);
+}
+.admonition.warning .admonition-title {
+    color: var(--Color3);
+}
+.admonition.warning .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Warning.svg");
+    mask-image: url("/Resources/SVG/Admonition-Warning.svg");
+}
+
+.admonition.danger,
+.admonition.critical {
+    border-left: 4px solid var(--Color1);
+    background-color: color-mix(in srgb, var(--Color1) 50%, transparent);
+}
+.admonition.danger .admonition-title,
+.admonition.critical .admonition-title {
+    color: var(--Color1);
+}
+.admonition.danger .admonition-title::before,
+.admonition.critical .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Danger.svg");
+    mask-image: url("/Resources/SVG/Admonition-Danger.svg");
+}
+
+.admonition.error {
+    border-left: 4px solid var(--Color1);
+    background-color: color-mix(in srgb, var(--Color1) 50%, transparent);
+}
+.admonition.error .admonition-title {
+    color: var(--Color1);
+}
+.admonition.error .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Error.svg");
+    mask-image: url("/Resources/SVG/Admonition-Error.svg");
+}
+
+.admonition.hint {
+    border-left: 4px solid var(--Color2);
+    background-color: color-mix(in srgb, var(--Color2) 50%, transparent);
+}
+.admonition.hint .admonition-title {
+    color: var(--Color2);
+}
+.admonition.hint .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Hint.svg");
+    mask-image: url("/Resources/SVG/Admonition-Hint.svg");
+}
+
+.admonition.important {
+    border-left: 4px solid var(--Color6);
+    background-color: color-mix(in srgb, var(--Color6) 50%, transparent);
+}
+.admonition.important .admonition-title {
+    color: var(--Color6);
+}
+.admonition.important .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Important.svg");
+    mask-image: url("/Resources/SVG/Admonition-Important.svg");
+}
+
+.admonition.tip,
+.admonition.success {
+    border-left: 4px solid var(--Color2);
+    background-color: color-mix(in srgb, var(--Color2) 50%, transparent);
+}
+.admonition.tip .admonition-title,
+.admonition.success .admonition-title {
+    color: var(--Color2);
+}
+.admonition.tip .admonition-title::before,
+.admonition.success .admonition-title::before {
+    -webkit-mask-image: url("/Resources/SVG/Admonition-Tip.svg");
+    mask-image: url("/Resources/SVG/Admonition-Tip.svg");
+}

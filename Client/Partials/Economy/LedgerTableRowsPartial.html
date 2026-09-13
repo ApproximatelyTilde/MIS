@@ -1,0 +1,17 @@
+{% if ErrorMessage %}
+  <tr><td colspan="5" class="TextDanger">{{ ErrorMessage }}</td></tr>
+{% elif InfoMessage %}
+  <tr><td colspan="5" class="TextMuted">{{ InfoMessage }}</td></tr>
+{% elif Transactions %}
+  {% for Transaction in Transactions %}
+    <tr>
+      <td>{{ Transaction.FormattedDate }}</td>
+      <td>{{ Transaction.GameSystem }}</td>
+      <td>{{ Transaction.Reason }}</td>
+      <td class="{{ Transaction.AmountClass }}"><strong>{{ Transaction.AmountFormatted }}</strong></td>
+      <td>{{ Transaction.ItemFormatted }}</td>
+    </tr>
+  {% endfor %}
+{% else %}
+  <tr><td colspan="5" class="TextMuted">No transactions recorded for this character yet.</td></tr>
+{% endif %}

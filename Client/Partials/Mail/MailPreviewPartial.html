@@ -1,0 +1,7 @@
+<div class="MailMarkdownBody">
+  {% if RenderedHTML %}
+    {{ RenderedHTML | safe }}
+  {% else %}
+    <span class="TextMuted">No preview content available. Write something in Markdown first.</span>
+  {% endif %}
+</div>

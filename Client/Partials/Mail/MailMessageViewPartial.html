@@ -1,0 +1,92 @@
+{% if NoticeMessage %}
+  <div class="MailNoticeBanner">{{ NoticeMessage }}</div>
+{% endif %}
+
+<div class="MailMessageViewWrapper">
+  <div class="MailMessageHeader">
+    <div class="MailSenderContainer">
+      {% if ActivityState.PortraitURL %}
+        <img class="MailHeaderPortrait" src="{{ ActivityState.PortraitURL }}" alt="{{ ActivityState.DisplayName }}" />
+      {% endif %}
+      <div class="MailHeaderDetails">
+        <div class="MailHeaderRow">
+          <div class="MailHeaderRowLeft">
+            <span class="MailSenderName">{{ ActivityState.DisplayName }}{% if ActivityState.Username %} (@{{ ActivityState.Username }}){% endif %}</span>
+          </div>
+          <div class="MailHeaderRowRight">
+            {% if ActivityState.StatusIndicatorClass %}
+              <span class="StatusIndicator {{ ActivityState.StatusIndicatorClass }}" title="{{ ActivityState.StateLabel }}" aria-label="{{ ActivityState.StateLabel }}"></span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="MailHeaderRow">
+          <div class="MailHeaderRowLeft">
+            <span class="Badge BadgeSmall BadgeRole">{{ ActivityState.PermissionLevel }}</span>
+            {% if ActivityState.Flair %}
+              <span class="Badge BadgeSmall BadgeFlair">{{ ActivityState.Flair }}</span>
+            {% endif %}
+          </div>
+          <div class="MailHeaderRowRight">
+            <span class="MailLastActiveText">{{ ActivityState.LastActiveText }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="MailMessageBody">
+    <div id="MailMessageRenderedText" class="MailMessageText MailMarkdownBody">{% if RenderedBodyHtml %}{{ RenderedBodyHtml | safe }}{% else %}{{ Message.Body }}{% endif %}</div>
+    <div id="MailMessageRawText" class="MailRawTextBody HiddenElement"><pre class="MailRawPre">{{ Message.Body }}</pre></div>
+  </div>
+
+  <div class="MailMessageFooter">
+    <div class="MailFooterRow">
+      <div class="MailFooterRowLeft">
+        <span class="MailFooterSubjectText">Subject: <span class="MailFooterSubjectSerif">{{ Message.Subject }}</span></span>
+      </div>
+      <div class="MailFooterRowRight">
+        <button type="button" class="Button ButtonSquare" id="MailToggleRawButton" title="Toggle Raw Text" aria-label="Toggle Raw Text">
+          <span class="FunctionIcon FunctionIconDocumentR" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <div class="MailFooterRow">
+      <div class="MailFooterRowLeft">
+        <span class="MailSentTimestamp" data-timestamp="{{ Message.CreatedAt.isoformat() }}">{{ CreatedAtFormatted }}</span>
+        <span class="Badge BadgeSmall Badge{{ Message.Category.value }}">{% if CategoryDisplayLabel %}{{ CategoryDisplayLabel }}{% else %}{{ Message.Category.value }}{% endif %}</span>
+        {% if Message.RelatedEntityType and Message.RelatedEntityID %}
+          <span class="MailFooterRefText">{{ Message.RelatedEntityType }} [{{ Message.RelatedEntityID[:8] }}…]</span>
+        {% endif %}
+      </div>
+      <div class="MailFooterRowRight">
+        <span class="MailFooterIDItem">ID: {{ Message.ID[:8] }}…</span>
+        <button type="button" class="Button ButtonSquare ButtonDanger MailDeleteButton" id="MailDeleteButton" hx-post="/API/Mail/Message/{{ Message.ID }}/Delete" hx-target="#MailMessageContainer" hx-swap="innerHTML" title="Delete Message" aria-label="Delete Message">
+          <span class="FunctionIcon FunctionIconDelete" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="MailReplySection {% if Message.IsAutomated %}MailReplySectionDisabled{% endif %}">
+    <div class="MailReplyHeader">
+      <span class="MailReplyTitle">REPLY TO MESSAGE</span>
+      {% if Message.IsAutomated %}
+        <span class="Badge BadgeSmall BadgeMuted">REPLIES DISABLED</span>
+      {% endif %}
+    </div>
+
+    {% if Message.IsAutomated %}
+      <textarea class="FormInput MailReplyInput" disabled="disabled" placeholder="Automated message: Direct replies are disabled for system notifications."></textarea>
+      <div class="FlexEnd MarginTopSmall">
+        <button type="button" class="Button ButtonPrimary MailReplyButton" disabled="disabled">Send Reply</button>
+      </div>
+    {% else %}
+      <form hx-post="/API/Mail/Message/{{ Message.ID }}/Reply/Partial" hx-target="#MailMessageContainer" hx-swap="innerHTML">
+        <textarea name="ReplyBody" class="FormInput MailReplyInput" placeholder="Type your response here..." required></textarea>
+        <div class="FlexEnd MarginTopSmall">
+          <button type="submit" class="Button ButtonPrimary MailReplyButton">Send Reply</button>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</div>

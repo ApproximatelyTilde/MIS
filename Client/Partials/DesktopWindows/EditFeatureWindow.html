@@ -1,0 +1,109 @@
+<div class="WindowContainer EditFeatureWindowContainer">
+  <div id="EditFeature5EToolsNotice" class="Admonition AdmonitionNote HiddenElement MarginBottomSmall">
+    <span class="AdmonitionIcon AdmonitionIconNote" aria-hidden="true"></span>
+    <div class="AdmonitionContent">This feature is defined by 5ETools and cannot be modified.</div>
+  </div>
+
+  <form id="EditFeatureForm" autocomplete="off">
+    <div class="FlexColumn GapMedium">
+      <div class="FlexRow AlignCenter GapSmall">
+        <label for="EditFeatureNameInput" class="FormLabel EditFeatureLabel">Name</label>
+        <input type="text" id="EditFeatureNameInput" name="Name" class="FlexOne" placeholder="Feature Name..." value="{{ FeatureName or '' }}" />
+      </div>
+
+      <div class="FlexRow AlignCenter GapSmall">
+        <div class="FlexOne FlexRow AlignCenter GapSmall">
+          <label for="EditFeatureSourceTypeSelect" class="FormLabel EditFeatureLabel">Source</label>
+          <select id="EditFeatureSourceTypeSelect" name="SourceType" class="FlexOne">
+            <option value="Custom">Custom</option>
+            <option value="Species">Species</option>
+            <option value="Class">Class</option>
+            <option value="Feat">Feat</option>
+            <option value="Background">Background</option>
+          </select>
+        </div>
+        <div class="FlexOne FlexRow AlignCenter GapSmall">
+          <label for="EditFeatureSourceNameInput" class="FormLabel EditFeatureLabel">Origin</label>
+          <input type="text" id="EditFeatureSourceNameInput" name="SourceName" class="FlexOne" placeholder="e.g. Barbarian, Human..." />
+        </div>
+      </div>
+
+      <div class="FlexRow AlignCenter GapSmall">
+        <div class="FlexOne FlexRow AlignCenter GapSmall">
+          <label for="EditFeatureLevelInput" class="FormLabel EditFeatureLabel">Level</label>
+          <input type="number" id="EditFeatureLevelInput" name="LevelRequirement" min="1" max="20" placeholder="1" class="FlexOne" />
+        </div>
+        <div class="FlexOne FlexRow AlignCenter GapSmall">
+          <label class="CheckboxLabel">
+            <input type="checkbox" id="EditFeatureIsEnabledCheckbox" name="IsEnabled" checked />
+            Active
+          </label>
+        </div>
+      </div>
+
+      <div class="FlexColumn GapSmall">
+        <label for="EditFeatureDescriptionInput" class="FormLabel">Description</label>
+        <textarea id="EditFeatureDescriptionInput" name="Description" rows="4" placeholder="Feature mechanics, details, and rules text..."></textarea>
+      </div>
+
+      <div class="CharacterSheetSectionHeader">
+        <div class="CharacterSheetSectionTitle">Feedback (Mechanics)</div>
+      </div>
+
+      <div class="EditFeatureFeedbackSection FlexColumn GapSmall">
+        <div class="FlexRow AlignCenter GapSmall">
+          <label class="CheckboxLabel">
+            <input type="checkbox" id="EditFeatureIncludeUnarmoredACCheckbox" name="IncludeUnarmoredAC" />
+            Include in Unarmored AC:
+          </label>
+          <select id="EditFeatureUnarmoredACAbilitySelect" name="UnarmoredACAbility" class="FlexOne">
+            <option value="Constitution">Constitution (Barbarian)</option>
+            <option value="Wisdom">Wisdom (Monk)</option>
+            <option value="Intelligence">Intelligence</option>
+            <option value="Charisma">Charisma</option>
+            <option value="Strength">Strength</option>
+            <option value="Dexterity">Dexterity</option>
+          </select>
+        </div>
+
+        <div class="FlexRow AlignCenter GapSmall">
+          <label class="CheckboxLabel">
+            <input type="checkbox" id="EditFeatureFlatACBonusCheckbox" name="HasFlatACBonus" />
+            AC Bonus:
+          </label>
+          <input type="number" id="EditFeatureFlatACBonusInput" name="FlatACBonus" value="1" min="-10" max="20" class="FlexOne" />
+        </div>
+
+        <div class="FlexRow AlignCenter GapSmall">
+          <label class="CheckboxLabel">
+            <input type="checkbox" id="EditFeatureAbilityBonusCheckbox" name="HasAbilityBonus" />
+            Ability Bonus:
+          </label>
+          <select id="EditFeatureAbilityBonusAbilitySelect" name="AbilityBonusAbility" class="FlexOne">
+            <option value="Strength">Strength</option>
+            <option value="Dexterity">Dexterity</option>
+            <option value="Constitution">Constitution</option>
+            <option value="Intelligence">Intelligence</option>
+            <option value="Wisdom">Wisdom</option>
+            <option value="Charisma">Charisma</option>
+          </select>
+          <input type="number" id="EditFeatureAbilityBonusValueInput" name="AbilityBonusValue" value="1" min="1" max="10" class="EditFeatureSmallNumberInput" />
+        </div>
+
+        <div class="FlexRow AlignCenter GapSmall">
+          <label class="CheckboxLabel">
+            <input type="checkbox" id="EditFeatureSpeedBonusCheckbox" name="HasSpeedBonus" />
+            Speed Bonus (ft):
+          </label>
+          <input type="number" id="EditFeatureSpeedBonusInput" name="SpeedBonus" value="10" min="5" max="60" step="5" class="FlexOne" />
+        </div>
+      </div>
+
+      <div class="FlexRow AlignCenter GapSmall MarginTopSmall">
+        <button type="button" id="EditFeatureSaveButton" class="Button ButtonPrimary">Save Feature</button>
+        <button type="button" id="EditFeatureCancelButton" class="Button ButtonSecondary">Cancel</button>
+        <span id="EditFeatureStatusText" class="TextMuted MarginLeftAuto"></span>
+      </div>
+    </div>
+  </form>
+</div>
